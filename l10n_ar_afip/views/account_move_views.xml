@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Account Move Form View -->
+    <record id="view_move_form_afip" model="ir.ui.view">
+        <field name="name">account.move.form.afip</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_info']" position="after">
+                <page name="afip" string="AFIP" invisible="move_type not in ['out_invoice', 'out_refund']">
+                    <group>
+                        <group string="CAE">
+                            <field name="cae" readonly="1"/>
+                            <field name="cae_due_date" readonly="1"/>
+                            <field name="afip_barcode" readonly="1"/>
+                        </group>
+                        <group string="Resultado">
+                            <field name="afip_result" readonly="1"/>
+                            <field name="l10n_ar_afip_state" readonly="1"/>
+                            <field name="afip_errors" readonly="1" invisible="afip_errors == False"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Account Journal Form View -->
+    <record id="view_account_journal_form_afip" model="ir.ui.view">
+        <field name="name">account.journal.form.afip</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="l10n_ar_afip_pto_vta"/>
+                <field name="l10n_ar_afip_document_type"/>
+                <field name="l10n_ar_afip_auto_authorize"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

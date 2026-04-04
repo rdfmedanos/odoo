@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_l10n_ar_afip_company,access_l10n_ar_afip_company,model_res_company,base.group_user,1,1,1,1
+access_l10n_ar_afip_move,access_l10n_ar_afip_move,model_account_move,account.group_account_invoice,1,1,1,1
+access_l10n_ar_afip_sequence,access_l10n_ar_afip_sequence,model_l10n_ar_afip_sequence,base.group_user,1,1,1,1
+access_l10n_ar_afip_clipboard,access_l10n_ar_afip_clipboard,model_l10n_ar_afip_clipboard,base.group_user,1,1,1,1
