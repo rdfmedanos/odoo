@@ -9,6 +9,7 @@
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
                     <t t-set="product_lines" t-value="o._l10n_ar_afip_report_lines()"/>
                     <t t-set="company_cuit" t-value="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
+                    <t t-set="company_iibb" t-value="o.company_id.l10n_ar_afip_iibb or company_cuit"/>
 
                     <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
@@ -56,7 +57,7 @@
                                 </td>
                                 <td style="width: 50%; vertical-align: top; font-size: 10pt; line-height: 1.4;">
                                     <div><strong>CUIT</strong> <span t-esc="company_cuit"/> - <t t-if="o.company_id.l10n_ar_afip_responsibility_type_id"><span t-field="o.company_id.l10n_ar_afip_responsibility_type_id"/></t><t t-else="">IVA Responsable Inscripto</t></div>
-                                    <div style="margin-top: 5px;"><strong>Ingresos Brutos:</strong> <t t-if="o.company_id.l10n_ar_afip_iibb"><span t-field="o.company_id.l10n_ar_afip_iibb"/></t><t t-else="">-</t></div>
+                                    <div style="margin-top: 5px;"><strong>Ingresos Brutos:</strong> <span t-esc="company_iibb"/></div>
                                     <div><strong>Inicio de actividades:</strong> <t t-if="o.company_id.l10n_ar_afip_start_date"><span t-field="o.company_id.l10n_ar_afip_start_date"/></t><t t-else="">-</t></div>
                                 </td>
                             </tr>
