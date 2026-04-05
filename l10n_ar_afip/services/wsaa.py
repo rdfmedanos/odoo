@@ -6,7 +6,7 @@ Basado en la implementación de AgroSentinel.
 
 import base64
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from lxml import etree
 import requests
 
@@ -26,12 +26,12 @@ class WSAAService:
         self.wsaa_url = self.WSAA_URLS.get(environment, self.WSAA_URLS['homologacion'])
     
     def _format_wsaa_date(self, date: datetime) -> str:
-        """Formatea fecha para WSAA en formato UTC-3 (Argentina)."""
-        return date.strftime('%Y-%m-%dT%H:%M:%S-03:00')
+        """Formatea fecha para WSAA en formato UTC."""
+        return date.strftime('%Y-%m-%dT%H:%M:%SZ')
     
     def _create_tra(self, service: str = 'wsfe') -> str:
         """Crea el Ticket de Requerimiento de Acceso (TRA)."""
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         unique_id = int(now.timestamp())
         generation_time = self._format_wsaa_date(now)
         expiration_time = self._format_wsaa_date(now + timedelta(hours=12))
