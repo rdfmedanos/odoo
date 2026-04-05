@@ -105,27 +105,46 @@ class AccountMove(models.Model):
             if move.cae and move.cae_due_date:
                 company = move.company_id
                 partner = move.partner_id
-                
+
                 fecha = move.date.strftime('%Y%m%d') if move.date else ''
-                
+
                 nro_doc_receptor = (partner.vat or '0').replace('-', '').replace(' ', '')
                 tipo_doc_receptor = 80 if partner.vat else 99
-                
+
                 cbte_nro = move.afip_document_number or ''
                 pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
-                
+
                 tipo_cbte = self._get_tipo_comprobante_afip()
-                
+
                 imp_total = f"{move.amount_total:.2f}"
-                imp_iva = f"{move.amount_tax:.2f}"
-                imp_neto = f"{move.amount_untaxed:.2f}"
-                
+
                 cae_str = str(move.cae)
-                cae_venc = move.cae_due_date.strftime('%Y%m%d') if move.cae_due_date else ''
-                
-                qr_data = f"https://www.afip.gob.ar/fe/qr/?p=%7B%22ver%22%3A1%2C%22fecha%22%3A%22{fecha}%22%2C%22cuit%22%3A{company.afip_cuit}%2C%22ptoVta%22%3A{pto_vta}%2C%22tipoCmp%22%3A{tipo_cbte}%2C%22nroCmp%22%3A{cbte_nro.replace('-', '')}%2C%22importe%22%3A{imp_total}%2C%22moneda%22%3A%22PES%22%2C%22ctz%22%3A1%2C%22tipoDocRec%22%3A{tipo_doc_receptor}%2C%22nroDocRec%22%3A{nro_doc_receptor}%2C%22tipoAut%22%3A%22E%22%2C%22codAut%22%3A{cae_str}%7D"
-                
-                move.afip_qr_data = qr_data
+
+                cuit_digits = ''.join(filter(str.isdigit, company.afip_cuit or company.vat or '0'))
+                cuit = int(cuit_digits) if cuit_digits else 0
+                nro_cmp = ''.join(filter(str.isdigit, cbte_nro or '0'))
+                nro_doc = ''.join(filter(str.isdigit, nro_doc_receptor or '0'))
+
+                qr_payload = {
+                    'ver': 1,
+                    'fecha': fecha,
+                    'cuit': cuit,
+                    'ptoVta': int(pto_vta),
+                    'tipoCmp': tipo_cbte,
+                    'nroCmp': int(nro_cmp) if nro_cmp else 0,
+                    'importe': float(imp_total),
+                    'moneda': 'PES',
+                    'ctz': 1,
+                    'tipoDocRec': tipo_doc_receptor,
+                    'nroDocRec': int(nro_doc) if nro_doc else 0,
+                    'tipoAut': 'E',
+                    'codAut': int(cae_str),
+                }
+
+                import json
+                qr_json = json.dumps(qr_payload, separators=(',', ':'))
+                qr_b64 = base64.b64encode(qr_json.encode('utf-8')).decode('ascii')
+                move.afip_qr_data = f"https://www.arca.gob.ar/fe/qr/?p={qr_b64}"
             else:
                 move.afip_qr_data = False
     
@@ -145,49 +164,17 @@ class AccountMove(models.Model):
         try:
             import qrcode
             import io
-            import json
         except ImportError:
             for move in self:
                 move.afip_qr_image = False
             return
-        
+
         for move in self:
-            if move.cae and move.cae_due_date and move.company_id.afip_cuit:
-                company = move.company_id
-                partner = move.partner_id
-                
-                fecha = move.date.strftime('%Y%m%d') if move.date else ''
-                
-                nro_doc_receptor = (partner.vat or '0').replace('-', '').replace(' ', '')
-                tipo_doc_receptor = 80 if partner.vat and len(partner.vat.replace('-', '')) >= 11 else 99
-                
-                pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
-                tipo_cbte = self._get_tipo_comprobante_afip()
-                
-                cbte_nro = ''.join(filter(str.isdigit, move.afip_document_number or ''))
-                
-                qr_data = {
-                    'ver': 1,
-                    'fecha': fecha,
-                    'cuit': int(company.afip_cuit) if company.afip_cuit else 0,
-                    'ptoVta': int(pto_vta),
-                    'tipoCmp': tipo_cbte,
-                    'nroCmp': int(cbte_nro) if cbte_nro else 0,
-                    'importe': float(move.amount_total),
-                    'moneda': 'PES',
-                    'ctz': 1,
-                    'tipoDocRec': tipo_doc_receptor,
-                    'nroDocRec': nro_doc_receptor or '0',
-                    'tipoAut': 'E',
-                    'codAut': str(move.cae),
-                }
-                
-                qr_json = json.dumps(qr_data, separators=(',', ':'))
-                
+            if move.afip_qr_data:
                 qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
-                qr.add_data(qr_json)
+                qr.add_data(move.afip_qr_data)
                 qr.make(fit=True)
-                
+
                 img = qr.make_image(fill_color="black", back_color="white")
                 buffer = io.BytesIO()
                 img.save(buffer, format='PNG')
