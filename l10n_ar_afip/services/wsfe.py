@@ -113,9 +113,9 @@ class WSFEService:
                 - condicion_iva: condición IVA del receptor
                 - fecha: fecha del comprobante (YYYYMMDD)
                 - importe_total: monto total
-                - importe_neto: monto neto (para tipo A/M)
-                - iva: monto de IVA (para tipo A/M)
-                - iva_id: ID del tipo de IVA (5 = 21%)
+                - importe_neto: monto neto gravado
+                - importe_iva: monto total de IVA
+                - iva_lines: lista de líneas de IVA [{id, base, amount}]
         
         Returns:
             dict con 'cae', 'cae_due_date', 'cbte_nro', 'result', 'errors'
@@ -128,9 +128,9 @@ class WSFEService:
         condicion_iva = invoice_data.get('condicion_iva', 'consumidor_final')
         fecha = invoice_data.get('fecha', datetime.now().strftime('%Y%m%d'))
         imp_total = invoice_data.get('importe_total', 0)
-        imp_neto = invoice_data.get('importe_neto', imp_total)
-        imp_iva = invoice_data.get('iva', 0)
-        iva_id = invoice_data.get('iva_id', 5)
+        imp_neto = invoice_data.get('importe_neto', 0)
+        imp_iva = invoice_data.get('importe_iva', 0)
+        iva_lines = invoice_data.get('iva_lines', [])
         
         cbte_tipo = self.TIPO_COMPROBANTE.get(f'invoice_{tipo.lower()}', 6)
         condicion_iva_id = self.CONDICION_IVA.get(condicion_iva.lower().replace(' ', '_'), 5)
@@ -138,15 +138,17 @@ class WSFEService:
         last_nro = self.get_last_voucher_number(pto_vta, cbte_tipo)
         next_nro = last_nro + 1
         
-        iva_node = ''
-        if imp_iva > 0 and tipo in ('A', 'M'):
-            iva_node = f"""<Iva>
+        iva_nodes = ''
+        if iva_lines and imp_neto > 0:
+            iva_nodes = '<Iva>'
+            for iva in iva_lines:
+                iva_nodes += f"""
               <AlicIva>
-                <Id>{iva_id}</Id>
-                <BaseImp>{imp_neto:.2f}</BaseImp>
-                <Importe>{imp_iva:.2f}</Importe>
-              </AlicIva>
-            </Iva>"""
+                <Id>{iva['id']}</Id>
+                <BaseImp>{iva['base']:.2f}</BaseImp>
+                <Importe>{iva['amount']:.2f}</Importe>
+              </AlicIva>"""
+            iva_nodes += '</Iva>'
         
         body = f"""<FECAESolicitar xmlns="http://ar.gov.afip.dif.FEV1/">
   <Auth>
@@ -180,7 +182,7 @@ class WSFEService:
         <FchServDesde>{fecha}</FchServDesde>
         <FchServHasta>{fecha}</FchServHasta>
         <FchVtoPago>{fecha}</FchVtoPago>
-        {iva_node}
+        {iva_nodes}
       </FECAEDetRequest>
     </FeDetReq>
   </FeCAEReq>

@@ -184,10 +184,7 @@ class AccountMove(models.Model):
         imp_neto = self.amount_untaxed
         iva_amount = self.amount_tax
         
-        iva_id = 5
-        if hasattr(self, 'l10n_ar_currency_id') and self.l10n_ar_currency_id:
-            if self.l10n_ar_currency_id.name == 'USD':
-                iva_id = 6
+        iva_lines = self._get_afip_iva_lines()
         
         return {
             'tipo': self.afip_document_type or 'B',
@@ -199,9 +196,40 @@ class AccountMove(models.Model):
             'fecha': self.date.strftime('%Y%m%d'),
             'importe_total': imp_total,
             'importe_neto': imp_neto,
-            'iva': iva_amount,
-            'iva_id': iva_id,
+            'importe_iva': iva_amount,
+            'iva_lines': iva_lines,
         }
+    
+    def _get_afip_iva_lines(self) -> list:
+        """Obtiene las líneas de IVA para AFIP."""
+        iva_map = {
+            21: 5,
+            10.5: 4,
+            27: 6,
+            2.5: 8,
+            0: 3,
+        }
+        
+        iva_amounts = {}
+        for line in self.invoice_line_ids:
+            for tax in line.tax_ids:
+                if tax.amount > 0:
+                    iva_id = iva_map.get(tax.amount, 5)
+                    base = line.price_subtotal
+                    amount = line.price_subtotal * (tax.amount / 100)
+                    if iva_id not in iva_amounts:
+                        iva_amounts[iva_id] = {'base': 0, 'amount': 0}
+                    iva_amounts[iva_id]['base'] += base
+                    iva_amounts[iva_id]['amount'] += amount
+        
+        result = []
+        for iva_id, data in iva_amounts.items():
+            result.append({
+                'id': iva_id,
+                'base': data['base'],
+                'amount': data['amount'],
+            })
+        return result
     
     def _get_condicion_iva_partner(self) -> str:
         """Obtiene la condición IVA del partner."""
