@@ -3,7 +3,7 @@
     <template id="report_invoice_afip_v2">
         <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="o">
-                <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 8px; color: #111; line-height: 1.15; background: #f2f2f2; border: 1px solid #000; border-radius: 5px; padding: 6px; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 42mm;">
+                <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 8px; color: #111; line-height: 1.15; background: #f2f2f2; border: 1px solid #000; border-radius: 5px; padding: 6px; box-sizing: border-box;">
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
                     <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
@@ -75,30 +75,30 @@
                     <div style="margin-bottom: 2px;"><strong>Moneda:</strong></div>
                     <div style="margin-bottom: 5px;"><span t-esc="o.currency_id.name"/></div>
 
-                    <table style="width: 100%; border-collapse: collapse; font-size: 7px; margin-bottom: 3px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 8px; margin-bottom: 4px;">
                         <thead>
                             <tr style="border-bottom: 1px solid #666;">
-                                <th style="text-align: left; padding-bottom: 1px;">Codigo</th>
-                                <th style="text-align: left; padding-bottom: 1px;">Descripcion</th>
-                                <th style="text-align: left; padding-bottom: 1px;">Documento Origen</th>
-                                <th style="text-align: right; padding-bottom: 1px;">Cant.Uni</th>
-                                <th style="text-align: right; padding-bottom: 1px;">Precio Unitario</th>
-                                <th style="text-align: right; padding-bottom: 1px;">Desc.(%)</th>
-                                <th style="text-align: right; padding-bottom: 1px;">Alicuota IVA</th>
-                                <th style="text-align: right; padding-bottom: 1px;">Monto Final</th>
+                                <th style="text-align: left; padding-bottom: 2px;">Codigo</th>
+                                <th style="text-align: left; padding-bottom: 2px;">Descripcion</th>
+                                <th style="text-align: left; padding-bottom: 2px;">Documento Origen</th>
+                                <th style="text-align: right; padding-bottom: 2px;">Cant.Uni</th>
+                                <th style="text-align: right; padding-bottom: 2px;">Precio Unitario</th>
+                                <th style="text-align: right; padding-bottom: 2px;">Desc.(%)</th>
+                                <th style="text-align: right; padding-bottom: 2px;">Alicuota IVA</th>
+                                <th style="text-align: right; padding-bottom: 2px;">Monto Final</th>
                             </tr>
                         </thead>
                         <tbody>
                             <t t-foreach="product_lines" t-as="line">
                                 <tr>
-                                    <td style="padding-top: 2px;"><span t-field="line.product_id.default_code"/></td>
-                                    <td style="padding-top: 2px;"><span t-field="line.name"/></td>
-                                    <td style="padding-top: 2px;">-</td>
-                                    <td style="padding-top: 2px; text-align: right;"><span t-field="line.quantity"/></td>
-                                    <td style="padding-top: 2px; text-align: right;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                    <td style="padding-top: 2px; text-align: right;"><span t-field="line.discount"/></td>
-                                    <td style="padding-top: 2px; text-align: right;"><t t-foreach="line.tax_ids" t-as="tax"><span t-esc="'IVA %s%%' % int(tax.amount)"/></t></td>
-                                    <td style="padding-top: 2px; text-align: right;"><span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    <td style="padding-top: 3px;"><span t-field="line.product_id.default_code"/></td>
+                                    <td style="padding-top: 3px;"><span t-field="line.name"/></td>
+                                    <td style="padding-top: 3px;">-</td>
+                                    <td style="padding-top: 3px; text-align: right;"><span t-field="line.quantity"/></td>
+                                    <td style="padding-top: 3px; text-align: right;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    <td style="padding-top: 3px; text-align: right;"><span t-field="line.discount"/></td>
+                                    <td style="padding-top: 3px; text-align: right;"><t t-foreach="line.tax_ids" t-as="tax"><span t-esc="'IVA %s%%' % int(tax.amount)"/></t></td>
+                                    <td style="padding-top: 3px; text-align: right;"><span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                 </tr>
                             </t>
                         </tbody>
@@ -130,7 +130,7 @@
                         </tr>
                     </table>
 
-                    <div style="position: absolute; left: 6px; right: 6px; bottom: 8px;">
+                    <div style="margin-top: 26mm;">
                         <div style="font-size: 8px; margin-bottom: 4px;">Plazo de pago: <span t-field="o.invoice_payment_term_id"/></div>
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
