@@ -151,7 +151,7 @@ class AccountMove(models.Model):
                 pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
                 tipo_cbte = self._get_tipo_comprobante_afip()
                 
-                cbte_nro = move.afip_document_number.replace('-', '') if move.afip_document_number else ''
+                cbte_nro = ''.join(filter(str.isdigit, move.afip_document_number or ''))
                 
                 qr_data = {
                     'ver': 1,
