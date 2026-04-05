@@ -3,7 +3,7 @@
     <template id="report_invoice_afip_v2">
         <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="o">
-                <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; border: 1px solid #777; border-radius: 8px; padding: 8mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 42mm;">
+                <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 42mm;">
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
                     <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
