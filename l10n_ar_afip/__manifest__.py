@@ -30,6 +30,8 @@
             'cryptography',
             'lxml',
             'requests',
+            'qrcode',
+            'Pillow',
         ],
     },
 }

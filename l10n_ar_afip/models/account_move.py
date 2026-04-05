@@ -49,10 +49,10 @@ class AccountMove(models.Model):
         store=True,
     )
     
-    afip_qr_code = fields.Binary(
+    afip_qr_image = fields.Binary(
         string='Código QR AFIP',
-        attachment=True,
-        copy=False,
+        compute='_compute_afip_qr_image',
+        store=True,
     )
     
     afip_document_type = fields.Selection([
@@ -85,6 +85,7 @@ class AccountMove(models.Model):
             else:
                 move.afip_barcode = False
     
+    @api.depends('cae', 'cae_due_date', 'date', 'partner_id', 'amount_total', 'amount_tax', 'amount_untaxed', 'afip_document_type', 'afip_document_number', 'journal_id.l10n_ar_afip_pto_vta')
     def _compute_afip_qr_data(self):
         """Genera los datos para el código QR según especificación AFIP."""
         for move in self:
@@ -124,6 +125,57 @@ class AccountMove(models.Model):
             'M': 51,
         }
         return tipo_map.get(self.afip_document_type, 6)
+    
+    @api.depends('cae', 'cae_due_date', 'date', 'partner_id', 'amount_total', 'amount_tax', 'amount_untaxed', 'afip_document_type', 'afip_document_number', 'journal_id.l10n_ar_afip_pto_vta', 'company_id.afip_cuit')
+    def _compute_afip_qr_image(self):
+        """Genera la imagen QR para AFIP."""
+        import qrcode
+        import io
+        import json
+        
+        for move in self:
+            if move.cae and move.cae_due_date and move.company_id.afip_cuit:
+                company = move.company_id
+                partner = move.partner_id
+                
+                fecha = move.date.strftime('%Y%m%d') if move.date else ''
+                
+                nro_doc_receptor = (partner.vat or '0').replace('-', '').replace(' ', '')
+                tipo_doc_receptor = 80 if partner.vat and len(partner.vat.replace('-', '')) >= 11 else 99
+                
+                pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
+                tipo_cbte = self._get_tipo_comprobante_afip()
+                
+                cbte_nro = move.afip_document_number.replace('-', '') if move.afip_document_number else ''
+                
+                qr_data = {
+                    'ver': 1,
+                    'fecha': fecha,
+                    'cuit': int(company.afip_cuit) if company.afip_cuit else 0,
+                    'ptoVta': int(pto_vta),
+                    'tipoCmp': tipo_cbte,
+                    'nroCmp': int(cbte_nro) if cbte_nro else 0,
+                    'importe': float(move.amount_total),
+                    'moneda': 'PES',
+                    'ctz': 1,
+                    'tipoDocRec': tipo_doc_receptor,
+                    'nroDocRec': nro_doc_receptor or '0',
+                    'tipoAut': 'E',
+                    'codAut': str(move.cae),
+                }
+                
+                qr_json = json.dumps(qr_data, separators=(',', ':'))
+                
+                qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
+                qr.add_data(qr_json)
+                qr.make(fit=True)
+                
+                img = qr.make_image(fill_color="black", back_color="white")
+                buffer = io.BytesIO()
+                img.save(buffer, format='PNG')
+                move.afip_qr_image = base64.b64encode(buffer.getvalue())
+            else:
+                move.afip_qr_image = False
     
     @api.depends('name', 'afip_document_type', 'journal_id.l10n_ar_afip_pto_vta')
     def _compute_afip_document_number(self):

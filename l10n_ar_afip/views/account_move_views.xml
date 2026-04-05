@@ -18,13 +18,20 @@
                             <field name="afip_result" readonly="1"/>
                             <field name="afip_document_type" readonly="1"/>
                             <field name="afip_document_number" readonly="1"/>
-                            <field name="afip_barcode" readonly="1"/>
                             <button name="action_request_afip_cae" string="Solicitar CAE" type="object" invisible="cae" class="btn-primary"/>
                             <button name="action_retry_afip_cae" string="Reintentar CAE" type="object" invisible="not cae or afip_result != 'R'" class="btn-warning"/>
                         </group>
                         <group string="Errores">
                             <field name="afip_errors" readonly="1"/>
                         </group>
+                    </group>
+                    <group invisible="not cae">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <p><strong>Código QR AFIP</strong></p>
+                                <field name="afip_qr_image" widget="image" options='{"width": 200, "height": 200}' readonly="1"/>
+                            </div>
+                        </div>
                     </group>
                 </page>
             </xpath>
