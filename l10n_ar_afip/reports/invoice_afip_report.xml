@@ -154,7 +154,7 @@
                                 <td style="width: 26%; vertical-align: top; text-align: center;">
                                     <div style="font-size: 8pt; font-weight: 700; margin-bottom: 3px;">Codigo QR ARCA</div>
                                     <t t-if="o.afip_qr_image">
-                                        <img t-attf-src="data:image/png;base64,{{ o.afip_qr_image }}" style="width: 108px; height: 108px; border: 1px solid #777;"/>
+                                        <img t-attf-src="data:image/png;base64,{{ o.afip_qr_image }}" style="width: 108px; height: 108px;"/>
                                     </t>
                                 </td>
                                 <td style="width: 40%; vertical-align: top; text-align: center;">
