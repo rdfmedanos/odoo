@@ -165,7 +165,7 @@
                                 </td>
                                 <td style="width: 28%; vertical-align: top; text-align: right; font-size: 10pt; line-height: 1.25;">
                                     <div><strong>CAE:</strong> <span t-field="o.cae"/></div>
-                                    <div style="margin-top: 7px;"><strong>Fecha Vencimiento CAE:</strong> <span t-field="o.cae_due_date"/></div>
+                                    <div style="margin-top: 7px; white-space: nowrap;"><strong>Fecha Vencimiento CAE:</strong> <span t-field="o.cae_due_date"/></div>
                                 </td>
                             </tr>
                         </table>
