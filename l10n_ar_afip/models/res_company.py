@@ -266,6 +266,34 @@ class ResCompany(models.Model):
         
         return result
 
+    def test_afip_connection(self) -> dict:
+        """Prueba la conexión con ARCA/AFIP sin guardar token."""
+        self.ensure_one()
+        
+        from ..services.wsaa import WSAAService
+        
+        if not self.afip_cuit:
+            raise UserError('Debe ingresar el CUIT')
+        
+        try:
+            creds = self.get_afip_credentials()
+            wsaa = WSAAService(
+                creds['certificate_pem'],
+                creds['private_key_pem'],
+                creds['environment']
+            )
+            
+            result = wsaa.request_token('wsfe')
+            
+            return {
+                'type': 'ir.actions.message',
+                'title': 'Conexión exitosa',
+                'message': f"Conectado a ARCA ({self.afip_ws_environment}). Token recibido correctamente.",
+                'close_button_title': 'OK',
+            }
+        except Exception as e:
+            raise UserError(f'Error de conexión con ARCA:\n{str(e)}')
+
 
 class L10nArAfipSettings(models.TransientModel):
     _name = 'l10n_ar_afip.settings'

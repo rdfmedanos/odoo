@@ -24,6 +24,7 @@
                             <field name="afip_private_key_text" widget="ace" options="{'mode': 'text'}" string="Clave Privada (pegar texto PEM)" placeholder="-----BEGIN PRIVATE KEY-----"/>
                         </group>
                         <group string="WSAA">
+                            <button name="test_afip_connection" string="Probar Conexión ARCA" type="object" class="btn-success" colspan="2"/>
                             <field name="afip_token" readonly="1"/>
                             <field name="afip_sign" readonly="1"/>
                             <field name="afip_token_expiration" readonly="1"/>
