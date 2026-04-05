@@ -115,11 +115,11 @@
                                     </tr>
                                     <tr>
                                         <td style="padding-top: 4px;"><strong>Impuesto</strong></td>
-                                        <td style="padding-top: 4px; text-align: right;"><strong>Base&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Monto</strong></td>
+                                        <td style="padding-top: 4px; text-align: right;"><strong>Base&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Monto</strong></td>
                                     </tr>
                                     <tr>
                                         <td>IVA 21%</td>
-                                        <td style="text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>&nbsp;<span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        <td style="text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>&#160;<span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                     </tr>
                                     <tr>
                                         <td style="padding-top: 6px; font-size: 13px;"><strong>Total</strong></td>
