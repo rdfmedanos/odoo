@@ -6,6 +6,7 @@ Modelo para configuración de empresa con ARCA/AFIP.
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 import base64
+from datetime import datetime, timedelta
 
 
 class ResCompany(models.Model):
@@ -267,21 +268,11 @@ class ResCompany(models.Model):
         return result
 
     def test_afip_connection(self) -> dict:
-        """Prueba la conexión con ARCA/AFIP."""
+        """Prueba la conexión con ARCA/AFIP y guarda el token si es exitoso."""
         self.ensure_one()
         
         if not self.afip_cuit:
             raise UserError('Debe ingresar el CUIT')
-        
-        if self.afip_token and self.afip_token_expiration:
-            if fields.Datetime.from_string(self.afip_token_expiration) > fields.Datetime.now():
-                return {
-                    'type': 'ir.actions.act_window',
-                    'res_model': 'l10n_ar_afip.message_wizard',
-                    'view_mode': 'form',
-                    'target': 'new',
-                    'context': {'default_message': f"Ya existe un Token válido hasta {self.afip_token_expiration}.\n\nLa conexión con ARCA está configurada correctamente.", 'default_is_success': True},
-                }
         
         from ..services.wsaa import WSAAService
         
@@ -296,9 +287,18 @@ class ResCompany(models.Model):
             result = wsaa.request_token('wsfe')
             
             if result.get('token') == 'EXISTING_VALID_TOKEN':
-                message = 'Ya existe un Token de Acceso válido para WSFE.\n\nLa conexión con ARCA está configurada correctamente.'
+                if self.afip_token and self.afip_token_expiration:
+                    message = 'Ya existe un Token de Acceso válido para WSFE.\n\nLa conexión con ARCA está configurada correctamente.'
+                else:
+                    message = 'WSAA confirmó que existe un TA válido, pero no está guardado.\n\nHaga clic en "Refrescar Token" para guardarlo.'
             else:
-                message = f"Conectado a ARCA ({self.afip_ws_environment}). Token recibido correctamente."
+                expiration = fields.Datetime.now() + timedelta(hours=12)
+                self.write({
+                    'afip_token': result['token'],
+                    'afip_sign': result['sign'],
+                    'afip_token_expiration': expiration,
+                })
+                message = f"Conectado a ARCA ({self.afip_ws_environment}).\n\nToken WSAA:\n{result['token'][:50]}...\n\nGuardado exitosamente."
             
             return {
                 'type': 'ir.actions.act_window',
