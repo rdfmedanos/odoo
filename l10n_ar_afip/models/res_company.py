@@ -269,7 +269,7 @@ class L10nArAfipSettings(models.TransientModel):
 
     company_id = fields.Many2one('res.company', string='Empresa', required=True,
                                  default=lambda self: self.env.company)
-    afip_cuit = fields.Char(related='company_id.afip_cuit', string='CUIT', readonly=False)
+    afip_cuit = fields.Char(related='company_id.l10n_ar_afip_cuit', string='CUIT', readonly=False)
     afip_ws_environment = fields.Selection(related='company_id.afip_ws_environment', 
                                            string='Ambiente', readonly=False)
     afip_point_of_sale = fields.Integer(related='company_id.afip_point_of_sale',
