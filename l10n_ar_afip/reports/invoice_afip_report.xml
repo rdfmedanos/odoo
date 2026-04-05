@@ -117,13 +117,11 @@
                                         <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                     </td>
                                 </tr>
-                                <t t-foreach="o.amount_by_group" t-as="amounts">
+                                <t t-if="o.amount_tax">
                                     <tr>
-                                        <td style="border: 1px solid black; padding: 5px; text-align: right; width: 60%;">
-                                            <span t-esc="amounts[0]"/>:
-                                        </td>
+                                        <td style="border: 1px solid black; padding: 5px; text-align: right; width: 60%;"><strong>IVA:</strong></td>
                                         <td style="border: 1px solid black; padding: 5px; text-align: right; width: 40%;">
-                                            <span t-esc="amounts[2]" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
                                     </tr>
                                 </t>
