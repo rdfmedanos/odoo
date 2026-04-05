@@ -11,11 +11,6 @@ import base64
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    afip_cuit = fields.Char(
-        string='CUIT',
-        size=11,
-        help='CUIT de la empresa (sin guiones)'
-    )
     
     afip_certificate = fields.Binary(
         string='Certificado Digital (.pem)',

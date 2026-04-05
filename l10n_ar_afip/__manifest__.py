@@ -14,7 +14,7 @@
     'author': 'AgroSentinel',
     'website': 'https://agrosentinel.com',
     'category': 'Accounting/Localizations',
-    'depends': ['account'],
+    'depends': ['account', 'l10n_ar'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_company_views.xml',

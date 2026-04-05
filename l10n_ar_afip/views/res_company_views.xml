@@ -19,7 +19,9 @@
                             <field name="afip_csr" readonly="1" widget="ace" options="{'mode': 'text'}" placeholder="Genere el CSR primero"/>
                             <button name="action_download_csr" string="Descargar CSR" type="object" class="btn-secondary"/>
                             <button name="action_copy_private_key" string="Ver/Copiar Clave Privada" type="object" class="btn-secondary"/>
-                            <field name="afip_certificate" widget="binary" string="Certificado"/>
+                            <field name="afip_certificate" widget="binary" string="Certificado (archivo)"/>
+                            <field name="afip_certificate_text" widget="ace" options="{'mode': 'text'}" string="Certificado (pegar texto PEM)" placeholder="-----BEGIN CERTIFICATE-----"/>
+                            <field name="afip_private_key_text" widget="ace" options="{'mode': 'text'}" string="Clave Privada (pegar texto PEM)" placeholder="-----BEGIN PRIVATE KEY-----"/>
                         </group>
                         <group string="WSAA">
                             <field name="afip_token" readonly="1"/>
