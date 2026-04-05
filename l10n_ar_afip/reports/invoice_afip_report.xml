@@ -151,7 +151,7 @@
                                 </p>
                             </div>
                             <div class="col-4 text-center">
-                                <img t-if="o.afip_qr_image" t-att-src="'data:image/png;base64,%s' % to_text(o.afip_qr_image)" style="width: 120px; height: 120px;"/>
+                                <img t-if="o.afip_qr_image" t-attf-src="data:image/png;base64,{{ o.afip_qr_image }}" style="width: 120px; height: 120px;"/>
                             </div>
                         </div>
                     </t>
