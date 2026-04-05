@@ -21,6 +21,8 @@
         'views/account_move_views.xml',
         'views/clipboard_views.xml',
         'views/message_wizard_views.xml',
+        'reports/report_actions.xml',
+        'reports/invoice_report.xml',
     ],
     'installable': True,
     'application': True,

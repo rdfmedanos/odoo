@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_afip" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@name='origin']" position="before">
+            <div class="row mb-4">
+                <div class="col-6">
+                    <strong t-field="o.company_id.name"/><br/>
+                    <span t-field="o.company_id.street"/> <span t-field="o.company_id.city"/><br/>
+                    <span t-field="o.company_id.state_id"/><br/>
+                    CUIT: <span t-field="o.company_id.afip_cuit"/>
+                </div>
+                <div class="col-6 text-right">
+                    <h2>
+                        <t t-if="o.move_type == 'out_invoice' and o.afip_document_type == 'A'">FACTURA A</t>
+                        <t t-elif="o.move_type == 'out_invoice' and o.afip_document_type == 'B'">FACTURA B</t>
+                        <t t-elif="o.move_type == 'out_invoice' and o.afip_document_type == 'C'">FACTURA C</t>
+                        <t t-else="">COMPROBANTE</t>
+                    </h2>
+                    <strong>N°: </strong><span t-esc="(o.journal_id.l10n_ar_afip_pto_vta or 1)"/>-<span t-esc="o.name.split('/')[-1] if '/' in o.name else o.name"/><br/>
+                    <strong>Fecha: </strong><span t-field="o.invoice_date"/><br/>
+                    <t t-if="o.cae_due_date">
+                        <strong>Vto. CAE: </strong><span t-field="o.cae_due_date"/>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+        
+        <xpath expr="//div[@id='total']" position="before">
+            <div t-if="o.cae" class="row mt-4">
+                <div class="col-12 border bg-light p-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>CAE N°: </strong><span t-field="o.cae"/>
+                        </div>
+                        <div class="col-6 text-right">
+                            <t t-if="o.afip_result == 'A'">
+                                <span class="badge badge-success">AUTORIZADO</span>
+                            </t>
+                            <t t-else="">
+                                <span class="badge badge-danger">RECHAZADO</span>
+                            </t>
+                        </div>
+                    </div>
+                    <div t-if="o.afip_barcode" class="row mt-2">
+                        <div class="col-12 text-center">
+                            <img t-att-src="'/report/barcode/Code128/%s' % o.afip_barcode" height="40" style="max-width:100%;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="report_invoice_afip">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="account.report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>
