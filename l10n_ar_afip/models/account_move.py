@@ -120,7 +120,7 @@ class AccountMove(models.Model):
 
                 pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
 
-                tipo_cbte = self._get_tipo_comprobante_afip()
+                tipo_cbte = move._get_tipo_comprobante_afip()
 
                 imp_total = f"{move.amount_total:.2f}"
 
@@ -157,6 +157,7 @@ class AccountMove(models.Model):
     
     def _get_tipo_comprobante_afip(self):
         """Retorna el código AFIP del tipo de comprobante."""
+        self.ensure_one()
         tipo_map = {
             'A': 1,
             'B': 6,
