@@ -152,7 +152,7 @@ class WSAAService:
             faultstring = re.search(r'<faultstring>([^<]+)</faultstring>', response.text)
             if faultstring:
                 error_msg = faultstring.group(1)
-                if 'alreadyAuthenticated' in error_msg:
+                if 'alreadyAuthenticated' in error_msg or 'ya posee un TA valido' in error_msg.lower():
                     return {
                         'token': 'EXISTING_VALID_TOKEN',
                         'sign': 'EXISTING_VALID_SIGN',
