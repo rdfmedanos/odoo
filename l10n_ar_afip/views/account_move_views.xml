@@ -6,41 +6,25 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//header/button[@name='action_post']" position="after">
-                <button name="action_request_afip_cae" string="Solicitar CAE" type="object" 
-                        invisible="state != 'posted' or cae != False or move_type not in ['out_invoice', 'out_refund']"
-                        class="btn-primary"/>
-                <button name="action_retry_afip_cae" string="Reintentar CAE" type="object"
-                        invisible="state != 'posted' or cae != False or afip_result != 'R' or move_type not in ['out_invoice', 'out_refund']"
-                        class="btn-warning"/>
-            </xpath>
             <xpath expr="//page[@name='other_info']" position="after">
-                <page name="afip" string="AFIP" invisible="move_type not in ['out_invoice', 'out_refund']">
+                <page name="afip" string="AFIP">
                     <group>
-                        <group string="CAE" invisible="not cae">
+                        <group string="CAE">
                             <field name="cae" readonly="1"/>
                             <field name="cae_due_date" readonly="1"/>
-                        </group>
-                        <group string="CAE" invisible="cae">
-                            <div class="alert alert-warning">
-                                Esta factura aún no tiene CAE. Haga clic en "Solicitar CAE" para autorizarla con AFIP.
-                            </div>
                         </group>
                         <group string="Resultado AFIP">
                             <field name="l10n_ar_afip_state" readonly="1"/>
                             <field name="afip_result" readonly="1"/>
                             <field name="afip_document_type" readonly="1"/>
                             <field name="afip_document_number" readonly="1"/>
-                            <field name="afip_barcode" readonly="1" invisible="not afip_barcode"/>
+                            <field name="afip_barcode" readonly="1"/>
+                            <button name="action_request_afip_cae" string="Solicitar CAE" type="object" invisible="cae" class="btn-primary"/>
+                            <button name="action_retry_afip_cae" string="Reintentar CAE" type="object" invisible="not cae or afip_result != 'R'" class="btn-warning"/>
                         </group>
-                        <group string="Errores" invisible="not afip_errors">
+                        <group string="Errores">
                             <field name="afip_errors" readonly="1"/>
                         </group>
-                    </group>
-                    <group invisible="not cae">
-                        <div class="col-12 border bg-light p-3 text-center">
-                            <img t-if="afip_qr_data" t-att-src="'/report/qr?value=%s' % afip_qr_data" height="150" width="150"/>
-                        </div>
                     </group>
                 </page>
             </xpath>
@@ -54,9 +38,9 @@
         <field name="inherit_id" ref="account.view_account_journal_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='type']" position="after">
-                <field name="l10n_ar_afip_pto_vta" invisible="type not in ['sale', 'purchase']"/>
-                <field name="l10n_ar_afip_document_type" invisible="type not in ['sale', 'purchase']"/>
-                <field name="l10n_ar_afip_auto_authorize" invisible="type not in ['sale']"/>
+                <field name="l10n_ar_afip_pto_vta"/>
+                <field name="l10n_ar_afip_document_type"/>
+                <field name="l10n_ar_afip_auto_authorize"/>
             </xpath>
         </field>
     </record>
