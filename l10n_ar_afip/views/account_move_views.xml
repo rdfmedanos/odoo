@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Account Move Form View -->
     <record id="view_move_form_afip" model="ir.ui.view">
         <field name="name">account.move.form.afip</field>
         <field name="model">account.move</field>
@@ -10,35 +9,26 @@
                 <page name="afip" string="AFIP">
                     <group>
                         <group string="CAE">
-                            <field name="cae" readonly="1"/>
-                            <field name="cae_due_date" readonly="1"/>
+                            <field name="cae"/>
+                            <field name="cae_due_date"/>
                         </group>
                         <group string="Resultado AFIP">
-                            <field name="l10n_ar_afip_state" readonly="1"/>
-                            <field name="afip_result" readonly="1"/>
-                            <field name="afip_document_type" readonly="1"/>
-                            <field name="afip_document_number" readonly="1"/>
-                            <button name="action_request_afip_cae" string="Solicitar CAE" type="object" invisible="cae" class="btn-primary"/>
-                            <button name="action_retry_afip_cae" string="Reintentar CAE" type="object" invisible="not cae or afip_result != 'R'" class="btn-warning"/>
+                            <field name="l10n_ar_afip_state"/>
+                            <field name="afip_result"/>
+                            <field name="afip_document_type"/>
+                            <field name="afip_document_number"/>
+                            <button name="action_request_afip_cae" string="Solicitar CAE" type="object"/>
+                            <button name="action_retry_afip_cae" string="Reintentar CAE" type="object"/>
                         </group>
                         <group string="Errores">
-                            <field name="afip_errors" readonly="1"/>
+                            <field name="afip_errors"/>
                         </group>
-                    </group>
-                    <group invisible="not cae">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <p><strong>Código QR AFIP</strong></p>
-                                <img t-if="afip_qr_data" t-att-src="'/report/barcode/?type=QR&amp;value=' + afip_qr_data" style="width:200px;height:200px;"/>
-                            </div>
-                        </div>
                     </group>
                 </page>
             </xpath>
         </field>
     </record>
 
-    <!-- Account Journal Form View -->
     <record id="view_account_journal_form_afip" model="ir.ui.view">
         <field name="name">account.journal.form.afip</field>
         <field name="model">account.journal</field>
