@@ -98,7 +98,7 @@
                                 <th style="text-align: right; padding: 4px 6px; width: 10%;">Cantidad</th>
                                 <th style="text-align: right; padding: 4px 6px; width: 13%;">Precio Unitario</th>
                                 <th style="text-align: right; padding: 4px 6px; width: 8%;">Desc.(%)</th>
-                                <th style="text-align: right; padding: 4px 6px; width: 9%;">Alicuota IVA</th>
+                                <th style="text-align: right; padding: 4px 6px; width: 9%; white-space: nowrap;">Alicuota IVA</th>
                                 <th style="text-align: right; padding: 4px 8px 4px 6px; width: 9%;">Monto Final</th>
                             </tr>
                         </thead>
