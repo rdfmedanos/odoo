@@ -22,6 +22,7 @@
         'views/clipboard_views.xml',
         'views/message_wizard_views.xml',
         'reports/report_actions.xml',
+        'reports/report_templates.xml',
         'reports/invoice_report.xml',
     ],
     'installable': True,
