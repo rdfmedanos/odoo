@@ -315,6 +315,28 @@ class AccountMove(models.Model):
         }
         return mapping.get(code, 'consumidor_final')
     
+    def _l10n_ar_afip_report_action(self):
+        report = self.env.ref('l10n_ar_afip.action_report_invoice_afip', raise_if_not_found=False)
+        return report.report_action(self) if report else False
+
+    def action_invoice_print(self):
+        customer_docs = self.filtered(lambda m: m.move_type in ('out_invoice', 'out_refund'))
+        if customer_docs:
+            return customer_docs._l10n_ar_afip_report_action()
+        parent = super()
+        if hasattr(parent, 'action_invoice_print'):
+            return parent.action_invoice_print()
+        return self._l10n_ar_afip_report_action()
+
+    def action_print(self):
+        customer_docs = self.filtered(lambda m: m.move_type in ('out_invoice', 'out_refund'))
+        if customer_docs:
+            return customer_docs._l10n_ar_afip_report_action()
+        parent = super()
+        if hasattr(parent, 'action_print'):
+            return parent.action_print()
+        return self._l10n_ar_afip_report_action()
+
     def _get_afip_service(self):
         """Obtiene el servicio WSFE configurado."""
         self.ensure_one()

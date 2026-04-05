@@ -12,14 +12,21 @@ class IrActionsReport(models.Model):
         candidates = self.search([
             ('model', '=', 'account.move'),
             ('report_type', '=', 'qweb-pdf'),
-            ('report_name', 'in', ['account.report_invoice', 'account.report_invoice_without_payment']),
+            ('report_name', 'ilike', 'account.'),
         ])
 
         if not candidates:
             candidates = self.search([
                 ('model', '=', 'account.move'),
                 ('report_type', '=', 'qweb-pdf'),
-                ('name', 'in', ['PDF de la factura', 'PDF sin pago', 'Invoice', 'Invoice without Payment']),
+                ('name', 'ilike', 'factura'),
+            ])
+
+        if not candidates:
+            candidates = self.search([
+                ('model', '=', 'account.move'),
+                ('report_type', '=', 'qweb-pdf'),
+                ('name', 'ilike', 'invoice'),
             ])
 
         if candidates:
