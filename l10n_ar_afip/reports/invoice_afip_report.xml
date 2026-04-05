@@ -3,7 +3,7 @@
     <template id="report_invoice_afip_v2">
         <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="o">
-                <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; border: 1px solid #777; border-radius: 8px; padding: 8mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 22mm;">
+                <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; border: 1px solid #777; border-radius: 8px; padding: 8mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 40mm;">
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
                     <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
@@ -140,7 +140,7 @@
                         </tr>
                     </table>
 
-                    <div style="position: absolute; left: 8mm; right: 8mm; bottom: -10px; border: 1px solid #5f5f5f; padding: 8px 8px 6px 8px; min-height: 24mm; background: #ffffff;">
+                    <div style="position: fixed; left: 15mm; right: 15mm; bottom: 8mm; border: 1px solid #5f5f5f; padding: 8px 8px 6px 8px; min-height: 24mm; background: #ffffff;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 24%; vertical-align: top; font-size: 10pt; line-height: 1.25;">
