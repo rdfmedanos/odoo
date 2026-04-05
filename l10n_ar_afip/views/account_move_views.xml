@@ -25,7 +25,7 @@
                         </group>
                     </group>
                     <group string="Código QR">
-                        <field name="afip_qr_image" widget="image" readonly="1" class="oe_avatar" style="max-width: 75px; max-height: 75px;" options='{"size": [75, 75], "width": 75, "height": 75, "zoom": false}'/>
+                        <field name="afip_qr_image" widget="image" readonly="1" style="display: block; margin: 0 auto; max-width: 225px; max-height: 225px;" options='{"size": [225, 225], "width": 225, "height": 225, "zoom": false}'/>
                         <button name="regenerate_afip_qr" string="Regenerar QR" type="object" invisible="not cae"/>
                     </group>
                 </page>
