@@ -6,7 +6,7 @@ Basado en la implementación de AgroSentinel.
 
 import base64
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from lxml import etree
 import requests
 
@@ -34,7 +34,7 @@ class WSAAService:
         now = datetime.now(timezone.utc)
         unique_id = int(now.timestamp())
         generation_time = self._format_wsaa_date(now)
-        expiration_time = self._format_wsaa_date(now)
+        expiration_time = self._format_wsaa_date(now + timedelta(hours=12))
         
         tra = f"""<?xml version="1.0" encoding="UTF-8"?>
 <loginTicketRequest version="1.0">
