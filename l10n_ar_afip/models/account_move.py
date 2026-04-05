@@ -246,11 +246,14 @@ class AccountMove(models.Model):
             if not move.company_id.afip_cuit:
                 raise UserError('Configure el CUIT de la empresa en la configuración de AFIP')
             
-            if not move.company_id.afip_certificate:
-                raise UserError('Configure el certificado digital AFIP')
+            has_cert = move.company_id.afip_certificate or move.company_id.afip_certificate_text
+            has_key = move.company_id.afip_private_key or move.company_id.afip_private_key_text
             
-            if not move.company_id.afip_private_key:
-                raise UserError('Configure la clave privada AFIP')
+            if not has_cert:
+                raise UserError('Configure el certificado digital AFIP (archivo o texto)')
+            
+            if not has_key:
+                raise UserError('Configure la clave privada AFIP (archivo o texto)')
             
             move.l10n_ar_afip_state = 'pending'
             
