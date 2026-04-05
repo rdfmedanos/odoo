@@ -89,30 +89,30 @@
                     <div style="font-size: 10pt; font-weight: 700;">Moneda:</div>
                     <div style="font-size: 11pt; margin-top: 1px; margin-bottom: 8px;"><span t-esc="o.currency_id.name"/></div>
 
-                    <table style="width: 100%; border-collapse: collapse; font-size: 9pt; margin-bottom: 6px;">
+                    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt; margin-bottom: 6px;">
                         <thead>
                             <tr style="border-top: 1px solid #c8ccd2; border-bottom: 1px solid #c8ccd2;">
-                                <th style="text-align: left; padding: 4px 8px; width: 10%;">Codigo</th>
+                                <th style="text-align: left; padding: 4px 8px; width: 10%; white-space: nowrap;">Codigo</th>
                                 <th style="text-align: left; padding: 4px 6px; width: 24%;">Descripcion</th>
-                                <th style="text-align: left; padding: 4px 6px; width: 17%;">Documento Origen</th>
-                                <th style="text-align: right; padding: 4px 6px; width: 10%;">Cantidad</th>
-                                <th style="text-align: right; padding: 4px 6px; width: 13%;">Precio Unitario</th>
-                                <th style="text-align: right; padding: 4px 6px; width: 8%;">Desc.(%)</th>
+                                <th style="text-align: left; padding: 4px 6px; width: 17%; white-space: nowrap;">Documento Origen</th>
+                                <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
+                                <th style="text-align: right; padding: 4px 6px; width: 13%; white-space: nowrap;">Precio Unitario</th>
+                                <th style="text-align: right; padding: 4px 6px; width: 8%; white-space: nowrap;">Desc.(%)</th>
                                 <th style="text-align: right; padding: 4px 6px; width: 9%; white-space: nowrap;">Alicuota IVA</th>
-                                <th style="text-align: right; padding: 4px 8px 4px 6px; width: 9%;">Monto Final</th>
+                                <th style="text-align: right; padding: 4px 8px 4px 6px; width: 9%; white-space: nowrap;">Monto Final</th>
                             </tr>
                         </thead>
                         <tbody>
                             <t t-foreach="product_lines" t-as="line">
                                 <tr>
-                                    <td style="padding: 7px 8px 2px 8px;"><span t-field="line.product_id.default_code"/></td>
-                                    <td style="padding: 7px 6px 2px 6px;"><span t-field="line.name"/></td>
-                                    <td style="padding: 7px 6px 2px 6px;">-</td>
-                                    <td style="padding: 7px 6px 2px 6px; text-align: right;"><span t-field="line.quantity"/></td>
-                                    <td style="padding: 7px 6px 2px 6px; text-align: right;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                    <td style="padding: 7px 6px 2px 6px; text-align: right;"><span t-field="line.discount"/></td>
-                                    <td style="padding: 7px 6px 2px 6px; text-align: right;"><t t-foreach="line.tax_ids" t-as="tax"><span t-esc="'IVA ' + str(int(tax.amount)) + '%'"/></t></td>
-                                    <td style="padding: 7px 8px 2px 6px; text-align: right;"><span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    <td style="padding: 7px 8px 2px 8px; white-space: nowrap;"><span t-field="line.product_id.default_code"/></td>
+                                    <td style="padding: 7px 6px 2px 6px; white-space: normal; word-break: break-word;"><span t-field="line.name"/></td>
+                                    <td style="padding: 7px 6px 2px 6px; white-space: nowrap;">-</td>
+                                    <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.quantity"/></td>
+                                    <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                    <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.discount"/></td>
+                                    <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><t t-foreach="line.tax_ids" t-as="tax"><span t-esc="'IVA ' + str(int(tax.amount)) + '%'"/></t></td>
+                                    <td style="padding: 7px 8px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                 </tr>
                             </t>
                             <tr t-if="not product_lines">
