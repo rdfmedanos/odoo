@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <function model="ir.actions.report" name="_l10n_ar_afip_set_default_invoice_report"/>
+</odoo>

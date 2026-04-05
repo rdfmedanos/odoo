@@ -25,7 +25,7 @@ class AfipBillingController(http.Controller):
                 return request.not_found()
             
             pdf_content, _ = request.env['ir.actions.report'].sudo()._render_qweb_pdf(
-                'l10n_ar_afip.report_invoice_afip',
+                'l10n_ar_afip.report_invoice_afip_v2',
                 [invoice_id]
             )
             
