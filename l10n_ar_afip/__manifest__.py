@@ -25,7 +25,7 @@
     'installable': True,
     'application': True,
     'auto_install': False,
-    'post_init_hook': '_create_report_action',
+    'post_init_hook': 'l10n_ar_afip._create_report_action',
     'external_dependencies': {
         'python': [
             'cryptography',
