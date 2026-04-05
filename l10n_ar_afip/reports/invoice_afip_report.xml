@@ -3,101 +3,112 @@
     <template id="report_invoice_afip">
         <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="o">
-                <div class="page">
-                    <!-- Header -->
-                    <div class="row" style="border: 2px solid black; padding: 10px; margin-bottom: 10px;">
-                        <div class="col-6">
-                            <strong style="font-size: 18px;" t-field="o.company_id.name"/><br/>
-                            <span t-field="o.company_id.street"/><br/>
-                            <t t-if="o.company_id.city"><span t-field="o.company_id.city"/>, </t>
-                            <t t-if="o.company_id.state_id"><span t-field="o.company_id.state_id"/><br/></t>
-                            <t t-if="o.company_id.zip">CP: <span t-field="o.company_id.zip"/><br/></t>
-                            <t t-if="o.company_id.phone">Tel: <span t-field="o.company_id.phone"/><br/></t>
-                            <t t-if="o.company_id.email">Email: <span t-field="o.company_id.email"/><br/></t>
-                        </div>
-                        <div class="col-6 text-right">
-                            <h1 style="font-size: 24px; margin-bottom: 5px;">
-                                <t t-if="o.afip_document_type == 'A'">FACTURA</t>
-                                <t t-elif="o.afip_document_type == 'B'">FACTURA B</t>
-                                <t t-elif="o.afip_document_type == 'C'">FACTURA C</t>
-                                <t t-else="">FACTURA</t>
-                            </h1>
-                            <p style="font-size: 16px;">
-                                <strong>Punto de Venta: </strong><span t-esc="(o.journal_id.l10n_ar_afip_pto_vta or 1)"/>-<span t-esc="o.name.split('/')[-1] if '/' in o.name else o.name"/><br/>
-                                <strong>Fecha: </strong><span t-field="o.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/><br/>
-                                <strong>CUIT: </strong><span t-field="o.company_id.afip_cuit"/><br/>
-                                <strong>Ing. Brutos: </strong><span t-field="o.company_id.l10n_ar_afip_iibb" t-options='{"default": ""}'/><br/>
-                                <strong>Inicio Act.: </strong><span t-field="o.company_id.l10n_ar_afip_start_date" t-options='{"format": "dd/MM/yyyy"}'/>
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Document Type and IVA -->
-                    <div class="row" style="border: 1px solid black; padding: 5px; margin-bottom: 10px;">
-                        <div class="col-12">
-                            <strong>Condición frente al IVA: </strong>
-                            <t t-if="o.partner_id.l10n_ar_afip_responsibility_type_id">
-                                <span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
-                            </t>
-                            <t t-else="">Consumidor Final</t>
-                        </div>
-                    </div>
-
-                    <!-- Recipient -->
-                    <div class="row" style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
-                        <div class="col-6">
-                            <strong>Señor(es): </strong><span t-field="o.partner_id"/><br/>
-                            <t t-if="o.partner_id.street"><strong>Domicilio: </strong><span t-field="o.partner_id.street"/><br/></t>
-                            <t t-if="o.partner_id.city">
-                                <strong>Localidad: </strong><span t-field="o.partner_id.city"/>
-                                <t t-if="o.partner_id.state_id">, </t>
-                                <span t-field="o.partner_id.state_id"/><br/>
-                            </t>
-                        </div>
-                        <div class="col-6">
-                            <t t-if="o.partner_id.vat">
-                                <strong>CUIT: </strong><span t-field="o.partner_id.vat"/><br/>
-                            </t>
-                            <t t-if="o.partner_id.l10n_ar_afip_responsibility_type_id">
-                                <strong>Cond. IVA: </strong><span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/><br/>
-                            </t>
-                            <strong>Fecha Vto.: </strong><span t-field="o.invoice_date_due" t-options='{"format": "dd/MM/yyyy"}'/>
-                        </div>
-                    </div>
-
-                    <!-- Invoice Lines -->
-                    <table class="table table-sm" style="border: 1px solid black; margin-bottom: 0;">
-                        <thead style="background-color: #f0f0f0;">
+                <div class="page" style="font-family: Arial, sans-serif; font-size: 12px;">
+                    
+                    <!-- Header con logo y datos empresa -->
+                    <div style="border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 15px;">
+                        <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                                <th style="border: 1px solid black; padding: 5px; width: 10%;">Código</th>
-                                <th style="border: 1px solid black; padding: 5px; width: 35%;">Descripción</th>
-                                <th style="border: 1px solid black; padding: 5px; width: 10%; text-align: center;">Cantidad</th>
-                                <th style="border: 1px solid black; padding: 5px; width: 15%; text-align: right;">Precio Unit.</th>
-                                <th style="border: 1px solid black; padding: 5px; width: 15%; text-align: right;">Alicuota IVA</th>
-                                <th style="border: 1px solid black; padding: 5px; width: 15%; text-align: right;">Subtotal</th>
+                                <td style="width: 60%; vertical-align: top;">
+                                    <t t-if="o.company_id.logo">
+                                        <img t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 80px; max-width: 200px;"/><br/>
+                                    </t>
+                                    <strong style="font-size: 16px;" t-field="o.company_id.name"/><br/>
+                                    <span t-field="o.company_id.street"/><t t-if="o.company_id.street2"> <span t-field="o.company_id.street2"/></t><br/>
+                                    <span t-field="o.company_id.city"/><t t-if="o.company_id.state_id">, <span t-field="o.company_id.state_id"/></t><br/>
+                                    <t t-if="o.company_id.zip">CP: <span t-field="o.company_id.zip"/></t> | Tel: <span t-field="o.company_id.phone"/><br/>
+                                    <t t-if="o.company_id.email">Email: <span t-field="o.company_id.email"/></t>
+                                </td>
+                                <td style="width: 40%; text-align: right; vertical-align: top;">
+                                    <div style="border: 3px solid #333; padding: 15px; display: inline-block; min-width: 250px;">
+                                        <h1 style="margin: 0 0 10px 0; font-size: 24px; text-align: center; color: #333;">
+                                            <t t-if="o.afip_document_type == 'A'">FACTURA</t>
+                                            <t t-elif="o.afip_document_type == 'B'">FACTURA B</t>
+                                            <t t-elif="o.afip_document_type == 'C'">FACTURA C</t>
+                                            <t t-else="">FACTURA</t>
+                                        </h1>
+                                        <p style="margin: 5px 0; text-align: center;">
+                                            <strong>N° </strong><span style="font-size: 18px;" t-esc="(o.journal_id.l10n_ar_afip_pto_vta or 1)"/>-<span style="font-size: 18px;" t-esc="o.name.split('/')[-1] if '/' in o.name else o.name"/>
+                                        </p>
+                                        <p style="margin: 5px 0; text-align: center;">
+                                            <strong>Fecha: </strong><span t-field="o.invoice_date"/>
+                                        </p>
+                                        <hr style="border: 1px solid #333;"/>
+                                        <p style="margin: 5px 0; text-align: center;">
+                                            <strong>CUIT: </strong><span t-field="o.company_id.afip_cuit"/>
+                                        </p>
+                                        <p style="margin: 5px 0; text-align: center;">
+                                            <strong>Ing. Brutos: </strong><t t-if="o.company_id.l10n_ar_afip_iibb"><span t-field="o.company_id.l10n_ar_afip_iibb"/></t><t t-else="">-</t>
+                                        </p>
+                                        <p style="margin: 5px 0; text-align: center;">
+                                            <strong>Fecha Inicio Act.: </strong><t t-if="o.company_id.l10n_ar_afip_start_date"><span t-field="o.company_id.l10n_ar_afip_start_date"/></t><t t-else="">-</t>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Datos Receptor -->
+                    <div style="border: 1px solid #999; padding: 10px; margin-bottom: 15px; background-color: #f9f9f9;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <strong>Señor/a:</strong> <span t-field="o.partner_id"/><br/>
+                                    <strong>Domicilio:</strong> <span t-field="o.partner_id.street"/><t t-if="o.partner_id.street2"> <span t-field="o.partner_id.street2"/></t><br/>
+                                    <strong>Localidad:</strong> <span t-field="o.partner_id.city"/><t t-if="o.partner_id.state_id">, <span t-field="o.partner_id.state_id"/></t>
+                                </td>
+                                <td style="width: 50%;">
+                                    <t t-if="o.partner_id.vat">
+                                        <strong>CUIT:</strong> <span t-field="o.partner_id.vat"/><br/>
+                                    </t>
+                                    <strong>Condición IVA:</strong> 
+                                    <t t-if="o.partner_id.l10n_ar_afip_responsibility_type_id">
+                                        <span t-field="o.partner_id.l10n_ar_afip_responsibility_type_id"/>
+                                    </t>
+                                    <t t-else="">Consumidor Final</t><br/>
+                                    <strong>Condición Venta:</strong> <span t-field="o.invoice_payment_term_id"/><br/>
+                                    <strong>Vencimiento:</strong> <span t-field="o.invoice_date_due"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Tabla de productos -->
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <thead>
+                            <tr style="background-color: #333; color: white;">
+                                <th style="padding: 8px; border: 1px solid #333; text-align: left; width: 10%;">Código</th>
+                                <th style="padding: 8px; border: 1px solid #333; text-align: left; width: 35%;">Descripción</th>
+                                <th style="padding: 8px; border: 1px solid #333; text-align: center; width: 8%;">Cantidad</th>
+                                <th style="padding: 8px; border: 1px solid #333; text-align: right; width: 12%;">Precio Unit.</th>
+                                <th style="padding: 8px; border: 1px solid #333; text-align: right; width: 10%;">U. Medida</th>
+                                <th style="padding: 8px; border: 1px solid #333; text-align: right; width: 10%;">IVA %</th>
+                                <th style="padding: 8px; border: 1px solid #333; text-align: right; width: 15%;">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
                             <t t-foreach="o.invoice_line_ids" t-as="line">
                                 <tr>
-                                    <td style="border: 1px solid black; padding: 5px;">
+                                    <td style="padding: 6px; border: 1px solid #999;">
                                         <span t-field="line.product_id.default_code"/>
                                     </td>
-                                    <td style="border: 1px solid black; padding: 5px;">
+                                    <td style="padding: 6px; border: 1px solid #999;">
                                         <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black; padding: 5px; text-align: center;">
+                                    <td style="padding: 6px; border: 1px solid #999; text-align: center;">
                                         <span t-field="line.quantity"/>
                                     </td>
-                                    <td style="border: 1px solid black; padding: 5px; text-align: right;">
+                                    <td style="padding: 6px; border: 1px solid #999; text-align: right;">
                                         <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                     </td>
-                                    <td style="border: 1px solid black; padding: 5px; text-align: right;">
+                                    <td style="padding: 6px; border: 1px solid #999; text-align: center;">UN</td>
+                                    <td style="padding: 6px; border: 1px solid #999; text-align: right;">
                                         <t t-foreach="line.tax_ids" t-as="tax">
                                             <span t-esc="int(tax.amount)"/>%
                                         </t>
                                     </td>
-                                    <td style="border: 1px solid black; padding: 5px; text-align: right;">
+                                    <td style="padding: 6px; border: 1px solid #999; text-align: right;">
                                         <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                     </td>
                                 </tr>
@@ -105,73 +116,84 @@
                         </tbody>
                     </table>
 
-                    <!-- Totals -->
-                    <div class="row">
-                        <div class="col-6">
-                        </div>
-                        <div class="col-6">
-                            <table class="table table-sm" style="margin-bottom: 0;">
-                                <tr>
-                                    <td style="border: 1px solid black; padding: 5px; text-align: right; width: 60%;"><strong>Subtotal:</strong></td>
-                                    <td style="border: 1px solid black; padding: 5px; text-align: right; width: 40%;">
-                                        <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                    </td>
-                                </tr>
-                                <t t-if="o.amount_tax">
+                    <!-- Totales -->
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 60%; vertical-align: bottom;">
+                                <!-- Espacio vacío o info adicional -->
+                            </td>
+                            <td style="width: 40%;">
+                                <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
-                                        <td style="border: 1px solid black; padding: 5px; text-align: right; width: 60%;"><strong>IVA:</strong></td>
-                                        <td style="border: 1px solid black; padding: 5px; text-align: right; width: 40%;">
-                                            <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        <td style="padding: 8px; border: 1px solid #999; text-align: right; width: 60%; background-color: #f0f0f0;">
+                                            <strong>Subtotal:</strong>
+                                        </td>
+                                        <td style="padding: 8px; border: 1px solid #999; text-align: right; width: 40%;">
+                                            <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
                                     </tr>
-                                </t>
-                                <tr style="background-color: #f0f0f0;">
-                                    <td style="border: 1px solid black; padding: 5px; text-align: right; width: 60%;"><strong>TOTAL:</strong></td>
-                                    <td style="border: 1px solid black; padding: 5px; text-align: right; width: 40%;">
-                                        <strong><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></strong>
+                                    <t t-if="o.amount_tax">
+                                        <tr>
+                                            <td style="padding: 8px; border: 1px solid #999; text-align: right; background-color: #f0f0f0;">
+                                                <strong>IVA:</strong>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #999; text-align: right;">
+                                                <span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr style="background-color: #333; color: white;">
+                                        <td style="padding: 10px; border: 1px solid #333; text-align: right;">
+                                            <strong style="font-size: 14px;">TOTAL:</strong>
+                                        </td>
+                                        <td style="padding: 10px; border: 1px solid #333; text-align: right;">
+                                            <strong style="font-size: 16px;">
+                                                <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- CAE Section -->
+                    <t t-if="o.cae">
+                        <div style="border: 2px solid #333; padding: 15px; margin-top: 30px; background-color: #f9f9f9;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 70%;">
+                                        <p style="margin: 5px 0;">
+                                            <strong>CAE N°: </strong><span style="font-size: 16px;" t-field="o.cae"/>
+                                        </p>
+                                        <p style="margin: 5px 0;">
+                                            <strong>Fecha Vto. CAE: </strong><span t-field="o.cae_due_date"/>
+                                        </p>
+                                        <p style="margin: 10px 0 0 0;">
+                                            <span style="color: green; font-weight: bold; font-size: 14px;">✓ COMPROBANTE AUTORIZADO</span>
+                                        </p>
+                                    </td>
+                                    <td style="width: 30%; text-align: center;">
+                                        <img t-if="o.afip_qr_image" t-attf-src="data:image/png;base64,{{ o.afip_qr_image }}" style="width: 100px; height: 100px;"/>
                                     </td>
                                 </tr>
                             </table>
                         </div>
-                    </div>
-
-                    <!-- CAE Section -->
-                    <t t-if="o.cae">
-                        <div class="row" style="border: 2px solid black; padding: 10px; margin-top: 20px; background-color: #f9f9f9;">
-                            <div class="col-8">
-                                <p style="margin-bottom: 5px;">
-                                    <strong>CAE N°: </strong><span t-field="o.cae"/>
-                                </p>
-                                <p style="margin-bottom: 5px;">
-                                    <strong>Fecha Vto. CAE: </strong><span t-field="o.cae_due_date" t-options='{"format": "dd/MM/yyyy"}'/>
-                                </p>
-                                <p style="margin-bottom: 0;">
-                                    <strong>Resultado: </strong>
-                                    <span style="color: green; font-weight: bold;">COMPROBANTE AUTORIZADO</span>
-                                </p>
-                            </div>
-                            <div class="col-4 text-center">
-                                <img t-if="o.afip_qr_image" t-attf-src="data:image/png;base64,{{ o.afip_qr_image }}" style="width: 120px; height: 120px;"/>
-                            </div>
-                        </div>
                     </t>
 
-                    <!-- Observations -->
+                    <!-- Observaciones -->
                     <t t-if="o.narration">
-                        <div class="row" style="margin-top: 20px;">
-                            <div class="col-12">
-                                <strong>Observaciones:</strong><br/>
-                                <span t-field="o.narration"/>
-                            </div>
+                        <div style="margin-top: 20px;">
+                            <strong>Observaciones:</strong><br/>
+                            <span t-field="o.narration"/>
                         </div>
                     </t>
 
                     <!-- Footer -->
-                    <div class="row" style="margin-top: 30px; font-size: 10px; color: #666;">
-                        <div class="col-12 text-center">
-                            <p>Documento generado por sistema Odoo - AgroSentinel</p>
-                        </div>
+                    <div style="margin-top: 40px; padding-top: 10px; border-top: 1px solid #999; text-align: center; color: #666; font-size: 10px;">
+                        <p>Documento emitido mediante sistema AFIP-ARCA | Generado por AgroSentinel ERP</p>
                     </div>
+
                 </div>
             </t>
         </t>
