@@ -33,6 +33,7 @@
             'requests',
             'qrcode',
             'Pillow',
+            'PyJWT',
         ],
     },
 }
