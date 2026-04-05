@@ -106,7 +106,7 @@ class AccountMove(models.Model):
                 company = move.company_id
                 partner = move.partner_id
 
-                fecha = move.date.strftime('%Y%m%d') if move.date else ''
+                fecha = move.date.strftime('%Y-%m-%d') if move.date else ''
 
                 nro_doc_receptor = (partner.vat or '0').replace('-', '').replace(' ', '')
                 tipo_doc_receptor = 80 if partner.vat else 99
@@ -143,8 +143,10 @@ class AccountMove(models.Model):
 
                 import json
                 qr_json = json.dumps(qr_payload, separators=(',', ':'))
+                from urllib.parse import quote_plus
+
                 qr_b64 = base64.b64encode(qr_json.encode('utf-8')).decode('ascii')
-                move.afip_qr_data = f"https://www.arca.gob.ar/fe/qr/?p={qr_b64}"
+                move.afip_qr_data = f"https://www.afip.gob.ar/fe/qr/?p={quote_plus(qr_b64)}"
             else:
                 move.afip_qr_data = False
     
