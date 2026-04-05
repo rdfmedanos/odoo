@@ -4,6 +4,7 @@ Modelo para facturas con integración ARCA/AFIP.
 """
 
 import base64
+import re
 from datetime import datetime
 from odoo import models, fields, api
 from odoo.exceptions import UserError
@@ -79,6 +80,12 @@ class AccountMove(models.Model):
         compute='_compute_afip_document_number',
         store=True,
     )
+
+    def _get_qr_nro_cmp(self):
+        self.ensure_one()
+        source = self.afip_document_number or self.name or ''
+        match = re.search(r'(\d+)$', source)
+        return int(match.group(1)) if match else 0
     
     l10n_ar_afip_state = fields.Selection([
         ('draft', 'Borrador'),
@@ -111,7 +118,6 @@ class AccountMove(models.Model):
                 nro_doc_receptor = (partner.vat or '0').replace('-', '').replace(' ', '')
                 tipo_doc_receptor = 80 if partner.vat else 99
 
-                cbte_nro = move.afip_document_number or ''
                 pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
 
                 tipo_cbte = self._get_tipo_comprobante_afip()
@@ -122,7 +128,6 @@ class AccountMove(models.Model):
 
                 cuit_digits = ''.join(filter(str.isdigit, company.afip_cuit or company.vat or '0'))
                 cuit = int(cuit_digits) if cuit_digits else 0
-                nro_cmp = ''.join(filter(str.isdigit, cbte_nro or '0'))
                 nro_doc = ''.join(filter(str.isdigit, nro_doc_receptor or '0'))
 
                 qr_payload = {
@@ -131,7 +136,7 @@ class AccountMove(models.Model):
                     'cuit': cuit,
                     'ptoVta': int(pto_vta),
                     'tipoCmp': tipo_cbte,
-                    'nroCmp': int(nro_cmp) if nro_cmp else 0,
+                    'nroCmp': move._get_qr_nro_cmp(),
                     'importe': float(imp_total),
                     'moneda': 'PES',
                     'ctz': 1,
@@ -160,7 +165,7 @@ class AccountMove(models.Model):
         }
         return tipo_map.get(self.afip_document_type, 6)
     
-    @api.depends('cae', 'cae_due_date', 'date', 'partner_id', 'amount_total', 'amount_tax', 'amount_untaxed', 'afip_document_type', 'afip_document_number', 'journal_id.l10n_ar_afip_pto_vta', 'company_id.afip_cuit')
+    @api.depends('afip_qr_data')
     def _compute_afip_qr_image(self):
         """Genera la imagen QR para AFIP."""
         try:
