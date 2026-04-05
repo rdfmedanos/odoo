@@ -151,16 +151,16 @@ class WSAAService:
         if response.status_code != 200:
             faultstring = re.search(r'<faultstring>([^<]+)</faultstring>', response.text)
             if faultstring:
-                error_msg = faultstring.group(1)
-                if 'alreadyAuthenticated' in error_msg or 'ya posee un TA valido' in error_msg.lower():
+                error_msg = faultstring.group(1).lower()
+                if 'alreadyauthenticated' in error_msg or 'ya posee' in error_msg or 'ta valido' in error_msg:
                     return {
                         'token': 'EXISTING_VALID_TOKEN',
                         'sign': 'EXISTING_VALID_SIGN',
                         'message': 'Ya existe un TA válido para este servicio'
                     }
-                if 'notAuthorized' in error_msg.lower():
+                if 'notauthorized' in error_msg or 'no autorizado' in error_msg:
                     raise Exception("WSAA: Certificado no autorizado para el servicio. Verifique en Administrador de Certificados que esté asociado a WSFEv1")
-                raise Exception(f"WSAA HTTP {response.status_code}: {error_msg}")
+                raise Exception(f"WSAA HTTP {response.status_code}: {faultstring.group(1)}")
             raise Exception(f"WSAA HTTP {response.status_code}: {response.text[:500]}")
         
         return self._parse_login_response(response.text)
