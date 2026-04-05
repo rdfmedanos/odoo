@@ -156,7 +156,7 @@
                                     <div style="font-size: 8pt; font-weight: 700; margin-top: 3px; width: 130px; text-align: center;">Codigo QR ARCA</div>
                                 </td>
                                 <td style="width: 44%; vertical-align: top; font-size: 8pt; line-height: 1.25; padding: 0 2px 2px 0; text-align: left;">
-                                    <div style="margin-left: -29px;">
+                                    <div style="margin-left: -41px;">
                                         <img src="https://neofactura.com.ar/uploads/logo-arca.jpg" style="width: 98px; height: auto; display: block; margin-top: 16px; margin-bottom: 16px;"/>
                                         <div style="font-weight: 700; margin-bottom: 2px;">Comprobante Autorizado</div>
                                         <div>Comprobante electronico autorizado por AFIP. Esta Administracion Federal no se responsabiliza por los datos ingresados en el detalle de la operacion.</div>
