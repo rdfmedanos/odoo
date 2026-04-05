@@ -5,14 +5,9 @@
         <field name="model">l10n_ar_afip.message_wizard</field>
         <field name="arch" type="xml">
             <form string="Resultado">
-                <div class="alert alert-success" invisible="not is_success">
-                    <p><field name="message"/></p>
-                </div>
-                <div class="alert alert-danger" invisible="is_success">
-                    <p><field name="message"/></p>
-                </div>
+                <p><field name="message"/></p>
                 <footer>
-                    <button string="Cerrar" class="btn-primary" special="cancel"/>
+                    <button string="Cerrar" special="cancel"/>
                 </footer>
             </form>
         </field>
