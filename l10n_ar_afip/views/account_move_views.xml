@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col-12 text-center">
                                 <p><strong>Código QR AFIP</strong></p>
-                                <field name="afip_qr_image" widget="image" options='{"width": 200, "height": 200}' readonly="1"/>
+                                <img t-if="afip_qr_data" t-att-src="'/report/barcode/?type=QR&amp;value=' + afip_qr_data" style="width:200px;height:200px;"/>
                             </div>
                         </div>
                     </group>
