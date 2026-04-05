@@ -151,7 +151,7 @@ class AccountMove(models.Model):
                 from urllib.parse import quote_plus
 
                 qr_b64 = base64.b64encode(qr_json.encode('utf-8')).decode('ascii')
-                move.afip_qr_data = f"https://serviciosweb.afip.gob.ar/fe/qr/?p={quote_plus(qr_b64)}"
+                move.afip_qr_data = f"https://www.afip.gob.ar/fe/qr/?p={quote_plus(qr_b64)}"
             else:
                 move.afip_qr_data = False
     
