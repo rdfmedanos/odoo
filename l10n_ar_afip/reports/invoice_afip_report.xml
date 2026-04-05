@@ -152,10 +152,10 @@
                                     <div style="margin-top: 7px;"><strong>Fecha Vencimiento CAE:</strong> <span t-field="o.cae_due_date"/></div>
                                 </td>
                                 <td style="width: 26%; vertical-align: top; text-align: center;">
-                                    <div style="font-size: 8pt; font-weight: 700; margin-bottom: 3px;">Codigo QR ARCA</div>
                                     <t t-if="o.afip_qr_image">
-                                        <img t-attf-src="data:image/png;base64,{{ o.afip_qr_image }}" style="width: 108px; height: 108px;"/>
+                                        <img t-attf-src="data:image/png;base64,{{ o.afip_qr_image }}" style="width: 130px; height: 130px;"/>
                                     </t>
+                                    <div style="font-size: 8pt; font-weight: 700; margin-top: 3px;">Codigo QR ARCA</div>
                                 </td>
                                 <td style="width: 40%; vertical-align: top; text-align: center;">
                                     <t t-if="o.afip_barcode">
