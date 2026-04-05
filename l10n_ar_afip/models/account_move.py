@@ -13,6 +13,11 @@ from odoo.exceptions import UserError
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    l10n_ar_afip_available = fields.Boolean(
+        string='AFIP habilitado',
+        compute='_compute_l10n_ar_afip_available',
+    )
+
     def _l10n_ar_afip_report_lines(self):
         self.ensure_one()
         lines = self.invoice_line_ids.filtered(
@@ -93,6 +98,11 @@ class AccountMove(models.Model):
         ('authorized', 'Autorizado'),
         ('rejected', 'Rechazado'),
     ], string='Estado AFIP', default='draft', copy=False)
+
+    @api.depends('journal_id')
+    def _compute_l10n_ar_afip_available(self):
+        for move in self:
+            move.l10n_ar_afip_available = bool(getattr(move.journal_id, 'l10n_latam_use_documents', False))
     
     def _compute_afip_barcode(self):
         """Genera el código de barras para el CAE."""
@@ -365,6 +375,9 @@ class AccountMove(models.Model):
     def action_request_afip_cae(self):
         """Solicita CAE a AFIP."""
         for move in self:
+            if not move.l10n_ar_afip_available:
+                raise UserError('El diario no utiliza documentos. No se puede solicitar CAE.')
+
             if move.state != 'posted':
                 raise UserError('Solo se pueden autorizar facturas publicadas')
             
@@ -422,7 +435,7 @@ class AccountMove(models.Model):
         
         for move in self.filtered(lambda m: m.company_id.afip_ws_environment):
             if move.move_type in ('out_invoice', 'out_refund'):
-                if move.journal_id.l10n_ar_afip_auto_authorize:
+                if move.journal_id.l10n_ar_afip_auto_authorize and move.l10n_ar_afip_available:
                     move.afip_document_type = move._get_afip_document_type()
                     try:
                         move.action_request_afip_cae()

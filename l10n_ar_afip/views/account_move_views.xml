@@ -6,7 +6,8 @@
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='other_info']" position="after">
-                <page name="afip" string="AFIP">
+                <page name="afip" string="AFIP" invisible="not l10n_ar_afip_available">
+                    <field name="l10n_ar_afip_available" invisible="1"/>
                     <group>
                         <group string="CAE">
                             <field name="cae"/>
@@ -17,8 +18,8 @@
                             <field name="afip_result"/>
                             <field name="afip_document_type"/>
                             <field name="afip_document_number"/>
-                            <button name="action_request_afip_cae" string="Solicitar CAE" type="object"/>
-                            <button name="action_retry_afip_cae" string="Reintentar CAE" type="object"/>
+                            <button name="action_request_afip_cae" string="Solicitar CAE" type="object" invisible="not l10n_ar_afip_available"/>
+                            <button name="action_retry_afip_cae" string="Reintentar CAE" type="object" invisible="not l10n_ar_afip_available"/>
                         </group>
                         <group string="Errores">
                             <field name="afip_errors"/>
@@ -26,7 +27,7 @@
                     </group>
                     <group string="Código QR">
                         <field name="afip_qr_image" widget="image" readonly="1" style="display: block; margin: 0 auto; max-width: 225px; max-height: 225px;" options='{"size": [225, 225], "width": 225, "height": 225, "zoom": false}'/>
-                        <button name="regenerate_afip_qr" string="Regenerar QR" type="object" invisible="not cae"/>
+                        <button name="regenerate_afip_qr" string="Regenerar QR" type="object" invisible="not cae or not l10n_ar_afip_available"/>
                     </group>
                 </page>
             </xpath>
