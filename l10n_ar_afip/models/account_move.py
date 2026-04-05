@@ -52,7 +52,7 @@ class AccountMove(models.Model):
     afip_qr_image = fields.Binary(
         string='Código QR AFIP',
         compute='_compute_afip_qr_image',
-        store=True,
+        store={'account.move': lambda self, cr, uid, ids, context=None: ids},
     )
     
     afip_document_type = fields.Selection([
@@ -129,9 +129,14 @@ class AccountMove(models.Model):
     @api.depends('cae', 'cae_due_date', 'date', 'partner_id', 'amount_total', 'amount_tax', 'amount_untaxed', 'afip_document_type', 'afip_document_number', 'journal_id.l10n_ar_afip_pto_vta', 'company_id.afip_cuit')
     def _compute_afip_qr_image(self):
         """Genera la imagen QR para AFIP."""
-        import qrcode
-        import io
-        import json
+        try:
+            import qrcode
+            import io
+            import json
+        except ImportError:
+            for move in self:
+                move.afip_qr_image = False
+            return
         
         for move in self:
             if move.cae and move.cae_due_date and move.company_id.afip_cuit:
@@ -176,6 +181,11 @@ class AccountMove(models.Model):
                 move.afip_qr_image = base64.b64encode(buffer.getvalue())
             else:
                 move.afip_qr_image = False
+    
+    def regenerate_afip_qr(self):
+        """Regenera el código QR."""
+        self._compute_afip_qr_image()
+        return True
     
     @api.depends('name', 'afip_document_type', 'journal_id.l10n_ar_afip_pto_vta')
     def _compute_afip_document_number(self):

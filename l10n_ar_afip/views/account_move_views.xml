@@ -24,6 +24,10 @@
                             <field name="afip_errors"/>
                         </group>
                     </group>
+                    <group string="Código QR">
+                        <field name="afip_qr_image" widget="image" readonly="1" options='{"width": 150, "height": 150}'/>
+                        <button name="regenerate_afip_qr" string="Regenerar QR" type="object" invisible="not cae"/>
+                    </group>
                 </page>
             </xpath>
         </field>
