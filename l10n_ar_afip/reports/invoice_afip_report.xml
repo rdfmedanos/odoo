@@ -104,7 +104,7 @@
                                     <td style="padding: 7px 6px 2px 6px; text-align: right;"><span t-field="line.quantity"/></td>
                                     <td style="padding: 7px 6px 2px 6px; text-align: right;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                     <td style="padding: 7px 6px 2px 6px; text-align: right;"><span t-field="line.discount"/></td>
-                                    <td style="padding: 7px 6px 2px 6px; text-align: right;"><t t-foreach="line.tax_ids" t-as="tax"><span t-esc="'IVA %s%%' % int(tax.amount)"/></t></td>
+                                    <td style="padding: 7px 6px 2px 6px; text-align: right;"><t t-foreach="line.tax_ids" t-as="tax"><span t-esc="'IVA ' + str(int(tax.amount)) + '%'"/></t></td>
                                     <td style="padding: 7px 8px 2px 6px; text-align: right;"><span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                 </tr>
                             </t>
