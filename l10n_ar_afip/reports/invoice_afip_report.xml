@@ -27,10 +27,12 @@
                                     </div>
                                 </td>
                                 <td style="width: 42%; padding: 5px 8px; vertical-align: top;">
-                                    <div style="font-size: 16pt; font-weight: 700; line-height: 1;"><span t-esc="doc_title"/></div>
-                                    <div style="font-size: 10pt; margin-top: 3px;">Fecha: <span t-field="o.invoice_date"/></div>
-                                    <div style="font-size: 12pt; line-height: 1.1;"><span t-field="o.name"/></div>
-                                    <div style="font-size: 6pt; margin-top: 2px;">Tipo de Documento <span t-esc="doc_title"/></div>
+                                    <div style="margin-left: 20%;">
+                                        <div style="font-size: 16pt; font-weight: 700; line-height: 1;"><span t-esc="doc_title"/></div>
+                                        <div style="font-size: 10pt; margin-top: 3px;">Fecha: <span t-field="o.invoice_date"/></div>
+                                        <div style="font-size: 12pt; line-height: 1.1;"><span t-field="o.name"/></div>
+                                        <div style="font-size: 6pt; margin-top: 2px;">Tipo de Documento <span t-esc="doc_title"/></div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
