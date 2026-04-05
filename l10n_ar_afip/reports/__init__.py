@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-from . import report_models
+from .report_models import *from . import report_models

@@ -18,8 +18,3 @@ def _create_report_action(cr, registry):
             'report_name': 'l10n_ar_afip.report_invoice_afip',
             'print_report_name': "'Factura_ARCA_%s' % (object.name or 'draft').replace('/', '_')",
         })
-
-
-class IrActionsReport(models.Model):
-    _inherit = 'ir.actions.report'
-    pass

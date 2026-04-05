@@ -21,11 +21,11 @@
         'views/account_move_views.xml',
         'views/clipboard_views.xml',
         'views/message_wizard_views.xml',
-        'reports/report_action.xml',
     ],
     'installable': True,
     'application': True,
     'auto_install': False,
+    'post_init_hook': '_create_report_action',
     'external_dependencies': {
         'python': [
             'cryptography',
