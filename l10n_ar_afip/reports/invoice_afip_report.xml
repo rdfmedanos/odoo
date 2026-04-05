@@ -7,6 +7,7 @@
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
                     <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
+                    <t t-set="product_lines" t-value="[l for l in o.invoice_line_ids if not l.display_type]"/>
                     <t t-set="company_cuit" t-value="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
 
                     <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
@@ -95,8 +96,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-foreach="o.invoice_line_ids" t-as="line">
-                                <tr t-if="not line.display_type">
+                            <t t-foreach="product_lines" t-as="line">
+                                <tr>
                                     <td style="padding: 7px 8px 2px 8px;"><span t-field="line.product_id.default_code"/></td>
                                     <td style="padding: 7px 6px 2px 6px;"><span t-field="line.name"/></td>
                                     <td style="padding: 7px 6px 2px 6px;">-</td>
@@ -107,6 +108,9 @@
                                     <td style="padding: 7px 8px 2px 6px; text-align: right;"><span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                 </tr>
                             </t>
+                            <tr t-if="not product_lines">
+                                <td colspan="8" style="padding: 8px; color: #666; font-style: italic;">Sin lineas de producto visibles en la factura.</td>
+                            </tr>
                         </tbody>
                     </table>
 
