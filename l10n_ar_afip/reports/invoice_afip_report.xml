@@ -7,7 +7,7 @@
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
                     <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
-                    <t t-set="product_lines" t-value="[l for l in o.invoice_line_ids if not l.display_type] if o.invoice_line_ids else [l for l in o.line_ids if (not l.display_type and not getattr(l, 'exclude_from_invoice_tab', False))]"/>
+                    <t t-set="product_lines" t-value="o._l10n_ar_afip_report_lines()"/>
                     <t t-set="company_cuit" t-value="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
 
                     <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
