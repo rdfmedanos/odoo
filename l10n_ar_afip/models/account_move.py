@@ -14,11 +14,15 @@ class AccountMove(models.Model):
 
     def _l10n_ar_afip_report_lines(self):
         self.ensure_one()
-        lines = self.invoice_line_ids.filtered(lambda l: not l.display_type)
+        lines = self.invoice_line_ids.filtered(
+            lambda l: l.display_type in (False, 'product')
+        )
         if lines:
             return lines
         return self.line_ids.filtered(
-            lambda l: not l.display_type and not l.tax_line_id and not l.exclude_from_invoice_tab
+            lambda l: l.display_type in (False, 'product')
+            and not l.tax_line_id
+            and not l.exclude_from_invoice_tab
         )
     
     cae = fields.Char(
