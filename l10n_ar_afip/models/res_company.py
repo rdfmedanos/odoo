@@ -276,10 +276,11 @@ class ResCompany(models.Model):
         if self.afip_token and self.afip_token_expiration:
             if fields.Datetime.from_string(self.afip_token_expiration) > fields.Datetime.now():
                 return {
-                    'type': 'ir.actions.message',
-                    'title': 'Conexión exitosa',
-                    'message': f"Ya existe un Token válido hasta {self.afip_token_expiration}.\n\nLa conexión con ARCA está configurada correctamente.",
-                    'close_button_title': 'OK',
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'l10n_ar_afip.message_wizard',
+                    'view_mode': 'form',
+                    'target': 'new',
+                    'context': {'default_message': f"Ya existe un Token válido hasta {self.afip_token_expiration}.\n\nLa conexión con ARCA está configurada correctamente.", 'default_is_success': True},
                 }
         
         from ..services.wsaa import WSAAService
@@ -295,18 +296,16 @@ class ResCompany(models.Model):
             result = wsaa.request_token('wsfe')
             
             if result.get('token') == 'EXISTING_VALID_TOKEN':
-                return {
-                    'type': 'ir.actions.message',
-                    'title': 'Conexión exitosa',
-                    'message': 'Ya existe un Token de Acceso válido para WSFE.\n\nLa conexión con ARCA está configurada correctamente.',
-                    'close_button_title': 'OK',
-                }
+                message = 'Ya existe un Token de Acceso válido para WSFE.\n\nLa conexión con ARCA está configurada correctamente.'
+            else:
+                message = f"Conectado a ARCA ({self.afip_ws_environment}). Token recibido correctamente."
             
             return {
-                'type': 'ir.actions.message',
-                'title': 'Conexión exitosa',
-                'message': f"Conectado a ARCA ({self.afip_ws_environment}). Token recibido correctamente.",
-                'close_button_title': 'OK',
+                'type': 'ir.actions.act_window',
+                'res_model': 'l10n_ar_afip.message_wizard',
+                'view_mode': 'form',
+                'target': 'new',
+                'context': {'default_message': message, 'default_is_success': True},
             }
         except Exception as e:
             raise UserError(f'Error de conexión con ARCA:\n{str(e)}')
@@ -385,3 +384,14 @@ class L10nArAfipSequence(models.Model):
         ('unique_company_document', 'UNIQUE(company_id, document_type)',
          'Solo puede existir una secuencia por empresa y tipo de documento'),
     ]
+
+
+class L10nArAfipMessageWizard(models.TransientModel):
+    _name = 'l10n_ar_afip.message_wizard'
+    _description = 'Wizard para mostrar mensajes'
+
+    message = fields.Text(string='Mensaje', readonly=True)
+    is_success = fields.Boolean(string='Es éxito', default=False)
+
+    def action_close(self):
+        return {'type': 'ir.actions.act_window_close'}

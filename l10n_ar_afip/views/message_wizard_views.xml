@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_afip_message_wizard" model="ir.ui.view">
+        <field name="name">l10n.ar.afip.message.wizard.form</field>
+        <field name="model">l10n_ar_afip.message_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Resultado">
+                <div class="alert alert-success" invisible="not is_success">
+                    <p><field name="message"/></p>
+                </div>
+                <div class="alert alert-danger" invisible="is_success">
+                    <p><field name="message"/></p>
+                </div>
+                <footer>
+                    <button string="Cerrar" class="btn-primary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
