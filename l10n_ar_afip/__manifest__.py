@@ -21,6 +21,7 @@
         'views/account_move_views.xml',
         'views/clipboard_views.xml',
         'views/message_wizard_views.xml',
+        'reports/invoice_afip_report.xml',
     ],
     'installable': True,
     'application': True,
