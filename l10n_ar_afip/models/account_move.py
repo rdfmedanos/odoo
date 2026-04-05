@@ -161,13 +161,22 @@ class AccountMove(models.Model):
         tipo_doc = 99
         nro_doc = '0'
         
-        if partner.l10n_ar_partner_document_type == 'cuit':
+        if hasattr(partner, 'l10n_ar_partner_document_type') and partner.l10n_ar_partner_document_type:
+            doc_type = partner.l10n_ar_partner_document_type
+        elif partner.vat and len(partner.vat.replace('-', '').replace(' ', '')) == 11:
+            doc_type = 'dni'
+        elif partner.vat and len(partner.vat.replace('-', '').replace(' ', '')) >= 11:
+            doc_type = 'cuit'
+        else:
+            doc_type = 'other'
+        
+        if doc_type == 'cuit':
             tipo_doc = 80
             nro_doc = (partner.vat or '').replace('-', '').replace(' ', '')
-        elif partner.l10n_ar_partner_document_type == 'dni':
+        elif doc_type == 'dni':
             tipo_doc = 96
             nro_doc = partner.vat or '0'
-        elif partner.l10n_ar_partner_document_type == 'other':
+        else:
             tipo_doc = 99
             nro_doc = partner.vat or '0'
         
@@ -176,10 +185,9 @@ class AccountMove(models.Model):
         iva_amount = self.amount_tax
         
         iva_id = 5
-        if self.l10n_ar_currency_id.name == 'ARS':
-            iva_id = 5
-        elif self.l10n_ar_currency_id.name == 'USD':
-            iva_id = 6
+        if hasattr(self, 'l10n_ar_currency_id') and self.l10n_ar_currency_id:
+            if self.l10n_ar_currency_id.name == 'USD':
+                iva_id = 6
         
         return {
             'tipo': self.afip_document_type or 'B',
