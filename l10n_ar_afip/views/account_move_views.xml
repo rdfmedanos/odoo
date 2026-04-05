@@ -39,7 +39,7 @@
                     </group>
                     <group invisible="not cae">
                         <div class="col-12 border bg-light p-3 text-center">
-                            <img t-if="afip_barcode" t-att-src="'/report/barcode/Code128/%s' % afip_barcode" height="50"/>
+                            <img t-if="afip_qr_data" t-att-src="'/report/qr?value=%s' % afip_qr_data" height="150" width="150"/>
                         </div>
                     </group>
                 </page>

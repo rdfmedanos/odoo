@@ -43,6 +43,12 @@ class AccountMove(models.Model):
         store=True,
     )
     
+    afip_qr_data = fields.Char(
+        string='Datos QR',
+        compute='_compute_afip_qr_data',
+        store=True,
+    )
+    
     afip_qr_code = fields.Binary(
         string='Código QR AFIP',
         attachment=True,
@@ -78,6 +84,46 @@ class AccountMove(models.Model):
                 move.afip_barcode = barcode
             else:
                 move.afip_barcode = False
+    
+    def _compute_afip_qr_data(self):
+        """Genera los datos para el código QR según especificación AFIP."""
+        for move in self:
+            if move.cae and move.cae_due_date:
+                company = move.company_id
+                partner = move.partner_id
+                
+                fecha = move.date.strftime('%Y%m%d') if move.date else ''
+                
+                nro_doc_receptor = (partner.vat or '0').replace('-', '').replace(' ', '')
+                tipo_doc_receptor = 80 if partner.vat else 99
+                
+                cbte_nro = move.afip_document_number or ''
+                pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
+                
+                tipo_cbte = self._get_tipo_comprobante_afip()
+                
+                imp_total = f"{move.amount_total:.2f}"
+                imp_iva = f"{move.amount_tax:.2f}"
+                imp_neto = f"{move.amount_untaxed:.2f}"
+                
+                cae_str = str(move.cae)
+                cae_venc = move.cae_due_date.strftime('%Y%m%d') if move.cae_due_date else ''
+                
+                qr_data = f"https://www.afip.gob.ar/fe/qr/?p=%7B%22ver%22%3A1%2C%22fecha%22%3A%22{fecha}%22%2C%22cuit%22%3A{company.afip_cuit}%2C%22ptoVta%22%3A{pto_vta}%2C%22tipoCmp%22%3A{tipo_cbte}%2C%22nroCmp%22%3A{cbte_nro.replace('-', '')}%2C%22importe%22%3A{imp_total}%2C%22moneda%22%3A%22PES%22%2C%22ctz%22%3A1%2C%22tipoDocRec%22%3A{tipo_doc_receptor}%2C%22nroDocRec%22%3A{nro_doc_receptor}%2C%22tipoAut%22%3A%22E%22%2C%22codAut%22%3A{cae_str}%7D"
+                
+                move.afip_qr_data = qr_data
+            else:
+                move.afip_qr_data = False
+    
+    def _get_tipo_comprobante_afip(self):
+        """Retorna el código AFIP del tipo de comprobante."""
+        tipo_map = {
+            'A': 1,
+            'B': 6,
+            'C': 11,
+            'M': 51,
+        }
+        return tipo_map.get(self.afip_document_type, 6)
     
     @api.depends('name', 'afip_document_type', 'journal_id.l10n_ar_afip_pto_vta')
     def _compute_afip_document_number(self):
