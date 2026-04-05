@@ -153,7 +153,11 @@ class WSAAService:
             if faultstring:
                 error_msg = faultstring.group(1)
                 if 'alreadyAuthenticated' in error_msg:
-                    raise Exception("WSAA: Ya existe un TA válido (coe.alreadyAuthenticated)")
+                    return {
+                        'token': 'EXISTING_VALID_TOKEN',
+                        'sign': 'EXISTING_VALID_SIGN',
+                        'message': 'Ya existe un TA válido para este servicio'
+                    }
                 if 'notAuthorized' in error_msg.lower():
                     raise Exception("WSAA: Certificado no autorizado para el servicio. Verifique en Administrador de Certificados que esté asociado a WSFEv1")
                 raise Exception(f"WSAA HTTP {response.status_code}: {error_msg}")

@@ -267,13 +267,22 @@ class ResCompany(models.Model):
         return result
 
     def test_afip_connection(self) -> dict:
-        """Prueba la conexión con ARCA/AFIP sin guardar token."""
+        """Prueba la conexión con ARCA/AFIP."""
         self.ensure_one()
-        
-        from ..services.wsaa import WSAAService
         
         if not self.afip_cuit:
             raise UserError('Debe ingresar el CUIT')
+        
+        if self.afip_token and self.afip_token_expiration:
+            if fields.Datetime.from_string(self.afip_token_expiration) > fields.Datetime.now():
+                return {
+                    'type': 'ir.actions.message',
+                    'title': 'Conexión exitosa',
+                    'message': f"Ya existe un Token válido hasta {self.afip_token_expiration}.\n\nLa conexión con ARCA está configurada correctamente.",
+                    'close_button_title': 'OK',
+                }
+        
+        from ..services.wsaa import WSAAService
         
         try:
             creds = self.get_afip_credentials()
@@ -284,6 +293,14 @@ class ResCompany(models.Model):
             )
             
             result = wsaa.request_token('wsfe')
+            
+            if result.get('token') == 'EXISTING_VALID_TOKEN':
+                return {
+                    'type': 'ir.actions.message',
+                    'title': 'Conexión exitosa',
+                    'message': 'Ya existe un Token de Acceso válido para WSFE.\n\nLa conexión con ARCA está configurada correctamente.',
+                    'close_button_title': 'OK',
+                }
             
             return {
                 'type': 'ir.actions.message',
