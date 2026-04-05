@@ -98,6 +98,21 @@ class ResCompany(models.Model):
         string='Secuencias AFIP',
     )
     
+    l10n_ar_afip_iibb = fields.Char(
+        string='Ing. Brutos',
+        help='Número de Inscripción en Ingresos Brutos'
+    )
+    
+    l10n_ar_afip_cm = fields.Char(
+        string='C.M.',
+        help='Código de Moratoria'
+    )
+    
+    l10n_ar_afip_start_date = fields.Date(
+        string='Inicio de Actividades',
+        help='Fecha de inicio de actividades ante AFIP'
+    )
+    
     def _compute_certificate_filename(self):
         for rec in self:
             if rec.afip_certificate:
