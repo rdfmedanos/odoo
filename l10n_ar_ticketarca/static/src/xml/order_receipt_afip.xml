@@ -59,6 +59,14 @@
             <attribute name="style">font-family: monospace; font-size: 13px;</attribute>
         </xpath>
 
+        <xpath expr="//div[hasclass('d-flex') and hasclass('gap-2') and hasclass('pt-3')][.//div[hasclass('pos-config-name')]]" position="replace"/>
+
+        <xpath expr="//div[hasclass('pos-receipt-order-data') and hasclass('text-center') and hasclass('pt-3')][span[contains(., 'Powered by')]]" position="replace">
+            <div class="pos-receipt-order-data text-center pt-3">
+                <span>Powered by <b>Odoo</b> by Grupo JAZ</span>
+            </div>
+        </xpath>
+
         <xpath expr="//div[contains(@class, 'gap-2') and contains(@class, 'd-flex') and contains(@class, 'flex-row') and contains(@class, 'pt-3')]" position="replace">
             <t t-set="afip" t-value="order.l10n_ar_afip_data"/>
             <div t-if="afip and afip.qr_image" class="pt-3 text-center" style="font-family: monospace; font-size: 13px;">
