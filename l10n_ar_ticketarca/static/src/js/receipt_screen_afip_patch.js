@@ -26,7 +26,7 @@ patch(ReceiptScreen.prototype, {
                 if (afipData && afipData.cae) {
                     order.l10nArAfipData = afipData;
                 }
-            } catch {
+            } catch (error) {
                 order.l10nArAfipData = null;
             }
         });
