@@ -1,110 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="l10n_ar_ticketarca.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
-        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="replace">
-            <div class="pos-receipt-contact" style="text-align: left; font-family: monospace; line-height: 1.25;">
-                <div t-if="receipt.company.name" t-esc="receipt.company.name" style="font-weight: 700;"/>
-                <div t-if="receipt.company.vat">CUIT: <t t-esc="receipt.company.vat"/></div>
-                <div t-if="receipt.company.street">
-                    Direccion: <t t-esc="receipt.company.street"/>
-                    <t t-if="receipt.company.city">, <t t-esc="receipt.company.city"/></t>
+        <xpath expr="//div[hasclass('pt-3')][1]" position="replace">
+            <div class="pt-2" style="font-family: monospace; line-height: 1.25; font-size: 13px; text-align: left;">
+                <div t-if="order.company.vat">CUIT: <t t-out="order.company.vat"/></div>
+                <div t-if="order.company.street">
+                    Direccion: <t t-out="order.company.street"/>
+                    <t t-if="order.company.city" t-out="', ' + order.company.city"/>
+                    <t t-if="order.company.state_id and order.company.state_id.code" t-out="', ' + order.company.state_id.code"/>
                 </div>
-                <div t-if="receipt.company.phone">Telefono: <t t-esc="receipt.company.phone"/></div>
-                <div t-if="receipt.cashier">Usuario: <t t-esc="receipt.cashier"/></div>
+                <div t-if="order.company.phone">Telefono: <t t-out="order.company.phone"/></div>
+                <div>Usuario: <t t-out="order.getCashierName()"/></div>
+                <hr/>
+                <div style="font-weight: 700;">FACTURA</div>
+                <div>NRO DE FACTURA: <t t-out="order.invoiceName or order.name"/></div>
+                <div>FECHA: <t t-out="order.date_order.toFormat('dd/MM/yyyy HH:mm:ss')"/></div>
+                <hr/>
+                <t t-if="order.partner_id">
+                    <div>CLIENTE: <t t-out="order.partner_id.name"/></div>
+                    <div t-if="order.partner_id.vat">CUIT: <t t-out="order.partner_id.vat"/></div>
+                    <div t-if="order.partner_id.street">
+                        CALLE: <t t-out="order.partner_id.street"/>
+                        <t t-if="order.partner_id.city" t-out="', ' + order.partner_id.city"/>
+                    </div>
+                    <div t-if="order.partner_id.email">Email: <t t-out="order.partner_id.email"/></div>
+                    <div t-if="order.partner_id.phone or order.partner_id.mobile">Tel: <t t-out="order.partner_id.phone or order.partner_id.mobile"/></div>
+                </t>
+                <hr/>
+                <div>REF. INTERNA: <t t-out="order.name"/></div>
             </div>
         </xpath>
 
-        <xpath expr="//t[@t-if='receipt.cashier']" position="replace">
-            <div style="font-family: monospace; line-height: 1.25; text-align: left;">
-                <hr/>
-                <strong>
-                    <div>FACTURA</div>
-                    <div>NRO DE FACTURA: <t t-esc="receipt.name"/></div>
-                    <div>FECHA: <t t-esc="receipt.date.localestring"/></div>
-                </strong>
-                <hr/>
-
-                <t t-if="receipt.client">
-                    <div>CLIENTE: <t t-esc="receipt.client.name"/></div>
-                    <t t-if="receipt.client.vat">
-                        <div>CUIT: <t t-esc="receipt.client.vat"/></div>
-                    </t>
-                    <t t-if="receipt.client.street">
-                        <div>
-                            CALLE: <t t-esc="receipt.client.street"/>
-                            <t t-if="receipt.client.city">, <t t-esc="receipt.client.city"/></t>
-                        </div>
-                    </t>
-                    <t t-if="receipt.client.email"><div>Email: <t t-esc="receipt.client.email"/></div></t>
-                    <t t-if="receipt.client.phone or receipt.client.mobile"><div>Tel: <t t-esc="receipt.client.phone || receipt.client.mobile"/></div></t>
-                </t>
-
-                <hr/>
-                <div>REF. INTERNA: <t t-esc="receipt.name"/></div>
+        <xpath expr="//div[hasclass('pos-receipt-amount') and hasclass('receipt-total')]" position="before">
+            <div style="font-family: monospace; line-height: 1.25; font-size: 13px; text-align: left;">
                 <hr/>
                 <strong>
                     <div>DESCRIPCION</div>
-                    <div>
-                        CANT. x PRECIO UNIT.
-                        <span class="pos-receipt-right-align">IMPORTE</span>
-                    </div>
+                    <div>CANT. x PRECIO UNIT.<span class="pos-receipt-right-align">IMPORTE</span></div>
                 </strong>
                 <hr/>
             </div>
         </xpath>
 
-        <xpath expr="//div[@class='orderlines']" position="replace">
-            <div class="orderlines" style="font-family: monospace; line-height: 1.25;">
-                <t t-set="orderlines" t-value="(receipt &amp;&amp; receipt.orderlines) ? receipt.orderlines : []"/>
-                <t t-foreach="orderlines" t-as="line" t-key="line.id">
-                    <t t-if="line.price != 0">
-                        <div>
-                            <t t-esc="line.product_name_wrapped[0]"/>
-                            <span t-esc="env.pos.format_currency_no_symbol(line.price_display)" class="pos-receipt-right-align"/>
-                        </div>
-                        <div class="pos-receipt-left-padding">
-                            <t t-esc="line.quantity"/> x <t t-esc="env.pos.format_currency_no_symbol(line.price_display_one || line.price)"/>
-                        </div>
-                    </t>
-                </t>
-
-                <div class="pos-receipt-right-align">--------</div>
-                <div>
-                    <strong>Subtotal</strong>
-                    <span t-esc="env.pos.format_currency(receipt.subtotal)" class="pos-receipt-right-align"/>
-                </div>
-                <t t-set="tax_details" t-value="(receipt &amp;&amp; receipt.tax_details) ? receipt.tax_details : []"/>
-                <div t-foreach="tax_details" t-as="tax" t-key="tax.id || tax.name">
-                    <strong><t t-esc="tax.name"/></strong>
-                    <span t-esc="env.pos.format_currency_no_symbol(tax.amount)" class="pos-receipt-right-align"/>
-                </div>
-            </div>
+        <xpath expr="//div[hasclass('pos-receipt-amount') and hasclass('receipt-total')]" position="attributes">
+            <attribute name="style">font-family: monospace; font-size: 13px;</attribute>
         </xpath>
 
-        <xpath expr="//div[@class='before-footer']" position="after">
-            <div style="font-family: monospace; line-height: 1.25; text-align: left;">
-                <div>
-                    Efectivo (ARS)
-                    <span t-esc="env.pos.format_currency(receipt.amount_paid)" class="pos-receipt-right-align"/>
-                </div>
-                <div>
-                    Cambio:
-                    <span t-esc="env.pos.format_currency(receipt.change)" class="pos-receipt-right-align"/>
-                </div>
+        <xpath expr="//div[hasclass('paymentlines') and hasclass('text-start') and hasclass('pt-1')]" position="attributes">
+            <attribute name="style">font-family: monospace; font-size: 13px;</attribute>
+        </xpath>
 
-                <t t-set="afip" t-value="receipt.l10n_ar_afip if receipt and receipt.l10n_ar_afip else false"/>
-                <t t-if="afip and afip.barcode">
-                    <div style="text-align: center; margin-top: 8px;">
-                        <img t-att-src="'/report/barcode/?type=Code128&amp;value=' + afip.barcode + '&amp;width=600&amp;height=80'" style="width: 100%;" alt="Codigo de barras"/>
-                        <div style="font-size: 12px;"><t t-esc="afip.barcode"/></div>
-                    </div>
-                </t>
-
-                <t t-if="afip and afip.cae">
-                    <div style="margin-top: 6px;"><strong>CAE:</strong> <t t-esc="afip.cae"/></div>
-                    <div><strong>Vto. CAE:</strong> <t t-esc="afip.cae_due_date"/></div>
-                </t>
-            </div>
+        <xpath expr="//div[hasclass('pos-receipt-amount') and hasclass('receipt-change')]" position="attributes">
+            <attribute name="style">font-family: monospace; font-size: 13px;</attribute>
         </xpath>
     </t>
 </templates>
