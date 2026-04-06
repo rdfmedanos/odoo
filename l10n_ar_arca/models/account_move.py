@@ -334,7 +334,7 @@ class AccountMove(models.Model):
         return mapping.get(code, 'consumidor_final')
     
     def _l10n_ar_afip_report_action(self):
-        report = self.env.ref('l10n_ar_afip.action_report_invoice_afip', raise_if_not_found=False)
+        report = self.env.ref('l10n_ar_arca.action_report_invoice_afip', raise_if_not_found=False)
         return report.report_action(self) if report else False
 
     def action_invoice_print(self):

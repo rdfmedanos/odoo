@@ -4,7 +4,7 @@ Repositorio con modulos de localizacion para Odoo 19.0.
 
 ## Modulos incluidos
 
-- `l10n_ar_afip`: facturacion electronica ARCA/AFIP (WSAA + WSFEv1, CAE, QR y reporte PDF).
+- `l10n_ar_arca`: facturacion electronica ARCA/AFIP (WSAA + WSFEv1, CAE, QR y reporte PDF).
 - `l10n_ar_mp`: integracion base con Mercado Pago para cobros en Argentina.
 
 ## Requisitos generales
@@ -18,15 +18,15 @@ Repositorio con modulos de localizacion para Odoo 19.0.
 1. Copiar ambos modulos al `addons_path` de Odoo.
 2. Reiniciar servicio Odoo.
 3. Actualizar lista de apps desde Odoo.
-4. Instalar `l10n_ar_afip` y/o `l10n_ar_mp`.
+4. Instalar `l10n_ar_arca` y/o `l10n_ar_mp`.
 
 Por consola:
 
 ```bash
-python3 -m odoo -c /etc/odoo/odoo.conf -d <tu_bd> -i l10n_ar_afip,l10n_ar_mp --stop-after-init
+python3 -m odoo -c /etc/odoo/odoo.conf -d <tu_bd> -i l10n_ar_arca,l10n_ar_mp --stop-after-init
 ```
 
 ## Documentacion por modulo
 
-- `l10n_ar_afip/README.md`
+- `l10n_ar_arca/README.md`
 - `l10n_ar_mp/README.md`

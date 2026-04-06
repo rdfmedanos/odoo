@@ -1,4 +1,4 @@
-# l10n_ar_afip (Odoo 19.0)
+# l10n_ar_arca (Odoo 19.0)
 
 Modulo de facturacion electronica ARCA/AFIP para Argentina en Odoo 19.0.
 
@@ -24,7 +24,7 @@ pip3 install cryptography lxml requests qrcode Pillow PyJWT
 
 ## Instalacion
 
-1. Copiar `l10n_ar_afip` al `addons_path`.
+1. Copiar `l10n_ar_arca` al `addons_path`.
 2. Reiniciar Odoo.
 3. Actualizar lista de aplicaciones.
 4. Instalar el modulo.
@@ -32,7 +32,7 @@ pip3 install cryptography lxml requests qrcode Pillow PyJWT
 Por consola:
 
 ```bash
-python3 -m odoo -c /etc/odoo/odoo.conf -d <tu_bd> -i l10n_ar_afip --stop-after-init
+python3 -m odoo -c /etc/odoo/odoo.conf -d <tu_bd> -i l10n_ar_arca --stop-after-init
 ```
 
 ## Configuracion minima

@@ -17,7 +17,8 @@ class AfipBillingController(http.Controller):
         
         try:
             import jwt
-            secret = request.env['ir.config_parameter'].sudo().get_param('l10n_ar_afip.jwt_secret', 'default_secret_key')
+            params = request.env['ir.config_parameter'].sudo()
+            secret = params.get_param('l10n_ar_arca.jwt_secret') or params.get_param('l10n_ar_afip.jwt_secret', 'default_secret_key')
             payload = jwt.decode(token, secret, algorithms=['HS256'])
             
             invoice = request.env['account.move'].sudo().browse(invoice_id)
@@ -25,7 +26,7 @@ class AfipBillingController(http.Controller):
                 return request.not_found()
             
             pdf_content, _ = request.env['ir.actions.report'].sudo()._render_qweb_pdf(
-                'l10n_ar_afip.report_invoice_afip_v2',
+                'l10n_ar_arca.report_invoice_afip_v2',
                 [invoice_id]
             )
             
@@ -53,7 +54,8 @@ class AfipBillingController(http.Controller):
         
         try:
             import jwt
-            secret = request.env['ir.config_parameter'].sudo().get_param('l10n_ar_afip.jwt_secret', 'default_secret_key')
+            params = request.env['ir.config_parameter'].sudo()
+            secret = params.get_param('l10n_ar_arca.jwt_secret') or params.get_param('l10n_ar_afip.jwt_secret', 'default_secret_key')
             payload = jwt.decode(token, secret, algorithms=['HS256'])
             
             invoice = request.env['account.move'].sudo().browse(invoice_id)

@@ -7,7 +7,7 @@ class IrActionsReport(models.Model):
 
     @api.model
     def _l10n_ar_afip_set_default_invoice_report(self):
-        arca_report_name = 'l10n_ar_afip.report_invoice_afip_v2'
+        arca_report_name = 'l10n_ar_arca.report_invoice_afip_v2'
 
         candidates = self.search([
             ('model', '=', 'account.move'),

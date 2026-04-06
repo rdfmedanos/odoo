@@ -12,7 +12,7 @@
     'author': 'AgroSentinel',
     'website': 'https://agrosentinel.com',
     'category': 'Accounting/Localizations',
-    'depends': ['point_of_sale', 'l10n_ar_afip'],
+    'depends': ['point_of_sale', 'l10n_ar_arca'],
     'data': [
         'views/pos_config_views.xml',
     ],

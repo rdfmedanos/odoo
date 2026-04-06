@@ -15,6 +15,6 @@ def _create_report_action(cr, registry):
             'name': 'Factura ARCA (PDF)',
             'model': 'account.move',
             'report_type': 'qweb-pdf',
-            'report_name': 'l10n_ar_afip.report_invoice_afip',
+            'report_name': 'l10n_ar_arca.report_invoice_afip',
             'print_report_name': "'Factura_ARCA_%s' % (object.name or 'draft').replace('/', '_')",
         })

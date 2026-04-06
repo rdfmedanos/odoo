@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Argentina - AFIP Facturación Electrónica',
+    'name': 'Argentina - ARCA Facturación Electrónica',
     'version': '1.0.0',
     'summary': 'Facturación Electrónica ARCA/AFIP para Argentina',
     'description': """
