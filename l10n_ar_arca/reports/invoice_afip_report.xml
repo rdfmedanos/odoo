@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_invoice_afip_v2">
-        <t t-call="web.basic_layout">
+        <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.external_layout">
                     <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 42mm;">
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
                     <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
@@ -171,8 +171,7 @@
                             </tr>
                         </table>
                     </div>
-                </div>
-                </div>
+                </t>
             </t>
         </t>
     </template>
