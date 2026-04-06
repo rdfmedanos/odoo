@@ -2,23 +2,24 @@
 <templates id="template" xml:space="preserve">
     <t t-name="l10n_ar_ticketarca.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('pos-receipt')]" position="inside">
-            <t t-set="ticket_width" t-value="receipt.l10n_ar_ticketarca_paper_width || '80'"/>
+            <t t-set="ticket" t-value="props.data"/>
+            <t t-set="ticket_width" t-value="(ticket && ticket.l10n_ar_ticketarca_paper_width) || '80'"/>
             <t t-set="afip_font_size" t-value="ticket_width === '58' ? '10px' : '12px'"/>
             <t t-set="afip_qr_size" t-value="ticket_width === '58' ? 96 : 128"/>
 
-            <div t-if="receipt.l10n_ar_afip and receipt.l10n_ar_afip.cae" t-att-style="'margin-top: 12px; border-top: 1px dashed #000; padding-top: 10px; font-size: ' + afip_font_size + '; text-align: center;'">
+            <div t-if="ticket && ticket.l10n_ar_afip && ticket.l10n_ar_afip.cae" t-att-style="'margin-top: 12px; border-top: 1px dashed #000; padding-top: 10px; font-size: ' + afip_font_size + '; text-align: center;'">
                 <div style="font-weight: 700; margin-bottom: 5px;">Comprobante autorizado ARCA/AFIP</div>
                 <div style="margin-bottom: 2px;">
                     <strong>CAE:</strong>
-                    <span t-esc="receipt.l10n_ar_afip.cae"/>
+                    <span t-esc="ticket.l10n_ar_afip.cae"/>
                 </div>
                 <div style="margin-bottom: 8px;">
                     <strong>Vto. CAE:</strong>
-                    <span t-esc="receipt.l10n_ar_afip.cae_due_date"/>
+                    <span t-esc="ticket.l10n_ar_afip.cae_due_date"/>
                 </div>
 
-                <div t-if="receipt.l10n_ar_afip.qr_image" t-att-style="'margin: 0 auto; width: ' + afip_qr_size + 'px;'">
-                    <img t-att-src="'data:image/png;base64,' + receipt.l10n_ar_afip.qr_image" t-att-style="'width: ' + afip_qr_size + 'px; height: ' + afip_qr_size + 'px; display: block; margin: 0 auto;'" alt="QR AFIP"/>
+                <div t-if="ticket.l10n_ar_afip.qr_image" t-att-style="'margin: 0 auto; width: ' + afip_qr_size + 'px;'">
+                    <img t-att-src="'data:image/png;base64,' + ticket.l10n_ar_afip.qr_image" t-att-style="'width: ' + afip_qr_size + 'px; height: ' + afip_qr_size + 'px; display: block; margin: 0 auto;'" alt="QR AFIP"/>
                     <div style="margin-top: 4px;">QR ARCA</div>
                 </div>
             </div>
