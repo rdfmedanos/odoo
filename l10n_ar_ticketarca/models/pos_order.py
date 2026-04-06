@@ -11,6 +11,30 @@ _logger = logging.getLogger(__name__)
 class PosOrder(models.Model):
     _inherit = 'pos.order'
 
+    def _prepare_invoice_vals(self):
+        vals = super()._prepare_invoice_vals()
+        self.ensure_one()
+
+        current_journal = self.env['account.journal'].browse(vals.get('journal_id'))
+        if getattr(current_journal, 'l10n_latam_use_documents', False):
+            return vals
+
+        candidate_journal = self.config_id.invoice_journal_id
+        if not getattr(candidate_journal, 'l10n_latam_use_documents', False):
+            candidate_journal = self.session_id.config_id.journal_id
+
+        if not getattr(candidate_journal, 'l10n_latam_use_documents', False):
+            candidate_journal = self.env['account.journal'].search([
+                ('company_id', '=', self.company_id.id),
+                ('type', '=', 'sale'),
+                ('l10n_latam_use_documents', '=', True),
+            ], limit=1)
+
+        if candidate_journal:
+            vals['journal_id'] = candidate_journal.id
+
+        return vals
+
     def _generate_pos_order_invoice(self):
         invoice = super()._generate_pos_order_invoice()
         for order in self:
