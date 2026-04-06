@@ -8,6 +8,8 @@
             <t t-set="afip_font_size" t-value="is_58 ? '11px' : '13px'"/>
             <t t-set="afip_barcode_height" t-value="is_58 ? 60 : 74"/>
 
+            <div style="margin-top: 8px; font-size: 10px; text-align: center; border-top: 1px dashed #000; padding-top: 4px;">TICKET ARCA v2</div>
+
             <div t-if="afip &amp;&amp; afip.cae" t-att-style="'margin-top: 12px; border-top: 1px dashed #000; padding-top: 10px; font-size: ' + afip_font_size + '; font-family: monospace; line-height: 1.25; text-align: left;'">
                 <div t-if="afip.company_name" t-esc="afip.company_name" style="font-weight: 700;"/>
                 <div t-if="afip.company_cuit">CUIT: <span t-esc="afip.company_cuit"/></div>
