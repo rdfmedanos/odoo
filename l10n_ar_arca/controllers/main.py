@@ -32,7 +32,7 @@ class AfipBillingController(http.Controller):
             
             pdf_http = request.make_response(pdf_content, [
                 ('Content-Type', 'application/pdf'),
-                ('Content-Disposition', f'attachment; filename=Factura_{invoice.name.replace("/", "_")}.pdf'),
+                ('Content-Disposition', f'inline; filename=Factura_{invoice.name.replace("/", "_")}.pdf'),
             ])
             
             return pdf_http
