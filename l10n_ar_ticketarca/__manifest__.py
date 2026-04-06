@@ -22,11 +22,6 @@
             'l10n_ar_ticketarca/static/src/js/receipt_screen_afip_patch.js',
             'l10n_ar_ticketarca/static/src/xml/order_receipt_afip.xml',
         ],
-        'point_of_sale.assets': [
-            'l10n_ar_ticketarca/static/src/js/order_afip_patch.js',
-            'l10n_ar_ticketarca/static/src/js/receipt_screen_afip_patch.js',
-            'l10n_ar_ticketarca/static/src/xml/order_receipt_afip.xml',
-        ],
     },
     'installable': True,
     'application': False,

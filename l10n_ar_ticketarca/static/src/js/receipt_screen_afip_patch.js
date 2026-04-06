@@ -16,14 +16,18 @@ patch(ReceiptScreen.prototype, {
                 return;
             }
 
-            const afipData = await this.orm.call(
-                "pos.order",
-                "l10n_ar_get_ticket_afip_data",
-                [order.server_id]
-            );
+            try {
+                const afipData = await this.orm.call(
+                    "pos.order",
+                    "l10n_ar_get_ticket_afip_data",
+                    [order.server_id]
+                );
 
-            if (afipData && afipData.cae) {
-                order.l10nArAfipData = afipData;
+                if (afipData && afipData.cae) {
+                    order.l10nArAfipData = afipData;
+                }
+            } catch {
+                order.l10nArAfipData = null;
             }
         });
     },
