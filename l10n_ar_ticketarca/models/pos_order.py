@@ -1,10 +1,32 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from odoo import api, fields, models
+
+
+_logger = logging.getLogger(__name__)
 
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
+
+    def _generate_pos_order_invoice(self):
+        invoice = super()._generate_pos_order_invoice()
+        for order in self:
+            move = order.account_move or invoice
+            if not move or move.cae:
+                continue
+            if move.move_type not in ('out_invoice', 'out_refund'):
+                continue
+            if not move.company_id.afip_ws_environment or not move.l10n_ar_afip_available:
+                continue
+            try:
+                move.afip_document_type = move._get_afip_document_type()
+                move.action_request_afip_cae()
+            except Exception:
+                _logger.exception("No se pudo autorizar ARCA automaticamente para POS %s", order.name)
+        return invoice
 
     @api.model
     def _l10n_ar_ticketarca_fmt_amount(self, amount):
@@ -35,10 +57,33 @@ class PosOrder(models.Model):
     @api.model
     def l10n_ar_get_ticket_afip_data(self, order_id):
         order = self.browse(order_id).exists()
+        return order._l10n_ar_build_ticket_afip_data()
+
+    @api.model
+    def l10n_ar_get_ticket_afip_data_by_uuid(self, order_uuid):
+        order = self.search([('uuid', '=', order_uuid)], limit=1)
+        return order._l10n_ar_build_ticket_afip_data()
+
+    def _l10n_ar_build_ticket_afip_data(self):
+        self.ensure_one()
+        order = self
         if not order or not order.account_move:
             return {}
 
         move = order.account_move
+        if (
+            not move.cae
+            and move.state == 'posted'
+            and move.move_type in ('out_invoice', 'out_refund')
+            and move.company_id.afip_ws_environment
+            and move.l10n_ar_afip_available
+        ):
+            try:
+                move.afip_document_type = move._get_afip_document_type()
+                move.action_request_afip_cae()
+            except Exception:
+                _logger.exception("No se pudo obtener CAE al preparar ticket POS %s", order.name)
+
         company = order.company_id
         partner = order.partner_id
         invoice_date = move.invoice_date or order.date_order.date()

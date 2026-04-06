@@ -58,5 +58,14 @@
         <xpath expr="//div[hasclass('pos-receipt-amount') and hasclass('receipt-change')]" position="attributes">
             <attribute name="style">font-family: monospace; font-size: 13px;</attribute>
         </xpath>
+
+        <xpath expr="//div[contains(@class, 'gap-2') and contains(@class, 'd-flex') and contains(@class, 'flex-row') and contains(@class, 'pt-3')]" position="replace">
+            <t t-set="afip" t-value="order.l10n_ar_afip_data"/>
+            <div t-if="afip and afip.qr_image" class="pt-3 text-center" style="font-family: monospace; font-size: 13px;">
+                <img t-att-src="'data:image/png;base64,' + afip.qr_image" style="width: 180px; height: 180px;" alt="QR ARCA"/>
+                <div class="pt-2"><strong>CAE:</strong> <t t-out="afip.cae"/></div>
+                <div><strong>Vto. CAE:</strong> <t t-out="afip.cae_due_date"/></div>
+            </div>
+        </xpath>
     </t>
 </templates>

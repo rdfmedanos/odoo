@@ -20,6 +20,7 @@
         'point_of_sale._assets_pos': [
             'l10n_ar_ticketarca/static/src/css/pos_receipts.css',
             'l10n_ar_ticketarca/static/src/js/order_payment_validation_patch.js',
+            'l10n_ar_ticketarca/static/src/js/receipt_afip_data_patch.js',
             'l10n_ar_ticketarca/static/src/xml/order_receipt_afip.xml',
         ],
     },
