@@ -8,7 +8,6 @@
                 <div t-if="receipt.company.street">
                     Direccion: <t t-esc="receipt.company.street"/>
                     <t t-if="receipt.company.city">, <t t-esc="receipt.company.city"/></t>
-                    <t t-if="receipt.company.state_id">, <t t-esc="receipt.company.state_id[1]"/></t>
                 </div>
                 <div t-if="receipt.company.phone">Telefono: <t t-esc="receipt.company.phone"/></div>
                 <div t-if="receipt.cashier">Usuario: <t t-esc="receipt.cashier"/></div>
@@ -34,7 +33,6 @@
                         <div>
                             CALLE: <t t-esc="receipt.client.street"/>
                             <t t-if="receipt.client.city">, <t t-esc="receipt.client.city"/></t>
-                            <t t-if="receipt.client.state_id">, <t t-esc="receipt.client.state_id[1]"/></t>
                         </div>
                     </t>
                     <t t-if="receipt.client.email"><div>Email: <t t-esc="receipt.client.email"/></div></t>
@@ -57,14 +55,15 @@
 
         <xpath expr="//div[@class='orderlines']" position="replace">
             <div class="orderlines" style="font-family: monospace; line-height: 1.25;">
-                <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id">
+                <t t-set="orderlines" t-value="(receipt &amp;&amp; receipt.orderlines) ? receipt.orderlines : []"/>
+                <t t-foreach="orderlines" t-as="line" t-key="line.id">
                     <t t-if="line.price != 0">
                         <div>
                             <t t-esc="line.product_name_wrapped[0]"/>
                             <span t-esc="env.pos.format_currency_no_symbol(line.price_display)" class="pos-receipt-right-align"/>
                         </div>
                         <div class="pos-receipt-left-padding">
-                            <t t-esc="line.quantity"/> x <t t-esc="env.pos.format_currency_no_symbol(line.price_unit)"/>
+                            <t t-esc="line.quantity"/> x <t t-esc="env.pos.format_currency_no_symbol(line.price_display_one || line.price)"/>
                         </div>
                     </t>
                 </t>
@@ -74,7 +73,8 @@
                     <strong>Subtotal</strong>
                     <span t-esc="env.pos.format_currency(receipt.subtotal)" class="pos-receipt-right-align"/>
                 </div>
-                <div t-foreach="receipt.tax_details" t-as="tax" t-key="tax.id or tax.name">
+                <t t-set="tax_details" t-value="(receipt &amp;&amp; receipt.tax_details) ? receipt.tax_details : []"/>
+                <div t-foreach="tax_details" t-as="tax" t-key="tax.id || tax.name">
                     <strong><t t-esc="tax.name"/></strong>
                     <span t-esc="env.pos.format_currency_no_symbol(tax.amount)" class="pos-receipt-right-align"/>
                 </div>
