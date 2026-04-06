@@ -19,6 +19,7 @@
     'assets': {
         'point_of_sale._assets_pos': [
             'l10n_ar_ticketarca/static/src/css/pos_receipts.css',
+            'l10n_ar_ticketarca/static/src/js/receipt_no_invoice_open.js',
             'l10n_ar_ticketarca/static/src/xml/order_receipt_afip.xml',
         ],
     },
