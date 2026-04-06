@@ -2,7 +2,7 @@
 <templates id="template" xml:space="preserve">
     <t t-name="l10n_ar_ticketarca.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('pos-receipt')]" position="inside">
-            <t t-set="ticket" t-value="typeof props !== 'undefined' &amp;&amp; props &amp;&amp; props.data ? props.data : (typeof receipt !== 'undefined' ? receipt : {})"/>
+            <t t-set="ticket" t-value="props.data"/>
             <t t-set="afip" t-value="ticket &amp;&amp; ticket.l10n_ar_afip ? ticket.l10n_ar_afip : null"/>
             <t t-set="is_58" t-value="ticket &amp;&amp; ticket.l10n_ar_ticketarca_paper_width == '58'"/>
             <t t-set="afip_font_size" t-value="is_58 ? '10px' : '12px'"/>

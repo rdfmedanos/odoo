@@ -11,12 +11,17 @@ patch(ReceiptScreen.prototype, {
         this.orm = useService("orm");
 
         onWillStart(async () => {
-            const order = this.pos.get_order();
-            if (!order || !order.server_id) {
-                return;
-            }
-
             try {
+                const pos = this.pos;
+                if (!pos || !pos.get_order) {
+                    return;
+                }
+
+                const order = pos.get_order();
+                if (!order || !order.server_id) {
+                    return;
+                }
+
                 const afipData = await this.orm.call(
                     "pos.order",
                     "l10n_ar_get_ticket_afip_data",
