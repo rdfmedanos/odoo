@@ -11,7 +11,9 @@
     'website': 'https://agrosentinel.com',
     'category': 'Accounting/Localizations',
     'depends': ['l10n_ar_arca'],
-    'data': [],
+    'data': [
+        'data/compat_report_templates.xml',
+    ],
     'installable': True,
     'application': False,
     'auto_install': False,

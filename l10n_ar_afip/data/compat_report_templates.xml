@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_afip_v2">
+        <t t-call="l10n_ar_arca.report_invoice_afip_v2"/>
+    </template>
+
+    <template id="report_invoice_afip">
+        <t t-call="l10n_ar_arca.report_invoice_afip_v2"/>
+    </template>
+</odoo>
