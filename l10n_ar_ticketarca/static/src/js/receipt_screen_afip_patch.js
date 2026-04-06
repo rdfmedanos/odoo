@@ -36,4 +36,12 @@ patch(ReceiptScreen.prototype, {
             }
         });
     },
+
+    async _downloadInvoice() {
+        return true;
+    },
+
+    async downloadInvoice() {
+        return true;
+    },
 });
