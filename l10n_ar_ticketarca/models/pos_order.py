@@ -6,6 +6,11 @@ from odoo import api, fields, models
 class PosOrder(models.Model):
     _inherit = 'pos.order'
 
+    @api.model
+    def _l10n_ar_ticketarca_fmt_amount(self, amount):
+        amount = amount or 0.0
+        return ('%.2f' % amount).replace('.', ',')
+
     l10n_ar_afip_cae = fields.Char(
         related='account_move.cae',
         readonly=True,
@@ -36,6 +41,7 @@ class PosOrder(models.Model):
         move = order.account_move
         company = order.company_id
         partner = order.partner_id
+        invoice_date = move.invoice_date or order.date_order.date()
 
         company_address = ', '.join([
             part for part in [company.street, company.city, company.state_id.name if company.state_id else False] if part
@@ -43,6 +49,12 @@ class PosOrder(models.Model):
         partner_address = ', '.join([
             part for part in [partner.street, partner.city, partner.state_id.name if partner.state_id else False] if part
         ]) if partner else False
+
+        amount_untaxed = order.amount_total - order.amount_tax
+        amount_tax = order.amount_tax
+        amount_total = order.amount_total
+        amount_paid = order.amount_paid
+        amount_change = order.amount_return
 
         return {
             'cae': move.cae or False,
@@ -52,7 +64,7 @@ class PosOrder(models.Model):
             'barcode': move.afip_barcode or False,
             'invoice_number': move.afip_document_number or move.name or False,
             'invoice_letter': move.afip_document_type or False,
-            'invoice_date': fields.Date.to_string(move.invoice_date) if move.invoice_date else False,
+            'invoice_date': fields.Date.to_string(invoice_date) if invoice_date else False,
             'company_name': company.name or False,
             'company_cuit': company.afip_cuit or company.vat or False,
             'company_iibb': company.l10n_ar_afip_iibb or False,
@@ -67,9 +79,9 @@ class PosOrder(models.Model):
             'partner_email': partner.email if partner else False,
             'partner_phone': partner.phone if partner else False,
             'order_name': order.name or False,
-            'amount_untaxed': order.amount_total - order.amount_tax,
-            'amount_tax': order.amount_tax,
-            'amount_total': order.amount_total,
-            'amount_paid': order.amount_paid,
-            'amount_change': order.amount_return,
+            'amount_untaxed': self._l10n_ar_ticketarca_fmt_amount(amount_untaxed),
+            'amount_tax': self._l10n_ar_ticketarca_fmt_amount(amount_tax),
+            'amount_total': self._l10n_ar_ticketarca_fmt_amount(amount_total),
+            'amount_paid': self._l10n_ar_ticketarca_fmt_amount(amount_paid),
+            'amount_change': self._l10n_ar_ticketarca_fmt_amount(amount_change),
         }
