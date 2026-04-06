@@ -5,6 +5,9 @@
 
         <xpath expr="//div[hasclass('pt-3')][1]" position="replace">
             <div class="pt-2" style="font-family: monospace; line-height: 1.25; font-size: 13px; text-align: left;">
+                <div t-if="order.company_logo_base64" style="text-align: center; margin-bottom: 8px;">
+                    <img t-att-src="order.company_logo_base64" style="max-width: 140px; max-height: 80px;" alt="Logo"/>
+                </div>
                 <div t-if="order.company.vat">CUIT: <t t-out="order.company.vat"/></div>
                 <div t-if="order.company.street">
                     Direccion: <t t-out="order.company.street"/>
