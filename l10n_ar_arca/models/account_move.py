@@ -338,6 +338,8 @@ class AccountMove(models.Model):
         return report.report_action(self) if report else False
 
     def action_invoice_print(self):
+        if self.env.context.get('from_pos') or self.env.context.get('pos_session_id'):
+            return False
         customer_docs = self.filtered(lambda m: m.move_type in ('out_invoice', 'out_refund'))
         if customer_docs:
             return customer_docs._l10n_ar_afip_report_action()
@@ -347,6 +349,8 @@ class AccountMove(models.Model):
         return self._l10n_ar_afip_report_action()
 
     def action_print(self):
+        if self.env.context.get('from_pos') or self.env.context.get('pos_session_id'):
+            return False
         customer_docs = self.filtered(lambda m: m.move_type in ('out_invoice', 'out_refund'))
         if customer_docs:
             return customer_docs._l10n_ar_afip_report_action()
