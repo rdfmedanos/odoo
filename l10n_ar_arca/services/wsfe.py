@@ -130,9 +130,11 @@ class WSFEService:
         imp_total = invoice_data.get('importe_total', 0)
         imp_neto = invoice_data.get('importe_neto', 0)
         imp_iva = invoice_data.get('importe_iva', 0)
+        moneda = invoice_data.get('moneda', 'PES')
+        cotizacion = invoice_data.get('cotizacion', 1)
         iva_lines = invoice_data.get('iva_lines', [])
         
-        cbte_tipo = self.TIPO_COMPROBANTE.get(f'invoice_{tipo.lower()}', 6)
+        cbte_tipo = invoice_data.get('codigo_cbte') or self.TIPO_COMPROBANTE.get(f'invoice_{tipo.lower()}', 6)
         condicion_iva_id = self.CONDICION_IVA.get(condicion_iva.lower().replace(' ', '_'), 5)
         
         last_nro = self.get_last_voucher_number(pto_vta, cbte_tipo)
@@ -177,8 +179,8 @@ class WSFEService:
         <ImpOpEx>0.00</ImpOpEx>
         <ImpIVA>{imp_iva:.2f}</ImpIVA>
         <ImpTrib>0.00</ImpTrib>
-        <MonId>PES</MonId>
-        <MonCotiz>1</MonCotiz>
+        <MonId>{moneda}</MonId>
+        <MonCotiz>{cotizacion}</MonCotiz>
         <FchServDesde>{fecha}</FchServDesde>
         <FchServHasta>{fecha}</FchServHasta>
         <FchVtoPago>{fecha}</FchVtoPago>

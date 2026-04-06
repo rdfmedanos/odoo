@@ -91,6 +91,75 @@ class AccountMove(models.Model):
         source = self.afip_document_number or self.name or ''
         match = re.search(r'(\d+)$', source)
         return int(match.group(1)) if match else 0
+
+    def _get_afip_currency_data(self):
+        self.ensure_one()
+        currency = self.currency_id or self.company_id.currency_id
+        code_map = {
+            'ARS': 'PES',
+            'USD': 'DOL',
+            'EUR': '060',
+            'BRL': '012',
+            'UYU': '011',
+            'CLP': '033',
+            'PYG': '032',
+            'BOB': '024',
+        }
+        afip_code = code_map.get((currency.name or '').upper(), 'PES')
+
+        if currency == self.company_id.currency_id:
+            rate = 1.0
+        else:
+            rate = float(getattr(self, 'invoice_currency_rate', 0.0) or 0.0)
+            if not rate:
+                rate = currency._get_conversion_rate(
+                    currency,
+                    self.company_id.currency_id,
+                    self.company_id,
+                    self.invoice_date or self.date or fields.Date.context_today(self),
+                )
+
+        return afip_code, round(rate or 1.0, 6)
+
+    def _get_afip_receiver_document_data(self):
+        self.ensure_one()
+        partner = self.partner_id
+        vat_digits = ''.join(filter(str.isdigit, partner.vat or ''))
+
+        doc_type = False
+        if hasattr(partner, 'l10n_ar_partner_document_type') and partner.l10n_ar_partner_document_type:
+            doc_type = partner.l10n_ar_partner_document_type
+        elif hasattr(partner, 'l10n_latam_identification_type_id') and partner.l10n_latam_identification_type_id:
+            identification = partner.l10n_latam_identification_type_id
+            doc_type = (
+                getattr(identification, 'l10n_ar_afip_code', False)
+                or getattr(identification, 'code', False)
+                or identification.name
+            )
+
+        normalized = (doc_type or '').strip().lower()
+        if normalized in ('80', 'cuit'):
+            return 80, vat_digits or '0'
+        if normalized in ('86', 'cuil'):
+            return 86, vat_digits or '0'
+        if normalized in ('87', 'cdi'):
+            return 87, vat_digits or '0'
+        if normalized in ('89', 'le'):
+            return 89, vat_digits or '0'
+        if normalized in ('90', 'lc'):
+            return 90, vat_digits or '0'
+        if normalized in ('91', 'ci extranjera'):
+            return 91, vat_digits or '0'
+        if normalized in ('94', 'pasaporte'):
+            return 94, vat_digits or '0'
+        if normalized in ('96', 'dni'):
+            return 96, vat_digits or '0'
+
+        if len(vat_digits) == 11:
+            return 80, vat_digits
+        if len(vat_digits) in (7, 8):
+            return 96, vat_digits
+        return 99, vat_digits or '0'
     
     l10n_ar_afip_state = fields.Selection([
         ('draft', 'Borrador'),
@@ -115,22 +184,22 @@ class AccountMove(models.Model):
             else:
                 move.afip_barcode = False
     
-    @api.depends('cae', 'cae_due_date', 'date', 'partner_id', 'amount_total', 'amount_tax', 'amount_untaxed', 'afip_document_type', 'afip_document_number', 'journal_id.l10n_ar_afip_pto_vta')
+    @api.depends('cae', 'cae_due_date', 'date', 'invoice_date', 'partner_id', 'partner_id.vat', 'amount_total', 'amount_tax', 'amount_untaxed', 'afip_document_type', 'afip_document_number', 'move_type', 'journal_id.l10n_ar_afip_pto_vta', 'currency_id', 'invoice_currency_rate')
     def _compute_afip_qr_data(self):
         """Genera los datos para el código QR según especificación AFIP."""
         for move in self:
             if move.cae and move.cae_due_date:
                 company = move.company_id
-                partner = move.partner_id
+                fecha_base = move.invoice_date or move.date
+                fecha = fecha_base.strftime('%Y-%m-%d') if fecha_base else ''
 
-                fecha = move.date.strftime('%Y-%m-%d') if move.date else ''
-
-                nro_doc_receptor = (partner.vat or '0').replace('-', '').replace(' ', '')
-                tipo_doc_receptor = 80 if partner.vat else 99
+                tipo_doc_receptor, nro_doc_receptor = move._get_afip_receiver_document_data()
 
                 pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
 
                 tipo_cbte = move._get_tipo_comprobante_afip()
+
+                moneda, cotizacion = move._get_afip_currency_data()
 
                 imp_total = f"{move.amount_total:.2f}"
 
@@ -148,10 +217,10 @@ class AccountMove(models.Model):
                     'tipoCmp': tipo_cbte,
                     'nroCmp': move._get_qr_nro_cmp(),
                     'importe': float(imp_total),
-                    'moneda': 'PES',
-                    'ctz': 1,
+                    'moneda': moneda,
+                    'ctz': cotizacion,
                     'tipoDocRec': tipo_doc_receptor,
-                    'nroDocRec': int(nro_doc) if nro_doc else 0,
+                    'nroDocRec': int(nro_doc_receptor) if nro_doc_receptor else 0,
                     'tipoAut': 'E',
                     'codAut': int(cae_str),
                 }
@@ -169,12 +238,16 @@ class AccountMove(models.Model):
         """Retorna el código AFIP del tipo de comprobante."""
         self.ensure_one()
         tipo_map = {
-            'A': 1,
-            'B': 6,
-            'C': 11,
-            'M': 51,
+            ('out_invoice', 'A'): 1,
+            ('out_invoice', 'B'): 6,
+            ('out_invoice', 'C'): 11,
+            ('out_invoice', 'M'): 51,
+            ('out_refund', 'A'): 3,
+            ('out_refund', 'B'): 8,
+            ('out_refund', 'C'): 13,
+            ('out_refund', 'M'): 53,
         }
-        return tipo_map.get(self.afip_document_type, 6)
+        return tipo_map.get((self.move_type, self.afip_document_type), 6)
     
     @api.depends('afip_qr_data')
     def _compute_afip_qr_image(self):
@@ -238,27 +311,8 @@ class AccountMove(models.Model):
         
         partner = self.partner_id
         
-        tipo_doc = 99
-        nro_doc = '0'
-        
-        if hasattr(partner, 'l10n_ar_partner_document_type') and partner.l10n_ar_partner_document_type:
-            doc_type = partner.l10n_ar_partner_document_type
-        elif partner.vat and len(partner.vat.replace('-', '').replace(' ', '')) == 11:
-            doc_type = 'dni'
-        elif partner.vat and len(partner.vat.replace('-', '').replace(' ', '')) >= 11:
-            doc_type = 'cuit'
-        else:
-            doc_type = 'other'
-        
-        if doc_type == 'cuit':
-            tipo_doc = 80
-            nro_doc = (partner.vat or '').replace('-', '').replace(' ', '')
-        elif doc_type == 'dni':
-            tipo_doc = 96
-            nro_doc = partner.vat or '0'
-        else:
-            tipo_doc = 99
-            nro_doc = partner.vat or '0'
+        tipo_doc, nro_doc = self._get_afip_receiver_document_data()
+        moneda, cotizacion = self._get_afip_currency_data()
         
         imp_total = self.amount_total
         imp_neto = self.amount_untaxed
@@ -268,6 +322,7 @@ class AccountMove(models.Model):
         
         return {
             'tipo': self.afip_document_type or 'B',
+            'codigo_cbte': self._get_tipo_comprobante_afip(),
             'punto_vta': self.journal_id.l10n_ar_afip_pto_vta or self.company_id.afip_point_of_sale,
             'concepto': 2,
             'tipo_doc': tipo_doc,
@@ -278,6 +333,8 @@ class AccountMove(models.Model):
             'importe_neto': imp_neto,
             'importe_iva': iva_amount,
             'iva_lines': iva_lines,
+            'moneda': moneda,
+            'cotizacion': cotizacion,
         }
     
     def _get_afip_iva_lines(self) -> list:
