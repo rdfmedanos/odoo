@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="l10n_ar_ticketarca.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//ReceiptHeader" position="replace"/>
+
         <xpath expr="//div[hasclass('pt-3')][1]" position="replace">
             <div class="pt-2" style="font-family: monospace; line-height: 1.25; font-size: 13px; text-align: left;">
                 <div t-if="order.company.vat">CUIT: <t t-out="order.company.vat"/></div>
@@ -10,7 +12,7 @@
                     <t t-if="order.company.state_id and order.company.state_id.code" t-out="', ' + order.company.state_id.code"/>
                 </div>
                 <div t-if="order.company.phone">Telefono: <t t-out="order.company.phone"/></div>
-                <div>Usuario: <t t-out="order.getCashierName()"/></div>
+                <div>Atendido por: <t t-out="order.getCashierName()"/></div>
                 <hr/>
                 <div style="font-weight: 700;">FACTURA</div>
                 <div>NRO DE FACTURA: <t t-out="order.invoiceName or order.name"/></div>
