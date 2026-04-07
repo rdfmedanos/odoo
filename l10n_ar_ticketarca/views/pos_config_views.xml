@@ -5,7 +5,7 @@
         <field name="model">pos.config</field>
         <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='printing']" position="inside">
+            <xpath expr="//field[@name='iface_print_auto']" position="after">
                 <field name="l10n_ar_ticketarca_paper_width"/>
             </xpath>
         </field>
