@@ -569,13 +569,17 @@ fun testExtractSupplierName(headerBlocks: List<com.google.mlkit.vision.text.Text
 /**
  * Limpia bloques header removiendo montos y líneas irrelevantes
  * Solo mantiene info de emisor: nombre, CUIT, dirección, etc.
+ * 
+ * MÁS AGRESIVO: rechaza cualquier línea que parezca sospechosa
  */
 fun cleanHeaderBlocks(blocks: List<com.google.mlkit.vision.text.Text.TextBlock>): List<com.google.mlkit.vision.text.Text.TextBlock> {
     val moneyPatterns = listOf(
         Regex("(TOTAL|SUBTOTAL|NETO|IMPORTE)[\\s:\\$]*[0-9.,]+"), // Totales
         Regex("^\\$?\\s*[0-9.,]+\\s*\\$?\\s*$"), // Solo número con símbolo
         Regex("(IVA|I\\.V\\.A\\.)\\s*[0-9.,]+"), // IVA value
-        Regex("^[0-9]{1,2}\\s*[,.]\\s*[0-9]{2}\\s*$") // Pequeños números (alícuotas)
+        Regex("^[0-9]{1,2}\\s*[,.]\\s*[0-9]{2}\\s*$"), // Pequeños números (alícuotas)
+        Regex("[0-9]{4,}"), // Números grandes (probablemente montos o CAE)
+        Regex("^\\s*\\$") // Comienza con símbolo de moneda
     )
     
     return blocks.filter { block ->
@@ -585,8 +589,16 @@ fun cleanHeaderBlocks(blocks: List<com.google.mlkit.vision.text.Text.TextBlock>)
         // Descartar líneas que sean principalmente números/montos
         val isMoney = moneyPatterns.any { it.containsMatchIn(textUpper) }
         
+        // Descartar líneas que sean mainly numbers
+        val digitCount = text.count { it.isDigit() }
+        val digitRatio = if (text.isNotEmpty()) digitCount.toDouble() / text.length else 0.0
+        val isMostlyNumbers = digitRatio > 0.3
+        
         if (isMoney) {
-            Log.d(TAG, "Removiendo de header (detectado monto): '$text'")
+            Log.d(TAG, "cleanHeaderBlocks: removiendo (monto): '$text'")
+            false
+        } else if (isMostlyNumbers) {
+            Log.d(TAG, "cleanHeaderBlocks: removiendo (mostly numbers ${"%.0f".format(digitRatio * 100)}%): '$text'")
             false
         } else {
             true

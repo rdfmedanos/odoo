@@ -65,37 +65,91 @@ class InvoiceOcrProcessor @Inject constructor() {
         
         // Función auxiliar para detectar si un bloque contiene un monto
         fun isMoneyBlock(text: String): Boolean {
-            val moneyPattern = Regex("(TOTAL|SUBTOTAL|NETO|IMPORTE|IVA)[\\s:\\$]*[0-9.,]+")
-            return moneyPattern.containsMatchIn(text.uppercase())
+            val textUpper = text.uppercase()
+            // Patrones que indican que es dinero/total
+            return Regex("(TOTAL|SUBTOTAL|NETO|IMPORTE|IVA)[\\s:\\$]*[0-9.,]+").containsMatchIn(textUpper) ||
+                   Regex("^\\$?\\s*[0-9.,]+\\s*(\\$|ARS)?\\s*$").matches(text.trim()) || // Solo dinero: "$1234,56"
+                   Regex("\\b(TOTAL|SUBTOTAL|NETO|IMPORTE|IVA)\\b").containsMatchIn(textUpper) && 
+                   Regex("[0-9.,]{4,}").containsMatchIn(text) // Palabra de total + números largos
         }
         
-        Log.d(TAG, "\n--- CLASIFICANDO BLOQUES POR POSICIÓN Y ---")
+        Log.d(TAG, "\n--- CLASIFICANDO BLOQUES CON HEURÍSTICA MEJORADA ---")
+        
+        // Primera pasada: identificar bloques especiales
+        val moneyBlockIndices = mutableSetOf<Int>()
+        val productHeaderIndices = mutableSetOf<Int>()
+        
         for ((index, block) in textBlocks.withIndex()) {
-            val blockCenterY = (block.boundingBox?.top ?: 0) + ((block.boundingBox?.bottom ?: 0) - (block.boundingBox?.top ?: 0)) / 2
+            val textUpper = block.text.uppercase()
             
-            val texto = block.text.replace("\n", " ")
-            Log.d(TAG, "Block[$index] Y=$blockCenterY → '$texto'")
-            Log.d(TAG, "           Bounds: top=${block.boundingBox?.top}, bottom=${block.boundingBox?.bottom}")
-            
-            // Si es claramente un monto/total, ir a footer sin importar posición
-            if (isMoneyBlock(texto)) {
-                footerBlocks.add(block)
-                Log.d(TAG, "        ✓ ABAJO (DETECTADO COMO MONTO)")
-                continue
+            // Detectar totales/montos
+            if (Regex("\\b(TOTAL|SUBTOTAL|NETO|IMPORTE)\\b").containsMatchIn(textUpper)) {
+                moneyBlockIndices.add(index)
+                Log.d(TAG, "Bloque $index es TOTAL/DINERO")
             }
             
+            // Detectar encabezado de productos
+            if (Regex("\\b(CANTIDAD|CANT|DESC|DESCRIPCIÓN|PRECIO|UNITARIO|VALOR)\\b").containsMatchIn(textUpper)) {
+                productHeaderIndices.add(index)
+                Log.d(TAG, "Bloque $index es ENCABEZADO DE PRODUCTOS")
+            }
+        }
+        
+        // Segunda pasada: clasificar bloques
+        for ((index, block) in textBlocks.withIndex()) {
+            val blockCenterY = (block.boundingBox?.top ?: 0) + ((block.boundingBox?.bottom ?: 0) - (block.boundingBox?.top ?: 0)) / 2
+            val texto = block.text.replace("\n", " ")
+            val textUpper = texto.uppercase()
+            
+            Log.d(TAG, "Block[$index] Y=$blockCenterY → '$texto'")
+            
             when {
+                // Si es identificado como dinero, va a footer SIEMPRE
+                index in moneyBlockIndices -> {
+                    footerBlocks.add(block)
+                    Log.d(TAG, "        ✓ ABAJO (DINERO DETECTADO)")
+                }
+                // Si es encabezado de productos, va a productos
+                index in productHeaderIndices -> {
+                    productBlocks.add(block)
+                    Log.d(TAG, "        ✓ CENTRO (ENCABEZADO PRODUCTOS)")
+                }
+                // Si hay dinero después, cualquier bloque numérico va a footer
+                moneyBlockIndices.isNotEmpty() && index > moneyBlockIndices.minOrNull()!! -> {
+                    if (Regex("[0-9.,]{5,}").containsMatchIn(texto)) {
+                        footerBlocks.add(block)
+                        Log.d(TAG, "        ✓ ABAJO (DESPUÉS DE DINERO + NÚMEROS)")
+                    } else {
+                        productBlocks.add(block)
+                        Log.d(TAG, "        ✓ CENTRO (DESPUÉS DE DINERO)")
+                    }
+                }
+                // Clasificar por posición Y si hay encabezado de productos
+                productHeaderIndices.isNotEmpty() -> {
+                    val productHeaderY = textBlocks[productHeaderIndices.minOrNull()!!].boundingBox?.top ?: (imageHeight / 3)
+                    when {
+                        blockCenterY < productHeaderY -> {
+                            headerBlocks.add(block)
+                            Log.d(TAG, "        ✓ ARRIBA (ANTES DE ENCABEZADO PRODUCTOS)")
+                        }
+                        else -> {
+                            productBlocks.add(block)
+                            Log.d(TAG, "        ✓ CENTRO (DESPUÉS DE ENCABEZADO)")
+                        }
+                    }
+                }
+                // Si no hay referencias, usar posición Y
                 blockCenterY < quarterY -> {
                     headerBlocks.add(block)
-                    Log.d(TAG, "        ✓ ARRIBA (EMISOR/FACTURA)")
+                    Log.d(TAG, "        ✓ ARRIBA (POR POSICIÓN Y)")
                 }
                 blockCenterY < threeQuarterY -> {
                     productBlocks.add(block)
-                    Log.d(TAG, "        ✓ CENTRO (PRODUCTOS)")
+                    Log.d(TAG, "        ✓ CENTRO (POR POSICIÓN Y)")
                 }
                 else -> {
                     footerBlocks.add(block)
-                    Log.d(TAG, "        ✓ ABAJO (TOTALES)")
+                    Log.d(TAG, "        ✓ ABAJO (POR POSICIÓN Y)")
                 }
             }
         }
