@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_sale_order_arca">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                        <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
+                            <t t-set="company_cuit" t-value="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
+                            <t t-set="company_iibb" t-value="o.company_id.l10n_ar_afip_iibb or company_cuit"/>
+
+                            <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff;">
+                                            <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px;"/></t>
+                                            <t t-else=""><strong><span t-field="o.company_id.name"/></strong></t>
+                                        </td>
+                                        <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
+                                            <div style="display: flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1.1;">Documento<br/>comercial</div>
+                                        </td>
+                                        <td style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #d1d1d1; border-right: 1px solid #d1d1d1;">
+                                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px;">
+                                                <div style="font-size: 22pt; line-height: 1; font-weight: 700;">P</div>
+                                                <div style="font-size: 11pt; line-height: 1.1;">Presupuesto</div>
+                                            </div>
+                                        </td>
+                                        <td style="width: 42%; padding: 5px 8px; vertical-align: top;">
+                                            <div style="margin-left: 20%;">
+                                                <div style="font-size: 16pt; font-weight: 700; line-height: 1;">PRESUPUESTO</div>
+                                                <div style="font-size: 10pt; margin-top: 3px;">Fecha: <span t-field="o.date_order"/></div>
+                                                <div style="font-size: 12pt; line-height: 1.1;"><span t-field="o.name"/></div>
+                                                <div style="font-size: 8pt; margin-top: 2px;">Validez: <t t-if="o.validity_date"><span t-field="o.validity_date"/></t><t t-else="">Sin fecha de vencimiento</t></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="border: 1px solid #666; border-radius: 7px; padding: 7px 8px; margin-bottom: 6px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="width: 50%; vertical-align: top; font-size: 10pt; line-height: 1.4;">
+                                            <div style="font-weight: 700;"><span t-field="o.company_id.name"/></div>
+                                            <div><span t-field="o.company_id.street"/></div>
+                                            <div>
+                                                <t t-if="o.company_id.city"><span t-field="o.company_id.city"/></t>
+                                                <t t-if="o.company_id.state_id"> <span t-field="o.company_id.state_id"/></t>
+                                                <t t-if="o.company_id.zip"> <span t-field="o.company_id.zip"/></t>
+                                            </div>
+                                            <div><t t-if="o.company_id.country_id"><span t-field="o.company_id.country_id"/></t></div>
+                                        </td>
+                                        <td style="width: 50%; vertical-align: top; font-size: 10pt; line-height: 1.4;">
+                                            <div><strong>CUIT:</strong> <span t-esc="company_cuit"/></div>
+                                            <div><strong>Ingresos Brutos:</strong> <span t-esc="company_iibb"/></div>
+                                            <div><strong>Moneda:</strong> <span t-esc="o.currency_id.name"/></div>
+                                            <div><strong>Vendedor:</strong> <span t-field="o.user_id"/></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="border: 1px solid #666; border-radius: 7px; padding: 7px 8px; margin-bottom: 9px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="width: 17%; font-size: 10pt; font-weight: 700; vertical-align: top;">Cliente</td>
+                                        <td style="width: 33%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
+                                            <div><span t-field="o.partner_id"/></div>
+                                            <div><span t-field="o.partner_id.street"/></div>
+                                            <div>
+                                                <t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t>
+                                                <t t-if="o.partner_id.state_id"> <span t-field="o.partner_id.state_id"/></t>
+                                                <t t-if="o.partner_id.zip"> <span t-field="o.partner_id.zip"/></t>
+                                            </div>
+                                            <div><t t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id"/></t></div>
+                                        </td>
+                                        <td style="width: 50%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
+                                            <div><strong>CUIT:</strong> <span t-field="o.partner_id.vat"/></div>
+                                            <div style="margin-top: 5px;"><strong>Email:</strong> <span t-field="o.partner_id.email"/></div>
+                                            <div><strong>Telefono:</strong> <span t-field="o.partner_id.phone"/></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt; margin-bottom: 6px;">
+                                <thead>
+                                    <tr style="border-top: 1px solid #c8ccd2; border-bottom: 1px solid #c8ccd2;">
+                                        <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
+                                        <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
+                                        <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
+                                        <th style="text-align: right; padding: 4px 6px; width: 14%; white-space: nowrap;">Precio Unitario</th>
+                                        <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Desc.(%)</th>
+                                        <th style="text-align: right; padding: 4px 8px 4px 6px; width: 14%; white-space: nowrap;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.order_line" t-as="line">
+                                        <tr t-if="not line.display_type">
+                                            <td style="padding: 7px 8px 2px 8px; white-space: nowrap;"><span t-field="line.product_id.default_code"/></td>
+                                            <td style="padding: 7px 6px 2px 6px; white-space: normal; word-break: break-word;"><span t-field="line.name"/></td>
+                                            <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.product_uom_qty"/></td>
+                                            <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                            <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.discount"/></td>
+                                            <td style="padding: 7px 8px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-top: 22mm;">
+                                <tr>
+                                    <td style="width: 68%; vertical-align: top;">
+                                        <div><strong>Condiciones de pago:</strong> <span t-field="o.payment_term_id"/></div>
+                                        <div style="margin-top: 4px;"><strong>Notas:</strong></div>
+                                        <div style="font-size: 9pt;"><span t-field="o.note"/></div>
+                                    </td>
+                                    <td style="width: 32%; vertical-align: top;">
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <tr style="border-top: 1px solid #5b5b5b;">
+                                                <td style="padding: 7px 2px; font-weight: 700;">Subtotal</td>
+                                                <td style="padding: 7px 2px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                            </tr>
+                                            <tr style="border-top: 1px solid #c8ccd2;">
+                                                <td style="padding: 7px 2px; font-weight: 700;">Impuestos</td>
+                                                <td style="padding: 7px 2px; text-align: right;"><span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                            </tr>
+                                            <tr style="border-top: 1px solid #5b5b5b;">
+                                                <td style="padding: 9px 2px; font-size: 15pt; font-weight: 700;">Total</td>
+                                                <td style="padding: 9px 2px; text-align: right; font-size: 15pt;"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
