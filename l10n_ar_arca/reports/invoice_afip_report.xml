@@ -37,7 +37,7 @@
                     <div class="card-afip">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                            <td style="width: 28%; padding: 6px 8px; vertical-align: middle;">
+                            <td style="width: 28%; padding: 6px 8px; vertical-align: middle; text-align: center;">
                                     <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px;"/></t>
                                     <t t-else=""><strong><span t-field="o.company_id.name"/></strong></t>
                                 </td>
