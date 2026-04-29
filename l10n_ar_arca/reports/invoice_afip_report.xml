@@ -109,8 +109,7 @@
                         </table>
                     </div>
 
-                    <div style="font-size: 10pt; font-weight: 700;">Moneda:</div>
-                    <div style="font-size: 11pt; margin-top: 1px; margin-bottom: 8px;"><span t-esc="o.currency_id.name"/></div>
+                    <div style="font-size: 10pt; font-weight: 700; margin-bottom: 8px;">Moneda: <span t-esc="o.currency_id.name"/></div>
 
                     <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt; margin-bottom: 6px;">
                         <thead>
