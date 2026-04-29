@@ -85,42 +85,10 @@
                                 .presupuesto-doc .totals-value {
                                     text-align: right;
                                 }
-                                .presupuesto-doc .header-left-cell {
-                                    border-top-left-radius: 8px;
-                                    border-bottom-left-radius: 8px;
-                                    background-clip: padding-box;
-                                }
-                                .presupuesto-doc .header-right-cell {
-                                    border-top-right-radius: 8px;
-                                    border-bottom-right-radius: 8px;
-                                    background-clip: padding-box;
-                                }
-                                .presupuesto-doc .products-head th {
-                                    border: 0 !important;
-                                    border-bottom: 0 !important;
-                                    padding: 6px 6px !important;
-                                    line-height: 1.2;
-                                    box-sizing: border-box;
-                                    color: #ffffff !important;
-                                }
-                                .presupuesto-doc .products-head th:not(:last-child) {
-                                    box-shadow: none !important;
-                                    border-right: 0 !important;
-                                }
-                                .presupuesto-doc .products-head th:first-child {
-                                    border-top-left-radius: 9px;
-                                }
-                                .presupuesto-doc .products-head th:last-child {
-                                    border-top-right-radius: 9px;
-                                }
-                                .presupuesto-doc .products-card {
-                                    border-top: 2px solid #8d97a5 !important;
-                                    background: #fff;
-                                }
-                                .presupuesto-doc .products-card table {
-                                    border-collapse: separate !important;
-                                    border-spacing: 0 !important;
-                                    margin-top: 0;
+                                .presupuesto-doc .conditions-right .card table,
+                                .presupuesto-doc .conditions-right .card tr,
+                                .presupuesto-doc .conditions-right .card td {
+                                    border-width: 0 !important;
                                 }
                                 .presupuesto-doc .conditions-flex {
                                     margin-top: 22mm;
@@ -220,18 +188,16 @@
                                 </table>
                             </div>
 
-                            <div class="products-card" style="border: 2px solid #8d97a5; background: #fff; margin-bottom: 6px; overflow: hidden;">
-                                <table style="width: 100%; border-collapse: separate !important; border-spacing: 0 !important; table-layout: fixed; font-size: 9pt;">
-                                <thead>
-                                    <tr class="products-head">
-                                        <th style="text-align: left; width: 12%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 8px; border-radius: 8px 0 0 0;">Codigo</th>
-                                        <th style="text-align: left; width: 40%; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 8px;">Descripcion</th>
-                                        <th style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 6px;">Cantidad</th>
-                                        <th style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 6px;">Precio Unitario</th>
-                                        <th style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 6px;">Desc.(%)</th>
-                                        <th style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 8px; border-radius: 0 8px 0 0;">Subtotal</th>
-                                    </tr>
-                                </thead>
+                            <div class="products-card" style="border: 2px solid #8d97a5; background: #fff; margin-bottom: 6px; border-radius: 10px; overflow: hidden;">
+                                <div t-attf-style="background: {{doc_color}}; display: table; width: 100%; font-size: 9pt;">
+                                    <div style="display: table-cell; color: #ffffff; text-align: left; width: 12%; padding: 6px 8px; font-weight: 700;">Codigo</div>
+                                    <div style="display: table-cell; color: #ffffff; text-align: left; width: 40%; padding: 6px 8px; font-weight: 700;">Descripcion</div>
+                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 10%; padding: 6px 6px; font-weight: 700;">Cantidad</div>
+                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 14%; padding: 6px 6px; font-weight: 700;">Precio Unitario</div>
+                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 10%; padding: 6px 6px; font-weight: 700;">Desc.(%)</div>
+                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 14%; padding: 6px 8px; font-weight: 700;">Subtotal</div>
+                                </div>
+                                <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <tbody>
                                     <t t-foreach="o.order_line" t-as="line">
                                         <tr t-if="not line.display_type">
