@@ -56,8 +56,6 @@
                                 .presupuesto-doc .conditions-right .card table,
                                 .presupuesto-doc .conditions-right .card tr,
                                 .presupuesto-doc .conditions-right .card td {
-                                    border-color: #8d97a5 !important;
-                                    border-style: solid !important;
                                     box-shadow: none !important;
                                     outline: none !important;
                                 }
@@ -68,6 +66,23 @@
                                 .presupuesto-doc .conditions-right .card tr,
                                 .presupuesto-doc .conditions-right .card td {
                                     border-width: 0 !important;
+                                }
+                                .presupuesto-doc .totals-line {
+                                    display: table;
+                                    width: 100%;
+                                }
+                                .presupuesto-doc .totals-line + .totals-line {
+                                    margin-top: 6px;
+                                }
+                                .presupuesto-doc .totals-label,
+                                .presupuesto-doc .totals-value {
+                                    display: table-cell;
+                                }
+                                .presupuesto-doc .totals-label {
+                                    font-weight: 700;
+                                }
+                                .presupuesto-doc .totals-value {
+                                    text-align: right;
                                 }
                                 .presupuesto-doc .header-left-cell {
                                     border-top-left-radius: 8px;
@@ -219,20 +234,18 @@
                                 </div>
                                 <div class="conditions-right">
                                     <div class="card" style="padding: 0 4px;">
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <tr>
-                                                <td style="padding: 7px 2px; font-weight: 700;">Subtotal</td>
-                                                <td style="padding: 7px 2px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                            </tr>
-                                            <tr class="soft-sep">
-                                                <td style="padding: 7px 2px; font-weight: 700;">Impuestos</td>
-                                                <td style="padding: 7px 2px; text-align: right;"><span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                            </tr>
-                                            <tr class="soft-sep">
-                                                <td style="padding: 9px 2px; font-size: 15pt; font-weight: 700;">Total</td>
-                                                <td style="padding: 9px 2px; text-align: right; font-size: 15pt;"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                                            </tr>
-                                        </table>
+                                        <div class="totals-line" style="padding: 7px 2px;">
+                                            <div class="totals-label">Subtotal</div>
+                                            <div class="totals-value"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                                        </div>
+                                        <div class="totals-line" style="padding: 7px 2px;">
+                                            <div class="totals-label">Impuestos</div>
+                                            <div class="totals-value"><span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                                        </div>
+                                        <div class="totals-line" style="padding: 9px 2px; font-size: 15pt;">
+                                            <div class="totals-label">Total</div>
+                                            <div class="totals-value"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
