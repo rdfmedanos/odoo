@@ -5,6 +5,7 @@
             <t t-foreach="docs" t-as="o">
                 <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                     <div class="page presupuesto-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
+                            <t t-set="doc_color" t-value="getattr(o.company_id, 'primary_color', False) or '#8d97a5'"/>
                             <style>
                                 .presupuesto-doc .card {
                                     border: 2px solid #8d97a5 !important;
@@ -95,7 +96,6 @@
                                     background-clip: padding-box;
                                 }
                                 .presupuesto-doc .products-head th {
-                                    background: #d7deea;
                                     border-top: 2px solid #8d97a5 !important;
                                 }
                                 .presupuesto-doc .products-head th:first-child {
@@ -204,12 +204,12 @@
                                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: transparent;">
                                     <tr class="products-head" style="border-bottom: 2px solid #8d97a5;">
-                                        <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
-                                        <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
-                                        <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
-                                        <th style="text-align: right; padding: 4px 6px; width: 14%; white-space: nowrap;">Precio Unitario</th>
-                                        <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Desc.(%)</th>
-                                        <th style="text-align: right; padding: 4px 8px 4px 6px; width: 14%; white-space: nowrap;">Subtotal</th>
+                                        <th t-attf-style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap; background: {{doc_color}}; color: #ffffff;">Codigo</th>
+                                        <th t-attf-style="text-align: left; padding: 4px 6px; width: 40%; background: {{doc_color}}; color: #ffffff;">Descripcion</th>
+                                        <th t-attf-style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap; background: {{doc_color}}; color: #ffffff;">Cantidad</th>
+                                        <th t-attf-style="text-align: right; padding: 4px 6px; width: 14%; white-space: nowrap; background: {{doc_color}}; color: #ffffff;">Precio Unitario</th>
+                                        <th t-attf-style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap; background: {{doc_color}}; color: #ffffff;">Desc.(%)</th>
+                                        <th t-attf-style="text-align: right; padding: 4px 8px 4px 6px; width: 14%; white-space: nowrap; background: {{doc_color}}; color: #ffffff;">Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
