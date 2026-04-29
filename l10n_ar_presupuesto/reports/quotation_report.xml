@@ -201,7 +201,7 @@
 
                             <div class="card" style="margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
-                                <thead style="background: #ffffff;">
+                                <thead style="background: #e6ebf1;">
                                     <tr class="products-head" style="border-bottom: 2px solid #8d97a5;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
