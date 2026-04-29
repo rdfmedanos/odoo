@@ -6,7 +6,7 @@
                 <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                     <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
 
-                            <div style="border: 1px solid #7a7a7a; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
+                            <div style="border: 1px solid #c8ccd2; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
                                         <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff; text-align: center;">
@@ -16,7 +16,7 @@
                                         <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
                                             <div style="display: flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1.1;">Documento<br/>comercial</div>
                                         </td>
-                                        <td style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #7a7a7a; border-right: 1px solid #7a7a7a;">
+                                        <td style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #c8ccd2; border-right: 1px solid #c8ccd2;">
                                             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px;">
                                                 <div style="font-size: 22pt; line-height: 1; font-weight: 700;">P</div>
                                                 <div style="font-size: 11pt; line-height: 1.1;">Presupuesto</div>
@@ -34,7 +34,7 @@
                                 </table>
                             </div>
 
-                            <div style="border: 1px solid #7a7a7a; border-radius: 7px; padding: 7px 8px; margin-bottom: 6px;">
+                            <div style="border: 1px solid #c8ccd2; border-radius: 7px; padding: 7px 8px; margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
                                         <td style="width: 17%; font-size: 10pt; font-weight: 700; vertical-align: top;">Empresa</td>
@@ -58,7 +58,7 @@
                                 </table>
                             </div>
 
-                            <div style="border: 1px solid #7a7a7a; border-radius: 7px; padding: 7px 8px; margin-bottom: 9px;">
+                            <div style="border: 1px solid #c8ccd2; border-radius: 7px; padding: 7px 8px; margin-bottom: 9px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
                                         <td style="width: 17%; font-size: 10pt; font-weight: 700; vertical-align: top;">Cliente</td>
@@ -81,10 +81,10 @@
                                 </table>
                             </div>
 
-                            <div style="border: 1px solid #7a7a7a; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
+                            <div style="border: 1px solid #c8ccd2; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
                             <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
-                                <thead style="background: #f6f6f6;">
-                                    <tr style="border-bottom: 1px solid #7a7a7a;">
+                                <thead style="background: #ffffff;">
+                                    <tr style="border-bottom: 1px solid #c8ccd2;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
                                         <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
@@ -116,17 +116,17 @@
                                         <div style="font-size: 9pt;"><span t-field="o.note"/></div>
                                     </td>
                                     <td style="width: 32%; vertical-align: top;">
-                                        <div style="border: 1px solid #7a7a7a; border-radius: 7px; overflow: hidden;">
+                                        <div style="border: 1px solid #c8ccd2; border-radius: 7px; overflow: hidden;">
                                         <table style="width: 100%; border-collapse: collapse;">
-                                            <tr style="border-top: 1px solid #7a7a7a;">
+                                            <tr>
                                                 <td style="padding: 7px 2px; font-weight: 700;">Subtotal</td>
                                                 <td style="padding: 7px 2px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                             </tr>
-                                            <tr style="border-top: 1px solid #7a7a7a;">
+                                            <tr style="border-top: 1px solid #c8ccd2;">
                                                 <td style="padding: 7px 2px; font-weight: 700;">Impuestos</td>
                                                 <td style="padding: 7px 2px; text-align: right;"><span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                             </tr>
-                                            <tr style="border-top: 1px solid #7a7a7a;">
+                                            <tr style="border-top: 1px solid #c8ccd2;">
                                                 <td style="padding: 9px 2px; font-size: 15pt; font-weight: 700;">Total</td>
                                                 <td style="padding: 9px 2px; text-align: right; font-size: 15pt;"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                             </tr>
