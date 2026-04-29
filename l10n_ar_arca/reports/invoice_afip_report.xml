@@ -26,7 +26,7 @@
                             border-color: transparent !important;
                         }
                     </style>
-                    <div class="page invoice-afip-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 36mm;">
+                    <div class="page invoice-afip-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 28mm;">
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
                     <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
@@ -170,7 +170,7 @@
                         </tr>
                     </table>
 
-                    <div class="card-afip" style="position: absolute; left: 6.4mm; right: 6.4mm; bottom: 8mm; padding: 6px 6px 3px 6px;">
+                    <div class="card-afip" style="position: absolute; left: 6.4mm; right: 6.4mm; bottom: 1mm; padding: 6px 6px 3px 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 28%; vertical-align: top; text-align: left; padding-left: 0;">
@@ -192,6 +192,9 @@
                                 </td>
                             </tr>
                         </table>
+                        <div style="text-align: center; font-size: 7pt; color: #4a4a4a; margin-top: 3px;">
+                            Con tecnologia <strong>Odoo</strong> por <strong>AxialPyme</strong>
+                        </div>
                     </div>
                     </div>
                 </div>
