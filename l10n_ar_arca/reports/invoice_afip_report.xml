@@ -126,15 +126,15 @@
                     <div class="card-afip" style="padding: 0;">
                         <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                             <thead>
-                                <tr t-attf-style="border-bottom: 1px solid #c8ccd2;">
-                                    <th t-attf-style="text-align: left; padding: 6px 8px; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; border-radius: 8px 0 0 0;">Codigo</th>
-                                    <th t-attf-style="text-align: left; padding: 6px 6px; width: 24%; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Descripcion</th>
-                                    <th t-attf-style="text-align: left; padding: 6px 6px; width: 17%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Documento Origen</th>
-                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Cantidad</th>
-                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 13%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Precio Unitario</th>
-                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 8%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Desc.(%)</th>
-                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 9%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Alicuota IVA</th>
-                                    <th t-attf-style="text-align: right; padding: 6px 8px 6px 6px; width: 9%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; border-radius: 0 8px 0 0;">Monto Final</th>
+                                <tr style="border-bottom: 1px solid #c8ccd2;">
+                                    <th t-attf-style="text-align: left; padding: 6px 8px; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color}}; border-radius: 8px 0 0 0;">Codigo</th>
+                                    <th t-attf-style="text-align: left; padding: 6px 6px; width: 24%; color: #ffffff; background: {{doc_color}};">Descripcion</th>
+                                    <th t-attf-style="text-align: left; padding: 6px 6px; width: 17%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Documento Origen</th>
+                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Cantidad</th>
+                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 13%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Precio Unitario</th>
+                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 8%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Desc.(%)</th>
+                                    <th t-attf-style="text-align: right; padding: 6px 6px; width: 9%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Alicuota IVA</th>
+                                    <th t-attf-style="text-align: right; padding: 6px 8px 6px 6px; width: 9%; white-space: nowrap; color: #ffffff; background: {{doc_color}}; border-radius: 0 8px 0 0;">Monto Final</th>
                                 </tr>
                             </thead>
                             <tbody>
