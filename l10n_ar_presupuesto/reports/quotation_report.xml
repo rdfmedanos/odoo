@@ -29,7 +29,7 @@
                                     box-shadow: inset 1px 0 0 #aeb6c1, inset -1px 0 0 #aeb6c1 !important;
                                 }
                                 .presupuesto-doc .soft-sep {
-                                    border-top: 1px solid #aeb6c1 !important;
+                                    border-top: 2px solid #8d97a5 !important;
                                 }
                                 .presupuesto-doc .totals-row,
                                 .presupuesto-doc .totals-row td {
@@ -61,6 +61,31 @@
                                     border-top-right-radius: 8px;
                                     border-bottom-right-radius: 8px;
                                     background-clip: padding-box;
+                                }
+                                .presupuesto-doc .products-head th {
+                                    background: #ffffff;
+                                }
+                                .presupuesto-doc .products-head th:first-child {
+                                    border-top-left-radius: 9px;
+                                }
+                                .presupuesto-doc .products-head th:last-child {
+                                    border-top-right-radius: 9px;
+                                }
+                                .presupuesto-doc .conditions-flex {
+                                    margin-top: 22mm;
+                                    font-size: 10pt;
+                                }
+                                .presupuesto-doc .conditions-left,
+                                .presupuesto-doc .conditions-right {
+                                    display: inline-block;
+                                    vertical-align: top;
+                                }
+                                .presupuesto-doc .conditions-left {
+                                    width: 68%;
+                                }
+                                .presupuesto-doc .conditions-right {
+                                    width: 31%;
+                                    margin-left: 1%;
                                 }
                             </style>
 
@@ -140,9 +165,9 @@
                             </div>
 
                             <div class="card" style="margin-bottom: 6px;">
-                            <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
+                                <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: #ffffff;">
-                                    <tr style="border-bottom: 1px solid #aeb6c1;">
+                                    <tr class="products-head" style="border-bottom: 2px solid #8d97a5;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
                                         <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
@@ -166,16 +191,14 @@
                             </table>
                             </div>
 
-                            <div class="conditions-wrap" style="margin-top: 22mm;">
-                            <table class="conditions-table" style="width: 100%; border-collapse: collapse; font-size: 10pt;">
-                                <tr class="totals-row">
-                                    <td style="width: 68%; vertical-align: top;">
-                                        <div><strong>Condiciones de pago:</strong> <span t-field="o.payment_term_id"/></div>
-                                        <div style="margin-top: 4px;"><strong>Notas:</strong></div>
-                                        <div style="font-size: 9pt;"><span t-field="o.note"/></div>
-                                    </td>
-                                    <td style="width: 32%; vertical-align: top;">
-                                        <div class="card" style="padding: 0 4px;">
+                            <div class="conditions-wrap conditions-flex">
+                                <div class="conditions-left">
+                                    <div><strong>Condiciones de pago:</strong> <span t-field="o.payment_term_id"/></div>
+                                    <div style="margin-top: 4px;"><strong>Notas:</strong></div>
+                                    <div style="font-size: 9pt;"><span t-field="o.note"/></div>
+                                </div>
+                                <div class="conditions-right">
+                                    <div class="card" style="padding: 0 4px;">
                                         <table style="width: 100%; border-collapse: collapse;">
                                             <tr>
                                                 <td style="padding: 7px 2px; font-weight: 700;">Subtotal</td>
@@ -190,10 +213,8 @@
                                                 <td style="padding: 9px 2px; text-align: right; font-size: 15pt;"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                             </tr>
                                         </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                                    </div>
+                                </div>
                             </div>
                     </div>
                 </div>
