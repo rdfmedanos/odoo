@@ -13,7 +13,7 @@
                                     background: #fff;
                                 }
                                 .presupuesto-doc .card table {
-                                    border-collapse: separate !important;
+                                    border-collapse: collapse !important;
                                     border-spacing: 0 !important;
                                 }
                                 .presupuesto-doc table,
@@ -26,6 +26,10 @@
                                 }
                                 .presupuesto-doc .line-sep-right {
                                     box-shadow: inset -2px 0 0 #7f8996;
+                                }
+                                .presupuesto-doc td.doc-type-box {
+                                    border-left: 2px solid #7f8996 !important;
+                                    border-right: 2px solid #7f8996 !important;
                                 }
                                 .presupuesto-doc .soft-sep {
                                     border-top: 2px solid #7f8996;
@@ -43,19 +47,31 @@
                                     box-shadow: none !important;
                                     outline: none !important;
                                 }
+                                .presupuesto-doc .conditions-wrap,
+                                .presupuesto-doc .conditions-wrap table,
+                                .presupuesto-doc .conditions-wrap tr,
+                                .presupuesto-doc .conditions-wrap td {
+                                    border: none !important;
+                                    box-shadow: none !important;
+                                    outline: none !important;
+                                }
+                                .presupuesto-doc .header-left-cell {
+                                    border-top-left-radius: 8px;
+                                    border-bottom-left-radius: 8px;
+                                }
                             </style>
 
                             <div class="card" style="margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
-                                        <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff; text-align: center;">
+                                        <td class="header-left-cell" style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff; text-align: center;">
                                             <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px; display: block; margin: 0 auto;"/></t>
                                             <t t-else=""><strong><span t-field="o.company_id.name"/></strong></t>
                                         </td>
                                         <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
                                             <div style="display: flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1.1;">Documento<br/>comercial</div>
                                         </td>
-                                        <td class="line-sep-left line-sep-right" style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff;">
+                                        <td class="doc-type-box" style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff;">
                                             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px;">
                                                 <div style="font-size: 22pt; line-height: 1; font-weight: 700;">P</div>
                                                 <div style="font-size: 11pt; line-height: 1.1;">Presupuesto</div>
@@ -147,7 +163,8 @@
                             </table>
                             </div>
 
-                            <table class="conditions-table" style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-top: 22mm;">
+                            <div class="conditions-wrap" style="margin-top: 22mm;">
+                            <table class="conditions-table" style="width: 100%; border-collapse: collapse; font-size: 10pt;">
                                 <tr class="totals-row">
                                     <td style="width: 68%; vertical-align: top;">
                                         <div><strong>Condiciones de pago:</strong> <span t-field="o.payment_term_id"/></div>
@@ -174,6 +191,7 @@
                                     </td>
                                 </tr>
                             </table>
+                            </div>
                     </div>
                 </div>
             </t>
