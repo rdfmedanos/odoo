@@ -74,18 +74,21 @@
                                 .presupuesto-doc .conditions-flex {
                                     margin-top: 22mm;
                                     font-size: 10pt;
+                                    width: 100%;
+                                    display: table;
+                                    table-layout: fixed;
                                 }
                                 .presupuesto-doc .conditions-left,
                                 .presupuesto-doc .conditions-right {
-                                    display: inline-block;
+                                    display: table-cell;
                                     vertical-align: top;
                                 }
                                 .presupuesto-doc .conditions-left {
                                     width: 68%;
                                 }
                                 .presupuesto-doc .conditions-right {
-                                    width: 31%;
-                                    margin-left: 1%;
+                                    width: 32%;
+                                    padding-left: 10px;
                                 }
                             </style>
 
