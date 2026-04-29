@@ -7,7 +7,7 @@
                     <div class="page presupuesto-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
                             <style>
                                 .presupuesto-doc .card {
-                                    border: 3px solid #8d97a5 !important;
+                                    border: 2px solid #8d97a5 !important;
                                     border-radius: 10px;
                                     overflow: hidden;
                                     background: #fff;
@@ -26,10 +26,10 @@
                                     border-color: transparent !important;
                                 }
                                 .presupuesto-doc td.doc-type-box {
-                                    box-shadow: inset 3px 0 0 #8d97a5, inset -3px 0 0 #8d97a5 !important;
+                                    box-shadow: inset 2px 0 0 #8d97a5, inset -2px 0 0 #8d97a5 !important;
                                 }
                                 .presupuesto-doc .soft-sep {
-                                    border-top: 3px solid #8d97a5 !important;
+                                    border-top: none !important;
                                 }
                                 .presupuesto-doc .totals-row,
                                 .presupuesto-doc .totals-row td {
@@ -62,7 +62,7 @@
                                     outline: none !important;
                                 }
                                 .presupuesto-doc .conditions-right .card {
-                                    border-width: 3px !important;
+                                    border-width: 2px !important;
                                 }
                                 .presupuesto-doc .conditions-right .card table,
                                 .presupuesto-doc .conditions-right .card tr,
@@ -187,7 +187,7 @@
                             <div class="card" style="margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: #ffffff;">
-                                    <tr class="products-head" style="border-bottom: 3px solid #8d97a5;">
+                                    <tr class="products-head" style="border-bottom: 2px solid #8d97a5;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
                                         <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
