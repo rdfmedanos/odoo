@@ -220,15 +220,15 @@
                             </div>
 
                             <div class="card products-card" style="margin-bottom: 6px;">
-                                <table style="width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 9pt;">
+                                <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: transparent;">
-                                    <tr class="products-head" t-attf-style="background: {{doc_color or '#8d97a5'}}; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
-                                        <th t-attf-style="text-align: left; width: 12%; white-space: nowrap; color: #ffffff;">Codigo</th>
-                                        <th t-attf-style="text-align: left; width: 40%; color: #ffffff;">Descripcion</th>
-                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff;">Cantidad</th>
-                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff;">Precio Unitario</th>
-                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff;">Desc.(%)</th>
-                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff;">Subtotal</th>
+                                    <tr class="products-head">
+                                        <th t-attf-style="text-align: left; width: 12%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Codigo</th>
+                                        <th t-attf-style="text-align: left; width: 40%; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Descripcion</th>
+                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Cantidad</th>
+                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Precio Unitario</th>
+                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Desc.(%)</th>
+                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
