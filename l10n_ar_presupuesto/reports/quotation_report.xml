@@ -9,8 +9,8 @@
                             <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
-                                        <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff;">
-                                            <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px;"/></t>
+                                        <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff; text-align: center;">
+                                            <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px; display: block; margin: 0 auto;"/></t>
                                             <t t-else=""><strong><span t-field="o.company_id.name"/></strong></t>
                                         </td>
                                         <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
@@ -29,6 +29,30 @@
                                                 <div style="font-size: 12pt; line-height: 1.1;"><span t-field="o.name"/></div>
                                                 <div style="font-size: 8pt; margin-top: 2px;">Validez: <t t-if="o.validity_date"><span t-field="o.validity_date"/></t><t t-else="">Sin fecha de vencimiento</t></div>
                                             </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="border: 1px solid #666; border-radius: 7px; padding: 7px 8px; margin-bottom: 6px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="width: 17%; font-size: 10pt; font-weight: 700; vertical-align: top;">Empresa</td>
+                                        <td style="width: 33%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
+                                            <div><span t-field="o.company_id.name"/></div>
+                                            <div><span t-field="o.company_id.street"/></div>
+                                            <div>
+                                                <t t-if="o.company_id.city"><span t-field="o.company_id.city"/></t>
+                                                <t t-if="o.company_id.state_id"> <span t-field="o.company_id.state_id"/></t>
+                                                <t t-if="o.company_id.zip"> <span t-field="o.company_id.zip"/></t>
+                                            </div>
+                                            <div><t t-if="o.company_id.country_id"><span t-field="o.company_id.country_id"/></t></div>
+                                        </td>
+                                        <td style="width: 50%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
+                                            <div><strong>CUIT:</strong> <span t-esc="o.company_id.afip_cuit or o.company_id.vat or '-'"/></div>
+                                            <div style="margin-top: 5px;"><strong>Ingresos Brutos:</strong> <span t-esc="o.company_id.l10n_ar_afip_iibb or '-'"/></div>
+                                            <div><strong>Email:</strong> <span t-field="o.company_id.email"/></div>
+                                            <div><strong>Telefono:</strong> <span t-field="o.company_id.phone"/></div>
                                         </td>
                                     </tr>
                                 </table>
@@ -57,9 +81,10 @@
                                 </table>
                             </div>
 
-                            <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt; margin-bottom: 6px;">
-                                <thead>
-                                    <tr style="border-top: 1px solid #c8ccd2; border-bottom: 1px solid #c8ccd2;">
+                            <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
+                            <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
+                                <thead style="background: #f6f6f6;">
+                                    <tr style="border-bottom: 1px solid #c8ccd2;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
                                         <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
@@ -81,6 +106,7 @@
                                     </t>
                                 </tbody>
                             </table>
+                            </div>
 
                             <table style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-top: 22mm;">
                                 <tr>
@@ -90,6 +116,7 @@
                                         <div style="font-size: 9pt;"><span t-field="o.note"/></div>
                                     </td>
                                     <td style="width: 32%; vertical-align: top;">
+                                        <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden;">
                                         <table style="width: 100%; border-collapse: collapse;">
                                             <tr style="border-top: 1px solid #5b5b5b;">
                                                 <td style="padding: 7px 2px; font-weight: 700;">Subtotal</td>
@@ -104,6 +131,7 @@
                                                 <td style="padding: 9px 2px; text-align: right; font-size: 15pt;"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                             </tr>
                                         </table>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
