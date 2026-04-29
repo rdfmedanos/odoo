@@ -109,7 +109,18 @@
                         </table>
                     </div>
 
-                    <div style="font-size: 10pt; font-weight: 700; margin-bottom: 8px;">Moneda: <span t-esc="o.currency_id.name"/></div>
+                    <div class="card-afip" style="padding: 7px 8px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 50%; vertical-align: top; font-size: 10pt; font-weight: 700;">
+                                    Moneda: <span t-esc="o.currency_id.name"/>
+                                </td>
+                                <td style="width: 50%; vertical-align: top; font-size: 10pt; line-height: 1.35;">
+                                    <strong>Atendido por:</strong> <span t-esc="o.env.user.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
                     <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt; margin-bottom: 6px;">
                         <thead>
