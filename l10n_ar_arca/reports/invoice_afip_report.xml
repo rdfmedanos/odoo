@@ -12,7 +12,7 @@
                     <t t-set="company_cuit" t-value="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
                     <t t-set="company_iibb" t-value="o.company_id.l10n_ar_afip_iibb or company_cuit"/>
 
-                    <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
+                    <div style="border: 2px solid #8d97a5; border-radius: 10px; margin-bottom: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                             <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff;">
@@ -40,9 +40,9 @@
                         </table>
                     </div>
 
-                    <div style="border: 1px solid #666; border-radius: 7px; padding: 2px 8px; margin-bottom: 6px; font-size: 11pt;">Fecha Vto: <span t-field="o.invoice_date_due"/></div>
+                    <div style="border: 2px solid #8d97a5; border-radius: 10px; padding: 2px 8px; margin-bottom: 6px; font-size: 11pt;">Fecha Vto: <span t-field="o.invoice_date_due"/></div>
 
-                    <div style="border: 1px solid #666; border-radius: 7px; padding: 7px 8px; margin-bottom: 6px;">
+                    <div style="border: 2px solid #8d97a5; border-radius: 10px; padding: 7px 8px; margin-bottom: 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 50%; vertical-align: top; font-size: 10pt; line-height: 1.4;">
@@ -65,7 +65,7 @@
                         </table>
                     </div>
 
-                    <div style="border: 1px solid #666; border-radius: 7px; padding: 7px 8px; margin-bottom: 9px;">
+                    <div style="border: 2px solid #8d97a5; border-radius: 10px; padding: 7px 8px; margin-bottom: 9px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 17%; font-size: 10pt; font-weight: 700; vertical-align: top;">Cliente</td>
@@ -148,7 +148,7 @@
                         </tr>
                     </table>
 
-                    <div style="position: absolute; left: 6.4mm; right: 6.4mm; bottom: -75mm; border: 1px solid #5f5f5f; padding: 8px 8px 4px 8px; min-height: 24mm; background: #ffffff;">
+                    <div style="position: absolute; left: 6.4mm; right: 6.4mm; bottom: -75mm; border: 2px solid #8d97a5; border-radius: 10px; padding: 8px 8px 4px 8px; min-height: 24mm; background: #ffffff;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 28%; vertical-align: top; text-align: left; padding-left: 0;">
