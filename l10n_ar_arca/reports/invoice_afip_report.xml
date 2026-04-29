@@ -161,8 +161,8 @@
                     <div class="card-afip" style="padding: 10px 12px;">
                         <table style="width: 100%; border-collapse: collapse; font-size: 10pt;">
                             <tr>
-                                <td style="padding: 5px 4px; font-weight: 700;">Subtotal</td>
-                                <td style="padding: 5px 4px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                <td style="width: 30%; padding: 5px 4px; font-weight: 700;">Subtotal</td>
+                                <td style="width: 70%; padding: 5px 4px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                             </tr>
                             <tr>
                                 <td style="padding: 5px 4px; font-weight: 700;">Impuesto</td>
