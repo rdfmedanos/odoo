@@ -189,20 +189,22 @@
                             </div>
 
                             <div class="products-card" style="border: 2px solid #8d97a5; background: #fff; margin-bottom: 6px; border-radius: 10px; overflow: hidden;">
-                                <div t-attf-style="background: {{doc_color}}; display: table; width: 100%; font-size: 9pt;">
-                                    <div style="display: table-cell; color: #ffffff; text-align: left; width: 12%; padding: 6px 8px; font-weight: 700;">Codigo</div>
-                                    <div style="display: table-cell; color: #ffffff; text-align: left; width: 40%; padding: 6px 8px; font-weight: 700;">Descripcion</div>
-                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 10%; padding: 6px 6px; font-weight: 700;">Cantidad</div>
-                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 14%; padding: 6px 6px; font-weight: 700;">Precio Unitario</div>
-                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 10%; padding: 6px 6px; font-weight: 700;">Desc.(%)</div>
-                                    <div style="display: table-cell; color: #ffffff; text-align: right; width: 14%; padding: 6px 8px; font-weight: 700;">Subtotal</div>
-                                </div>
                                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
+                                <thead>
+                                    <tr t-attf-style="background: {{doc_color}};">
+                                        <th style="color: #ffffff; text-align: left; width: 12%; padding: 6px 8px; font-weight: 700;">Codigo</th>
+                                        <th style="color: #ffffff; text-align: left; width: 40%; padding: 6px 8px; font-weight: 700;">Descripcion</th>
+                                        <th style="color: #ffffff; text-align: right; width: 10%; padding: 6px 6px; font-weight: 700;">Cantidad</th>
+                                        <th style="color: #ffffff; text-align: right; width: 14%; padding: 6px 6px; font-weight: 700;">Precio Unitario</th>
+                                        <th style="color: #ffffff; text-align: right; width: 10%; padding: 6px 6px; font-weight: 700;">Desc.(%)</th>
+                                        <th style="color: #ffffff; text-align: right; width: 14%; padding: 6px 8px; font-weight: 700;">Subtotal</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <t t-foreach="o.order_line" t-as="line">
                                         <tr t-if="not line.display_type">
                                             <td style="padding: 7px 8px 2px 8px; white-space: nowrap;"><span t-field="line.product_id.default_code"/></td>
-                                            <td style="padding: 7px 6px 2px 6px; white-space: normal; word-break: break-word;"><span t-field="line.name"/></td>
+                                            <td style="padding: 7px 8px 2px 8px; white-space: normal; word-break: break-word;"><span t-field="line.name"/></td>
                                             <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.product_uom_qty"/></td>
                                             <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                                             <td style="padding: 7px 6px 2px 6px; text-align: right; white-space: nowrap;"><span t-field="line.discount"/></td>
