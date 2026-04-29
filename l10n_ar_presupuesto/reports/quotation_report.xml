@@ -3,58 +3,28 @@
     <template id="report_sale_order_arca">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="web.external_layout">
-                    <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-                        <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
-                            <t t-set="company_cuit" t-value="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
-                            <t t-set="company_iibb" t-value="o.company_id.l10n_ar_afip_iibb or company_cuit"/>
+                <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                    <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
 
                             <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
-                                        <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff;">
-                                            <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px;"/></t>
-                                            <t t-else=""><strong><span t-field="o.company_id.name"/></strong></t>
-                                        </td>
-                                        <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
+                                        <td style="width: 18%; text-align: center; vertical-align: middle; font-size: 7pt;">
                                             <div style="display: flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1.1;">Documento<br/>comercial</div>
                                         </td>
-                                        <td style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #d1d1d1; border-right: 1px solid #d1d1d1;">
+                                        <td style="width: 20%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #d1d1d1; border-right: 1px solid #d1d1d1;">
                                             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px;">
                                                 <div style="font-size: 22pt; line-height: 1; font-weight: 700;">P</div>
                                                 <div style="font-size: 11pt; line-height: 1.1;">Presupuesto</div>
                                             </div>
                                         </td>
-                                        <td style="width: 42%; padding: 5px 8px; vertical-align: top;">
+                                        <td style="width: 62%; padding: 5px 8px; vertical-align: top;">
                                             <div style="margin-left: 20%;">
                                                 <div style="font-size: 16pt; font-weight: 700; line-height: 1;">PRESUPUESTO</div>
                                                 <div style="font-size: 10pt; margin-top: 3px;">Fecha: <span t-field="o.date_order"/></div>
                                                 <div style="font-size: 12pt; line-height: 1.1;"><span t-field="o.name"/></div>
                                                 <div style="font-size: 8pt; margin-top: 2px;">Validez: <t t-if="o.validity_date"><span t-field="o.validity_date"/></t><t t-else="">Sin fecha de vencimiento</t></div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div style="border: 1px solid #666; border-radius: 7px; padding: 7px 8px; margin-bottom: 6px;">
-                                <table style="width: 100%; border-collapse: collapse;">
-                                    <tr>
-                                        <td style="width: 50%; vertical-align: top; font-size: 10pt; line-height: 1.4;">
-                                            <div style="font-weight: 700;"><span t-field="o.company_id.name"/></div>
-                                            <div><span t-field="o.company_id.street"/></div>
-                                            <div>
-                                                <t t-if="o.company_id.city"><span t-field="o.company_id.city"/></t>
-                                                <t t-if="o.company_id.state_id"> <span t-field="o.company_id.state_id"/></t>
-                                                <t t-if="o.company_id.zip"> <span t-field="o.company_id.zip"/></t>
-                                            </div>
-                                            <div><t t-if="o.company_id.country_id"><span t-field="o.company_id.country_id"/></t></div>
-                                        </td>
-                                        <td style="width: 50%; vertical-align: top; font-size: 10pt; line-height: 1.4;">
-                                            <div><strong>CUIT:</strong> <span t-esc="company_cuit"/></div>
-                                            <div><strong>Ingresos Brutos:</strong> <span t-esc="company_iibb"/></div>
-                                            <div><strong>Moneda:</strong> <span t-esc="o.currency_id.name"/></div>
-                                            <div><strong>Vendedor:</strong> <span t-field="o.user_id"/></div>
                                         </td>
                                     </tr>
                                 </table>
@@ -133,9 +103,8 @@
                                     </td>
                                 </tr>
                             </table>
-                        </div>
                     </div>
-                </t>
+                </div>
             </t>
         </t>
     </template>
