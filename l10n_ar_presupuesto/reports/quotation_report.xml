@@ -171,8 +171,7 @@
                             <div class="card" style="padding: 7px 8px; margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
-                                        <td style="width: 17%; font-size: 10pt; font-weight: 700; vertical-align: top;">Empresa</td>
-                                        <td style="width: 33%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
+                                        <td style="width: 40%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
                                             <div><span t-field="o.company_id.name"/></div>
                                             <div><span t-field="o.company_id.street"/></div>
                                             <div>
@@ -182,7 +181,7 @@
                                             </div>
                                             <div><t t-if="o.company_id.country_id"><span t-field="o.company_id.country_id"/></t></div>
                                         </td>
-                                        <td style="width: 50%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
+                                        <td style="width: 60%; font-size: 10pt; line-height: 1.35; vertical-align: top;">
                                             <div>
                                                 <strong>CUIT:</strong> <span t-esc="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
                                                 <span> - </span>
