@@ -96,13 +96,15 @@
                                     background-clip: padding-box;
                                 }
                                 .presupuesto-doc .products-head th {
-                                    border-top: none !important;
+                                    border: 0 !important;
                                     border-bottom: 2px solid #8d97a5 !important;
                                     padding: 6px 6px !important;
                                     line-height: 1.2;
+                                    box-sizing: border-box;
                                 }
                                 .presupuesto-doc .products-head th:not(:last-child) {
-                                    box-shadow: inset -1px 0 0 #8d97a5;
+                                    box-shadow: none !important;
+                                    border-right: 1px solid #8d97a5 !important;
                                 }
                                 .presupuesto-doc .products-head th:first-child {
                                     border-top-left-radius: 9px;
@@ -111,7 +113,7 @@
                                     border-top-right-radius: 9px;
                                 }
                                 .presupuesto-doc .products-card {
-                                    border-top: 0 !important;
+                                    border-top: 1px solid #8d97a5 !important;
                                 }
                                 .presupuesto-doc .conditions-flex {
                                     margin-top: 22mm;
