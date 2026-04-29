@@ -115,9 +115,11 @@
                                 }
                                 .presupuesto-doc .products-card {
                                     border-top: 2px solid #8d97a5 !important;
-                                    border-radius: 0 !important;
+                                    background: #fff;
                                 }
                                 .presupuesto-doc .products-card table {
+                                    border-collapse: separate !important;
+                                    border-spacing: 0 !important;
                                     margin-top: 0;
                                 }
                                 .presupuesto-doc .conditions-flex {
@@ -218,16 +220,16 @@
                                 </table>
                             </div>
 
-                            <div class="card products-card" style="margin-bottom: 6px;">
-                                <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
+                            <div class="products-card" style="border: 2px solid #8d97a5; background: #fff; margin-bottom: 6px; overflow: hidden;">
+                                <table style="width: 100%; border-collapse: separate !important; border-spacing: 0 !important; table-layout: fixed; font-size: 9pt;">
                                 <thead>
-                                    <tr class="products-head" t-attf-style="background: {{doc_color or '#8d97a5'}};">
-                                        <th style="text-align: left; width: 12%; white-space: nowrap; color: #ffffff;">Codigo</th>
-                                        <th style="text-align: left; width: 40%; color: #ffffff;">Descripcion</th>
-                                        <th style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff;">Cantidad</th>
-                                        <th style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff;">Precio Unitario</th>
-                                        <th style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff;">Desc.(%)</th>
-                                        <th style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff;">Subtotal</th>
+                                    <tr class="products-head">
+                                        <th style="text-align: left; width: 12%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 8px; border-radius: 8px 0 0 0;">Codigo</th>
+                                        <th style="text-align: left; width: 40%; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 8px;">Descripcion</th>
+                                        <th style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 6px;">Cantidad</th>
+                                        <th style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 6px;">Precio Unitario</th>
+                                        <th style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 6px;">Desc.(%)</th>
+                                        <th style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}}; padding: 6px 8px; border-radius: 0 8px 0 0;">Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
