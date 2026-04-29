@@ -25,4 +25,11 @@
         <field name="binding_type">report</field>
         <field name="print_report_name">'Presupuesto_%s' % (object.name or 'draft').replace('/', '_')</field>
     </record>
+
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="report_name">l10n_ar_presupuesto.report_sale_order_arca</field>
+        <field name="report_file">l10n_ar_presupuesto.report_sale_order_arca</field>
+        <field name="paperformat_id" ref="l10n_ar_presupuesto.paperformat_presupuesto_a4"/>
+        <field name="print_report_name">'Presupuesto_%s' % (object.name or 'draft').replace('/', '_')</field>
+    </record>
 </odoo>

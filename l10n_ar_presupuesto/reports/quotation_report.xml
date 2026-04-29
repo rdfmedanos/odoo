@@ -115,6 +115,9 @@
                                 .presupuesto-doc .products-card {
                                     border-top: 2px solid #8d97a5 !important;
                                 }
+                                .presupuesto-doc .products-card table {
+                                    margin-top: 1px;
+                                }
                                 .presupuesto-doc .conditions-flex {
                                     margin-top: 22mm;
                                     font-size: 10pt;
@@ -136,7 +139,7 @@
                                 }
                             </style>
 
-                            <div class="card products-card" style="margin-bottom: 6px;">
+                            <div class="card" style="margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
                                         <td class="header-left-cell" style="width: 28%; padding: 6px 8px; vertical-align: middle; background: transparent; text-align: center;">
@@ -184,7 +187,6 @@
                                                 <span> - </span>
                                                 <span t-esc="(o.company_id.l10n_ar_afip_responsibility_type_id and o.company_id.l10n_ar_afip_responsibility_type_id.name) or (o.company_id.partner_id.l10n_ar_afip_responsibility_type_id and o.company_id.partner_id.l10n_ar_afip_responsibility_type_id.name) or '-'"/>
                                             </div>
-                                            <div style="margin-top: 5px;"><strong>Ingresos Brutos:</strong> <span t-esc="o.company_id.l10n_ar_afip_iibb or '-'"/></div>
                                             <div><strong>Email:</strong> <span t-field="o.company_id.email"/></div>
                                             <div><strong>Telefono:</strong> <span t-field="o.company_id.phone"/></div>
                                         </td>
@@ -215,7 +217,7 @@
                                 </table>
                             </div>
 
-                            <div class="card" style="margin-bottom: 6px;">
+                            <div class="card products-card" style="margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: transparent;">
                                     <tr class="products-head">
