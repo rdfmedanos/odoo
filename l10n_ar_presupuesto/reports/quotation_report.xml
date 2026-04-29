@@ -4,7 +4,14 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-                    <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
+                    <div class="page presupuesto-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
+                            <style>
+                                .presupuesto-doc table,
+                                .presupuesto-doc th,
+                                .presupuesto-doc td {
+                                    border: none !important;
+                                }
+                            </style>
 
                             <div style="border: 1px solid #c8ccd2; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
