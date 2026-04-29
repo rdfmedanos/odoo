@@ -157,27 +157,35 @@
                         </table>
                     </div>
 
-                    <div style="font-size: 10pt; margin-bottom: 4px;"><strong>Plazo de pago:</strong> <span t-field="o.invoice_payment_term_id"/></div>
-                    <div class="card-afip" style="padding: 10px 12px;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10pt;">
-                            <tr>
-                                <td style="width: 30%; padding: 5px 4px; font-weight: 700;">Subtotal</td>
-                                <td style="width: 70%; padding: 5px 4px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 5px 4px; font-weight: 700;">Impuesto</td>
-                                <td style="padding: 5px 4px; text-align: right; font-weight: 700;">Base&#160;&#160;Monto</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 4px 4px;">IVA 21%</td>
-                                <td style="padding: 4px 4px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>&#160;&#160;<span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 8px 4px; font-size: 15pt; font-weight: 700;">Total</td>
-                                <td style="padding: 8px 4px; text-align: right; font-size: 15pt;"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
-                            </tr>
-                        </table>
-                    </div>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 50%; vertical-align: top; font-size: 10pt; padding-right: 8px;">
+                                <div style="font-size: 10pt;"><strong>Plazo de pago:</strong> <span t-field="o.invoice_payment_term_id"/></div>
+                            </td>
+                            <td style="width: 50%; vertical-align: top;">
+                                <div class="card-afip" style="padding: 10px 12px;">
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 10pt;">
+                                        <tr>
+                                            <td style="width: 35%; padding: 5px 4px; font-weight: 700;">Subtotal</td>
+                                            <td style="width: 65%; padding: 5px 4px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 5px 4px; font-weight: 700;">Impuesto</td>
+                                            <td style="padding: 5px 4px; text-align: right; font-weight: 700;">Base&#160;&#160;Monto</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 4px 4px;">IVA 21%</td>
+                                            <td style="padding: 4px 4px; text-align: right;"><span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>&#160;&#160;<span t-field="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 8px 4px; font-size: 15pt; font-weight: 700;">Total</td>
+                                            <td style="padding: 8px 4px; text-align: right; font-size: 15pt;"><span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
                     <div class="card-afip" style="position: absolute; left: 6.4mm; right: 6.4mm; bottom: -1mm; padding: 6px 6px 3px 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
