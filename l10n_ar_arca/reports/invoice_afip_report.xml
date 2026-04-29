@@ -28,7 +28,7 @@
                     </style>
                     <div class="page invoice-afip-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative; padding-bottom: 28mm;">
                     <t t-set="doc_letter" t-value="o.afip_document_type if o.afip_document_type in ['A', 'B', 'C'] else 'A'"/>
-                    <t t-set="doc_title" t-value="'FACTURAS %s' % doc_letter"/>
+                    <t t-set="doc_title" t-value="'FACTURA %s' % doc_letter"/>
                     <t t-set="doc_code" t-value="{'A': 1, 'B': 6, 'C': 11}.get(doc_letter, 1)"/>
                     <t t-set="product_lines" t-value="o._l10n_ar_afip_report_lines()"/>
                     <t t-set="company_cuit" t-value="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
