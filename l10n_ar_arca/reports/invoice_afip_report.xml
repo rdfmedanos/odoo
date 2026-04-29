@@ -170,7 +170,7 @@
                         </tr>
                     </table>
 
-                    <div class="card-afip" style="position: absolute; left: 6.4mm; right: 6.4mm; bottom: 1mm; padding: 6px 6px 3px 6px;">
+                    <div class="card-afip" style="position: absolute; left: 6.4mm; right: 6.4mm; bottom: -1mm; padding: 6px 6px 3px 6px;">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 28%; vertical-align: top; text-align: left; padding-left: 0;">
@@ -192,9 +192,9 @@
                                 </td>
                             </tr>
                         </table>
-                        <div style="text-align: center; font-size: 7pt; color: #4a4a4a; margin-top: 3px;">
-                            Con tecnologia <strong>Odoo</strong> por <strong>AxialPyme</strong>
-                        </div>
+                    </div>
+                    <div style="text-align: center; font-size: 7pt; color: #4a4a4a; position: absolute; left: 6.4mm; right: 6.4mm; bottom: -22mm;">
+                        Con tecnologia <strong>Odoo</strong> por <strong>AxialPyme</strong>
                     </div>
                     </div>
                 </div>
