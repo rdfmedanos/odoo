@@ -127,14 +127,14 @@
                         <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                             <thead>
                                 <tr t-attf-style="border-bottom: 1px solid #c8ccd2; background: {{doc_color or '#8d97a5'}};">
-                                    <th style="text-align: left; padding: 6px 8px; width: 10%; white-space: nowrap; color: #ffffff;">Codigo</th>
+                                    <th style="text-align: left; padding: 6px 8px; width: 10%; white-space: nowrap; color: #ffffff; border-radius: 8px 0 0 0;">Codigo</th>
                                     <th style="text-align: left; padding: 6px 6px; width: 24%; color: #ffffff;">Descripcion</th>
                                     <th style="text-align: left; padding: 6px 6px; width: 17%; white-space: nowrap; color: #ffffff;">Documento Origen</th>
                                     <th style="text-align: right; padding: 6px 6px; width: 10%; white-space: nowrap; color: #ffffff;">Cantidad</th>
                                     <th style="text-align: right; padding: 6px 6px; width: 13%; white-space: nowrap; color: #ffffff;">Precio Unitario</th>
                                     <th style="text-align: right; padding: 6px 6px; width: 8%; white-space: nowrap; color: #ffffff;">Desc.(%)</th>
                                     <th style="text-align: right; padding: 6px 6px; width: 9%; white-space: nowrap; color: #ffffff;">Alicuota IVA</th>
-                                    <th style="text-align: right; padding: 6px 8px 6px 6px; width: 9%; white-space: nowrap; color: #ffffff;">Monto Final</th>
+                                    <th style="text-align: right; padding: 6px 8px 6px 6px; width: 9%; white-space: nowrap; color: #ffffff; border-radius: 0 8px 0 0;">Monto Final</th>
                                 </tr>
                             </thead>
                             <tbody>
