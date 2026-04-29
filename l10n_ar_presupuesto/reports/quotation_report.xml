@@ -12,24 +12,13 @@
                                     overflow: hidden;
                                     background: #fff;
                                 }
-                                .presupuesto-doc .card table {
-                                    border-collapse: collapse !important;
-                                    border-spacing: 0 !important;
-                                }
                                 .presupuesto-doc table,
                                 .presupuesto-doc th,
                                 .presupuesto-doc td {
                                     border: none !important;
                                 }
-                                .presupuesto-doc .line-sep-left {
-                                    box-shadow: inset 2px 0 0 #7f8996;
-                                }
-                                .presupuesto-doc .line-sep-right {
-                                    box-shadow: inset -2px 0 0 #7f8996;
-                                }
                                 .presupuesto-doc td.doc-type-box {
-                                    border-left: 2px solid #7f8996 !important;
-                                    border-right: 2px solid #7f8996 !important;
+                                    box-shadow: inset 2px 0 0 #7f8996, inset -2px 0 0 #7f8996;
                                 }
                                 .presupuesto-doc .soft-sep {
                                     border-top: 2px solid #7f8996;
@@ -58,26 +47,32 @@
                                 .presupuesto-doc .header-left-cell {
                                     border-top-left-radius: 8px;
                                     border-bottom-left-radius: 8px;
+                                    background-clip: padding-box;
+                                }
+                                .presupuesto-doc .header-right-cell {
+                                    border-top-right-radius: 8px;
+                                    border-bottom-right-radius: 8px;
+                                    background-clip: padding-box;
                                 }
                             </style>
 
                             <div class="card" style="margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
-                                        <td class="header-left-cell" style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff; text-align: center;">
+                                        <td class="header-left-cell" style="width: 28%; padding: 6px 8px; vertical-align: middle; background: transparent; text-align: center;">
                                             <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px; display: block; margin: 0 auto;"/></t>
                                             <t t-else=""><strong><span t-field="o.company_id.name"/></strong></t>
                                         </td>
-                                        <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
+                                        <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt; background: transparent;">
                                             <div style="display: flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1.1;">Documento<br/>comercial</div>
                                         </td>
-                                        <td class="doc-type-box" style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff;">
+                                        <td class="doc-type-box" style="width: 16%; text-align: center; vertical-align: middle; background: transparent;">
                                             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px;">
                                                 <div style="font-size: 22pt; line-height: 1; font-weight: 700;">P</div>
                                                 <div style="font-size: 11pt; line-height: 1.1;">Presupuesto</div>
                                             </div>
                                         </td>
-                                        <td style="width: 42%; padding: 5px 8px; vertical-align: top;">
+                                        <td class="header-right-cell" style="width: 42%; padding: 5px 8px; vertical-align: top; background: transparent;">
                                             <div style="margin-left: 20%;">
                                                 <div style="font-size: 16pt; font-weight: 700; line-height: 1;">PRESUPUESTO</div>
                                                 <div style="font-size: 10pt; margin-top: 3px;">Fecha: <span t-field="o.date_order"/></div>
