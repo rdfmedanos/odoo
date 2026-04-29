@@ -97,7 +97,7 @@
                                 }
                                 .presupuesto-doc .products-head th {
                                     border: 0 !important;
-                                    border-bottom: 3px solid #8d97a5 !important;
+                                    border-bottom: 0 !important;
                                     padding: 6px 6px !important;
                                     line-height: 1.2;
                                     box-sizing: border-box;
@@ -182,7 +182,6 @@
                                             <div>
                                                 <strong>CUIT:</strong> <span t-esc="o.company_id.afip_cuit or o.company_id.vat or '-'"/>
                                                 <span> - </span>
-                                                <strong>Condicion frente al IVA:</strong>
                                                 <span t-esc="(o.company_id.l10n_ar_afip_responsibility_type_id and o.company_id.l10n_ar_afip_responsibility_type_id.name) or (o.company_id.partner_id.l10n_ar_afip_responsibility_type_id and o.company_id.partner_id.l10n_ar_afip_responsibility_type_id.name) or '-'"/>
                                             </div>
                                             <div style="margin-top: 5px;"><strong>Ingresos Brutos:</strong> <span t-esc="o.company_id.l10n_ar_afip_iibb or '-'"/></div>
