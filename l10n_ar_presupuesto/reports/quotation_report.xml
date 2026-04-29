@@ -7,21 +7,29 @@
                     <div class="page presupuesto-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
                             <style>
                                 .presupuesto-doc .card {
-                                    border: 2px solid #7f8996;
+                                    border: 1px solid #aeb6c1 !important;
                                     border-radius: 10px;
                                     overflow: hidden;
                                     background: #fff;
+                                    box-shadow: none !important;
+                                }
+                                .presupuesto-doc,
+                                .presupuesto-doc * {
+                                    box-shadow: none !important;
+                                    outline: none !important;
                                 }
                                 .presupuesto-doc table,
+                                .presupuesto-doc tr,
                                 .presupuesto-doc th,
                                 .presupuesto-doc td {
                                     border: none !important;
+                                    border-color: transparent !important;
                                 }
                                 .presupuesto-doc td.doc-type-box {
-                                    box-shadow: inset 2px 0 0 #7f8996, inset -2px 0 0 #7f8996;
+                                    box-shadow: inset 1px 0 0 #aeb6c1, inset -1px 0 0 #aeb6c1 !important;
                                 }
                                 .presupuesto-doc .soft-sep {
-                                    border-top: 2px solid #7f8996;
+                                    border-top: 1px solid #aeb6c1 !important;
                                 }
                                 .presupuesto-doc .totals-row,
                                 .presupuesto-doc .totals-row td {
@@ -134,7 +142,7 @@
                             <div class="card" style="margin-bottom: 6px;">
                             <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: #ffffff;">
-                                    <tr style="border-bottom: 2px solid #7f8996;">
+                                    <tr style="border-bottom: 1px solid #aeb6c1;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
                                         <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
