@@ -98,11 +98,11 @@
                                 .presupuesto-doc .products-head th {
                                     border: 0 !important;
                                     border-bottom: 0 !important;
-                                    background: transparent !important;
                                     padding: 6px 6px !important;
                                     line-height: 1.2;
                                     box-sizing: border-box;
                                     background-clip: padding-box;
+                                    color: #ffffff !important;
                                 }
                                 .presupuesto-doc .products-head th:not(:last-child) {
                                     box-shadow: none !important;
@@ -223,12 +223,12 @@
                                 <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: transparent;">
                                     <tr class="products-head">
-                                        <th t-attf-style="text-align: left; width: 12%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Codigo</th>
-                                        <th t-attf-style="text-align: left; width: 40%; color: #ffffff; background: {{doc_color}};">Descripcion</th>
-                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Cantidad</th>
-                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Precio Unitario</th>
-                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Desc.(%)</th>
-                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color}};">Subtotal</th>
+                                        <th t-attf-style="text-align: left; width: 12%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Codigo</th>
+                                        <th t-attf-style="text-align: left; width: 40%; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Descripcion</th>
+                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Cantidad</th>
+                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Precio Unitario</th>
+                                        <th t-attf-style="text-align: right; width: 10%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Desc.(%)</th>
+                                        <th t-attf-style="text-align: right; width: 14%; white-space: nowrap; color: #ffffff; background: {{doc_color or '#8d97a5'}};">Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
