@@ -9,16 +9,20 @@
                             <div style="border: 1px solid #666; border-radius: 7px; overflow: hidden; margin-bottom: 6px;">
                                 <table style="width: 100%; border-collapse: collapse;">
                                     <tr>
-                                        <td style="width: 18%; text-align: center; vertical-align: middle; font-size: 7pt;">
+                                        <td style="width: 28%; padding: 6px 8px; vertical-align: middle; background: #ffffff;">
+                                            <t t-if="o.company_id.logo"><img t-att-src="image_data_uri(o.company_id.logo)" style="max-width: 90px; max-height: 42px;"/></t>
+                                            <t t-else=""><strong><span t-field="o.company_id.name"/></strong></t>
+                                        </td>
+                                        <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
                                             <div style="display: flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1.1;">Documento<br/>comercial</div>
                                         </td>
-                                        <td style="width: 20%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #d1d1d1; border-right: 1px solid #d1d1d1;">
+                                        <td style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #d1d1d1; border-right: 1px solid #d1d1d1;">
                                             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px;">
                                                 <div style="font-size: 22pt; line-height: 1; font-weight: 700;">P</div>
                                                 <div style="font-size: 11pt; line-height: 1.1;">Presupuesto</div>
                                             </div>
                                         </td>
-                                        <td style="width: 62%; padding: 5px 8px; vertical-align: top;">
+                                        <td style="width: 42%; padding: 5px 8px; vertical-align: top;">
                                             <div style="margin-left: 20%;">
                                                 <div style="font-size: 16pt; font-weight: 700; line-height: 1;">PRESUPUESTO</div>
                                                 <div style="font-size: 10pt; margin-top: 3px;">Fecha: <span t-field="o.date_order"/></div>
