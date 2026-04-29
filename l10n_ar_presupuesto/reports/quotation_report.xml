@@ -12,10 +12,20 @@
                                     overflow: hidden;
                                     background: #fff;
                                 }
+                                .presupuesto-doc .card table {
+                                    border-collapse: separate !important;
+                                    border-spacing: 0 !important;
+                                }
                                 .presupuesto-doc table,
                                 .presupuesto-doc th,
                                 .presupuesto-doc td {
                                     border: none !important;
+                                }
+                                .presupuesto-doc .line-sep-left {
+                                    box-shadow: inset 1px 0 0 #d3d7dc;
+                                }
+                                .presupuesto-doc .line-sep-right {
+                                    box-shadow: inset -1px 0 0 #d3d7dc;
                                 }
                                 .presupuesto-doc .soft-sep {
                                     border-top: 1px solid #d3d7dc;
@@ -32,7 +42,7 @@
                                         <td style="width: 14%; text-align: center; vertical-align: middle; font-size: 7pt;">
                                             <div style="display: flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1.1;">Documento<br/>comercial</div>
                                         </td>
-                                        <td style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff; border-left: 1px solid #d3d7dc; border-right: 1px solid #d3d7dc;">
+                                        <td class="line-sep-left line-sep-right" style="width: 16%; text-align: center; vertical-align: middle; background: #ffffff;">
                                             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px;">
                                                 <div style="font-size: 22pt; line-height: 1; font-weight: 700;">P</div>
                                                 <div style="font-size: 11pt; line-height: 1.1;">Presupuesto</div>
