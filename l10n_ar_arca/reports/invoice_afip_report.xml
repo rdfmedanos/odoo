@@ -126,7 +126,7 @@
                     <div class="card-afip" style="padding: 0;">
                         <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                             <thead>
-                                <tr t-attf-style="border-bottom: 1px solid #c8ccd2; background: {{doc_color or '#8d97a5'}}; opacity: 0.88;">
+                                <tr t-attf-style="border-bottom: 1px solid #c8ccd2; background: {{doc_color or '#8d97a5'}};">
                                     <th style="text-align: left; padding: 6px 8px; width: 10%; white-space: nowrap; color: #ffffff;">Codigo</th>
                                     <th style="text-align: left; padding: 6px 6px; width: 24%; color: #ffffff;">Descripcion</th>
                                     <th style="text-align: left; padding: 6px 6px; width: 17%; white-space: nowrap; color: #ffffff;">Documento Origen</th>
