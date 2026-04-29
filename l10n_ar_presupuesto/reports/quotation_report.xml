@@ -7,7 +7,7 @@
                     <div class="page presupuesto-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
                             <style>
                                 .presupuesto-doc .card {
-                                    border: 1px solid #9aa3af;
+                                    border: 2px solid #7f8996;
                                     border-radius: 10px;
                                     overflow: hidden;
                                     background: #fff;
@@ -22,16 +22,23 @@
                                     border: none !important;
                                 }
                                 .presupuesto-doc .line-sep-left {
-                                    box-shadow: inset 1px 0 0 #9aa3af;
+                                    box-shadow: inset 2px 0 0 #7f8996;
                                 }
                                 .presupuesto-doc .line-sep-right {
-                                    box-shadow: inset -1px 0 0 #9aa3af;
+                                    box-shadow: inset -2px 0 0 #7f8996;
                                 }
                                 .presupuesto-doc .soft-sep {
-                                    border-top: 1px solid #9aa3af;
+                                    border-top: 2px solid #7f8996;
                                 }
                                 .presupuesto-doc .totals-row,
                                 .presupuesto-doc .totals-row td {
+                                    border: none !important;
+                                    box-shadow: none !important;
+                                    outline: none !important;
+                                }
+                                .presupuesto-doc .conditions-table,
+                                .presupuesto-doc .conditions-table tr,
+                                .presupuesto-doc .conditions-table td {
                                     border: none !important;
                                     box-shadow: none !important;
                                     outline: none !important;
@@ -116,7 +123,7 @@
                             <div class="card" style="margin-bottom: 6px;">
                             <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: #ffffff;">
-                                    <tr style="border-bottom: 1px solid #9aa3af;">
+                                    <tr style="border-bottom: 2px solid #7f8996;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
                                         <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
@@ -140,7 +147,7 @@
                             </table>
                             </div>
 
-                            <table style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-top: 22mm;">
+                            <table class="conditions-table" style="width: 100%; border-collapse: collapse; font-size: 10pt; margin-top: 22mm;">
                                 <tr class="totals-row">
                                     <td style="width: 68%; vertical-align: top;">
                                         <div><strong>Condiciones de pago:</strong> <span t-field="o.payment_term_id"/></div>
