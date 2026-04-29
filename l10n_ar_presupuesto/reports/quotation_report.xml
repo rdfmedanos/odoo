@@ -101,7 +101,6 @@
                                     padding: 6px 6px !important;
                                     line-height: 1.2;
                                     box-sizing: border-box;
-                                    background: transparent !important;
                                     color: #ffffff !important;
                                 }
                                 .presupuesto-doc .products-head th:not(:last-child) {
