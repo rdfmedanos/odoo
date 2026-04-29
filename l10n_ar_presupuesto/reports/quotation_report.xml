@@ -7,7 +7,7 @@
                     <div class="page presupuesto-doc" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #1f1f1f; background: #ffffff; padding: 8mm 6.4mm; min-height: 270mm; box-sizing: border-box; position: relative;">
                             <style>
                                 .presupuesto-doc .card {
-                                    border: 1px solid #d3d7dc;
+                                    border: 1px solid #b8bec7;
                                     border-radius: 10px;
                                     overflow: hidden;
                                     background: #fff;
@@ -22,13 +22,13 @@
                                     border: none !important;
                                 }
                                 .presupuesto-doc .line-sep-left {
-                                    box-shadow: inset 1px 0 0 #d3d7dc;
+                                    box-shadow: inset 1px 0 0 #b8bec7;
                                 }
                                 .presupuesto-doc .line-sep-right {
-                                    box-shadow: inset -1px 0 0 #d3d7dc;
+                                    box-shadow: inset -1px 0 0 #b8bec7;
                                 }
                                 .presupuesto-doc .soft-sep {
-                                    border-top: 1px solid #d3d7dc;
+                                    border-top: 1px solid #b8bec7;
                                 }
                             </style>
 
@@ -110,7 +110,7 @@
                             <div class="card" style="margin-bottom: 6px;">
                             <table style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 9pt;">
                                 <thead style="background: #ffffff;">
-                                    <tr style="border-bottom: 1px solid #d3d7dc;">
+                                    <tr style="border-bottom: 1px solid #b8bec7;">
                                         <th style="text-align: left; padding: 4px 8px; width: 12%; white-space: nowrap;">Codigo</th>
                                         <th style="text-align: left; padding: 4px 6px; width: 40%;">Descripcion</th>
                                         <th style="text-align: right; padding: 4px 6px; width: 10%; white-space: nowrap;">Cantidad</th>
@@ -142,7 +142,7 @@
                                         <div style="font-size: 9pt;"><span t-field="o.note"/></div>
                                     </td>
                                     <td style="width: 32%; vertical-align: top;">
-                                        <div class="card">
+                                        <div class="card" style="padding: 0 4px;">
                                         <table style="width: 100%; border-collapse: collapse;">
                                             <tr>
                                                 <td style="padding: 7px 2px; font-weight: 700;">Subtotal</td>
