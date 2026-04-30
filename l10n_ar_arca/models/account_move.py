@@ -490,6 +490,16 @@ class AccountMove(models.Model):
         })
         return self.action_request_afip_cae()
     
+    def button_draft(self):
+        """Evita reestablecer a borrador facturas ya autorizadas por ARCA/AFIP."""
+        authorized = self.filtered(lambda m: m.cae and m.l10n_ar_afip_state == 'authorized')
+        if authorized:
+            raise UserError(
+                'No se puede reestablecer a borrador la(s) factura(s) %s porque ya se encuentran autorizadas por ARCA/AFIP (tienen CAE).'
+                % ', '.join(authorized.mapped('name'))
+            )
+        return super().button_draft()
+
     def action_post(self):
         """Override del método post para solicitar CAE automáticamente."""
         res = super().action_post()
