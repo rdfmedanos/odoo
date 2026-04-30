@@ -6,6 +6,7 @@ Modelo para facturas con integración ARCA/AFIP.
 import base64
 import re
 from datetime import datetime
+import uuid
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 
@@ -493,14 +494,26 @@ class AccountMove(models.Model):
                     'l10n_ar_afip_cbte_nro': cbte_nro,
                 })
                 
-                self._cr.execute("SAVEPOINT set_arca_name")
-                try:
-                    self._cr.execute(
-                        "UPDATE account_move SET name = %s WHERE id = %s",
-                        [real_name, move.id],
-                    )
-                except Exception:
-                    self._cr.execute("ROLLBACK TO SAVEPOINT set_arca_name")
+                final_name = real_name
+                self._cr.execute(
+                    "SELECT id FROM account_move WHERE name = %s AND company_id = %s AND id != %s LIMIT 1",
+                    [real_name, move.company_id.id, move.id],
+                )
+                if self._cr.fetchone():
+                    for attempt in range(cbte_nro + 1, cbte_nro + 100):
+                        candidate = f"{str(pto_vta).zfill(4)}-{str(attempt).zfill(8)}"
+                        self._cr.execute(
+                            "SELECT id FROM account_move WHERE name = %s AND company_id = %s AND id != %s LIMIT 1",
+                            [candidate, move.company_id.id, move.id],
+                        )
+                        if not self._cr.fetchone():
+                            final_name = candidate
+                            break
+                
+                move._cr.execute(
+                    "UPDATE account_move SET name = %s WHERE id = %s",
+                    [final_name, move.id],
+                )
                 move.invalidate_recordset(['name'])
                 
             except Exception as e:
@@ -540,7 +553,7 @@ class AccountMove(models.Model):
         for move in arca_moves:
             if move.journal_id.l10n_ar_afip_auto_authorize and not move.cae:
                 move.afip_document_type = move._get_afip_document_type()
-                move.name = f"ARCA/{move.id or 'new'}"
+                move.name = f"ARCA-TMP-{uuid.uuid4().hex[:8]}"
 
         res = super().action_post()
 
