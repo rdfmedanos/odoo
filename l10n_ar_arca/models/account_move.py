@@ -493,13 +493,15 @@ class AccountMove(models.Model):
                     'l10n_ar_afip_cbte_nro': cbte_nro,
                 })
                 
-                move._cr.execute(
-                    "UPDATE account_move SET name = %s WHERE id = %s",
-                    [real_name, move.id],
-                )
+                self._cr.execute("SAVEPOINT set_arca_name")
+                try:
+                    self._cr.execute(
+                        "UPDATE account_move SET name = %s WHERE id = %s",
+                        [real_name, move.id],
+                    )
+                except Exception:
+                    self._cr.execute("ROLLBACK TO SAVEPOINT set_arca_name")
                 move.invalidate_recordset(['name'])
-                if move.invoice_line_ids:
-                    move.invoice_line_ids.invalidate_recordset()
                 
             except Exception as e:
                 move.write({
