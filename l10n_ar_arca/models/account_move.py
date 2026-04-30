@@ -6,7 +6,6 @@ Modelo para facturas con integración ARCA/AFIP.
 import base64
 import re
 from datetime import datetime
-import uuid
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 
@@ -494,28 +493,6 @@ class AccountMove(models.Model):
                     'l10n_ar_afip_cbte_nro': cbte_nro,
                 })
                 
-                final_name = real_name
-                self._cr.execute(
-                    "SELECT id FROM account_move WHERE name = %s AND company_id = %s AND id != %s LIMIT 1",
-                    [real_name, move.company_id.id, move.id],
-                )
-                if self._cr.fetchone():
-                    for attempt in range(cbte_nro + 1, cbte_nro + 100):
-                        candidate = f"{str(pto_vta).zfill(4)}-{str(attempt).zfill(8)}"
-                        self._cr.execute(
-                            "SELECT id FROM account_move WHERE name = %s AND company_id = %s AND id != %s LIMIT 1",
-                            [candidate, move.company_id.id, move.id],
-                        )
-                        if not self._cr.fetchone():
-                            final_name = candidate
-                            break
-                
-                move._cr.execute(
-                    "UPDATE account_move SET name = %s WHERE id = %s",
-                    [final_name, move.id],
-                )
-                move.invalidate_recordset(['name'])
-                
             except Exception as e:
                 move.write({
                     'afip_result': 'R',
@@ -553,7 +530,19 @@ class AccountMove(models.Model):
         for move in arca_moves:
             if move.journal_id.l10n_ar_afip_auto_authorize and not move.cae:
                 move.afip_document_type = move._get_afip_document_type()
-                move.name = f"ARCA-TMP-{uuid.uuid4().hex[:8]}"
+                pto_vta = move.journal_id.l10n_ar_afip_pto_vta or 1
+                cbte_tipo = move._get_tipo_comprobante_afip()
+                wsfe = move._get_afip_service()
+                last_nro = wsfe.get_last_voucher_number(pto_vta, cbte_tipo)
+                for attempt in range(last_nro + 1, last_nro + 100):
+                    candidate = f"{str(pto_vta).zfill(4)}-{str(attempt).zfill(8)}"
+                    self._cr.execute(
+                        "SELECT id FROM account_move WHERE name = %s AND company_id = %s AND id != %s LIMIT 1",
+                        [candidate, move.company_id.id, move.id],
+                    )
+                    if not self._cr.fetchone():
+                        move.name = candidate
+                        break
 
         res = super().action_post()
 
