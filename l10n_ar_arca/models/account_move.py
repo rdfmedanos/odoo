@@ -175,18 +175,23 @@ class AccountMove(models.Model):
         help='Número asignado por ARCA/AFIP al autorizar',
     )
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        """Asigna nombre provisorio a facturas ARCA al crearlas."""
-        for vals in vals_list:
-            move_type = vals.get('move_type')
-            journal_id = vals.get('journal_id')
-            if move_type in ('out_invoice', 'out_refund') and journal_id:
-                journal = self.env['account.journal'].browse(journal_id)
-                if getattr(journal, 'l10n_latam_use_documents', False):
-                    existing = self.search_count([('journal_id', '=', journal_id), ('move_type', '=', move_type)])
-                    vals['name'] = f"Fac{str(existing + 1).zfill(5)}"
-        return super().create(vals_list)
+    def _compute_name(self):
+        """Asigna nombre provisorio a facturas ARCA en borrador."""
+        super()._compute_name()
+        for move in self:
+            if (
+                move.state == 'draft'
+                and move.move_type in ('out_invoice', 'out_refund')
+                and getattr(move.journal_id, 'l10n_latam_use_documents', False)
+            ):
+                has_arca_name = (move.name or '').startswith('Fac') or (move.name and '-' in move.name)
+                if not has_arca_name:
+                    existing = self.search_count([
+                        ('id', '!=', move.id or 0),
+                        ('journal_id', '=', move.journal_id.id),
+                        ('move_type', '=', move.move_type),
+                    ])
+                    move.name = f"Fac{str(existing + 1).zfill(5)}"
 
     @api.depends('journal_id')
     def _compute_l10n_ar_afip_available(self):
