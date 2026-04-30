@@ -184,14 +184,15 @@ class AccountMove(models.Model):
                 and move.move_type in ('out_invoice', 'out_refund')
                 and getattr(move.journal_id, 'l10n_latam_use_documents', False)
             ):
-                has_arca_name = (move.name or '').startswith('Fac') or (move.name and '-' in move.name)
-                if not has_arca_name:
+                has_arca_name = (move.name or '').startswith('Fac') or (move.name and '-' in move.name and not move.cae)
+                if not has_arca_name or move.name.startswith('Fac'):
+                    pto_vta = move.journal_id.l10n_ar_afip_pto_vta or 1
                     existing = self.search_count([
                         ('id', '!=', move.id or 0),
                         ('journal_id', '=', move.journal_id.id),
                         ('move_type', '=', move.move_type),
                     ])
-                    move.name = f"Fac{str(existing + 1).zfill(5)}"
+                    move.name = f"{str(pto_vta).zfill(4)}-{str(existing + 1).zfill(8)}"
 
     @api.depends('journal_id')
     def _compute_l10n_ar_afip_available(self):
