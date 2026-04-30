@@ -291,10 +291,10 @@ class AccountMove(models.Model):
         """Calcula el número de documento AFIP."""
         for move in self:
             if move.name:
-                parts = move.name.split('-')
-                if len(parts) >= 4 and parts[0] == 'FAC':
-                    move.afip_document_number = f"{parts[2]}-{parts[3]}"
-                elif len(parts) == 2:
+                parts = move.name.split()
+                if len(parts) >= 2 and parts[0].startswith('FA-'):
+                    move.afip_document_number = parts[1]
+                elif '-' in move.name:
                     move.afip_document_number = move.name
                 else:
                     pto_vta = move.journal_id.l10n_ar_afip_pto_vta or 1
@@ -486,7 +486,7 @@ class AccountMove(models.Model):
                 
                 cbte_nro = result.get('cbte_nro', next_nro)
                 doc_type = move.afip_document_type or 'B'
-                real_name = f"FAC-{doc_type}-{str(pto_vta).zfill(4)}-{str(cbte_nro).zfill(8)}"
+                real_name = f"FA-{doc_type} {str(pto_vta).zfill(4)}-{str(cbte_nro).zfill(8)}"
                 
                 move.write({
                     'cae': result['cae'],
@@ -539,7 +539,7 @@ class AccountMove(models.Model):
                 wsfe = move._get_afip_service()
                 last_nro = wsfe.get_last_voucher_number(pto_vta, cbte_tipo)
                 for attempt in range(last_nro + 1, last_nro + 100):
-                    candidate = f"FAC-{move.afip_document_type}-{str(pto_vta).zfill(4)}-{str(attempt).zfill(8)}"
+                    candidate = f"FA-{move.afip_document_type} {str(pto_vta).zfill(4)}-{str(attempt).zfill(8)}"
                     self._cr.execute(
                         "SELECT id FROM account_move WHERE name = %s AND company_id = %s AND id != %s LIMIT 1",
                         [candidate, move.company_id.id, move.id],
