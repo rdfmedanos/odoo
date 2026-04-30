@@ -63,7 +63,7 @@
 
         <xpath expr="//div[hasclass('pos-receipt-order-data') and hasclass('text-center') and hasclass('pt-3')][span[contains(., 'Powered by')]]" position="replace">
             <div class="pos-receipt-order-data text-center pt-3">
-                <span>Con tecnologia <strong>Odoo</strong> by <a href="https://axialpyme.jaz.ar" target="_blank" style="color: #7c3aed;"><strong>AxialPyme</strong></a></span>
+                <span>Con tecnologia <strong>Odoo</strong> by <a t-att-href="'https://axialpyme.jaz.ar'" t-att-target="'_blank'" style="color: #7c3aed;"><strong>AxialPyme</strong></a></span>
             </div>
         </xpath>
 

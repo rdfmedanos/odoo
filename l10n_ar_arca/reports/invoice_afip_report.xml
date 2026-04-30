@@ -207,7 +207,7 @@
                         </table>
                     </div>
                     <div style="text-align: center; font-size: 14pt; color: #4a4a4a; position: absolute; left: 6.4mm; right: 6.4mm; bottom: -22mm;">
-                        Con tecnologia <strong>Odoo</strong> by <a href="https://axialpyme.jaz.ar" target="_blank" style="color: #7c3aed; text-decoration: none;"><strong>AxialPyme</strong></a>
+                        Con tecnologia <strong>Odoo</strong> by <a t-att-href="'https://axialpyme.jaz.ar'" t-att-target="'_blank'" style="color: #7c3aed; text-decoration: none;"><strong>AxialPyme</strong></a>
                     </div>
                     </div>
                 </div>
