@@ -541,16 +541,24 @@ class AccountMove(models.Model):
         return super().button_draft()
 
     def action_post(self):
-        """Override del método post para validar facturas ARCA sin autorizar CAE automáticamente."""
-        res = super().action_post()
-
-        for move in self.filtered(
+        """Override del método post para solicitar CAE automáticamente."""
+        arca_moves = self.filtered(
             lambda m: m.company_id.afip_ws_environment
             and m.move_type in ('out_invoice', 'out_refund')
             and m.l10n_ar_afip_available
-        ):
+        )
+        for move in arca_moves:
             if move.journal_id.l10n_ar_afip_auto_authorize and not move.cae:
                 move.afip_document_type = move._get_afip_document_type()
+
+        res = super().action_post()
+
+        for move in arca_moves:
+            if move.journal_id.l10n_ar_afip_auto_authorize and not move.cae:
+                try:
+                    move.action_request_afip_cae()
+                except Exception:
+                    pass
 
         return res
 
