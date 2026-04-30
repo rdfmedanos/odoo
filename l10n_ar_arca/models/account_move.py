@@ -168,6 +168,26 @@ class AccountMove(models.Model):
         ('rejected', 'Rechazado'),
     ], string='Estado AFIP', default='draft', copy=False)
 
+    l10n_ar_afip_cbte_nro = fields.Integer(
+        string='Número Comprobante ARCA',
+        readonly=True,
+        copy=False,
+        help='Número asignado por ARCA/AFIP al autorizar',
+    )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Asigna nombre provisorio a facturas ARCA antes de crearlas."""
+        for vals in vals_list:
+            move_type = vals.get('move_type')
+            journal_id = vals.get('journal_id')
+            if move_type in ('out_invoice', 'out_refund') and journal_id:
+                journal = self.env['account.journal'].browse(journal_id)
+                if getattr(journal, 'l10n_latam_use_documents', False) and getattr(journal, 'l10n_ar_afip_auto_authorize', False):
+                    existing = self.search_count([('journal_id', '=', journal_id), ('move_type', '=', move_type)])
+                    vals['name'] = f"Fac{str(existing + 1).zfill(5)}"
+        return super().create(vals_list)
+
     @api.depends('journal_id')
     def _compute_l10n_ar_afip_available(self):
         for move in self:
@@ -178,8 +198,9 @@ class AccountMove(models.Model):
         for move in self:
             if move.cae:
                 pto_vta = str(move.journal_id.l10n_ar_afip_pto_vta or 1).zfill(4)
-                cbte_nro = str(move.afip_document_number or '').zfill(8)
-                barcode = f"{move.partner_id.vat or '0'}{pto_vta}{cbte_nro}{move.cae}"
+                doc_num = move.afip_document_number or ''
+                cbte_nro = doc_num.split('-')[-1] if '-' in doc_num else doc_num
+                barcode = f"{move.partner_id.vat or '0'}{pto_vta}{cbte_nro.zfill(8)}{move.cae}"
                 move.afip_barcode = barcode
             else:
                 move.afip_barcode = False
@@ -283,9 +304,12 @@ class AccountMove(models.Model):
         """Calcula el número de documento AFIP."""
         for move in self:
             if move.name:
-                pto_vta = move.journal_id.l10n_ar_afip_pto_vta or 1
-                doc_number = move.name.split('/')[-1] if '/' in move.name else move.name
-                move.afip_document_number = f"{str(pto_vta).zfill(4)}-{doc_number.zfill(8)}"
+                if '-' in move.name:
+                    move.afip_document_number = move.name
+                else:
+                    pto_vta = move.journal_id.l10n_ar_afip_pto_vta or 1
+                    doc_number = move.name.split('/')[-1] if '/' in move.name else move.name
+                    move.afip_document_number = f"{str(pto_vta).zfill(4)}-{doc_number.zfill(8)}"
             else:
                 move.afip_document_number = False
     
@@ -457,13 +481,21 @@ class AccountMove(models.Model):
             if not has_key:
                 raise UserError('Configure la clave privada AFIP (archivo o texto)')
             
+            pto_vta = move.journal_id.l10n_ar_afip_pto_vta or 1
+            cbte_tipo = move._get_tipo_comprobante_afip()
+            
+            wsfe = move._get_afip_service()
+            last_nro = wsfe.get_last_voucher_number(pto_vta, cbte_tipo)
+            next_nro = last_nro + 1
+
             move.l10n_ar_afip_state = 'pending'
             
             try:
-                wsfe = move._get_afip_service()
                 invoice_data = move._prepare_afip_invoice_data()
-                
                 result = wsfe.request_cae(invoice_data)
+                
+                cbte_nro = result.get('cbte_nro', next_nro)
+                real_name = f"{str(pto_vta).zfill(4)}-{str(cbte_nro).zfill(8)}"
                 
                 move.write({
                     'cae': result['cae'],
@@ -471,6 +503,8 @@ class AccountMove(models.Model):
                     'afip_result': result['result'],
                     'afip_errors': False,
                     'l10n_ar_afip_state': 'authorized',
+                    'l10n_ar_afip_cbte_nro': cbte_nro,
+                    'name': real_name,
                 })
                 
             except Exception as e:
@@ -502,17 +536,30 @@ class AccountMove(models.Model):
 
     def action_post(self):
         """Override del método post para solicitar CAE automáticamente."""
+        arca_moves = self.filtered(
+            lambda m: m.company_id.afip_ws_environment
+            and m.move_type in ('out_invoice', 'out_refund')
+            and m.journal_id.l10n_ar_afip_auto_authorize
+            and m.l10n_ar_afip_available
+        )
+        for move in arca_moves:
+            if not move.name or move.name.startswith('New'):
+                existing = self.search_count([
+                    ('journal_id', '=', move.journal_id.id),
+                    ('move_type', '=', move.move_type),
+                    ('l10n_ar_afip_state', '=', 'authorized'),
+                ])
+                move.name = f"Fac{str(existing + 1).zfill(5)}"
+            move.afip_document_type = move._get_afip_document_type()
+
         res = super().action_post()
-        
-        for move in self.filtered(lambda m: m.company_id.afip_ws_environment):
-            if move.move_type in ('out_invoice', 'out_refund'):
-                if move.journal_id.l10n_ar_afip_auto_authorize and move.l10n_ar_afip_available:
-                    move.afip_document_type = move._get_afip_document_type()
-                    try:
-                        move.action_request_afip_cae()
-                    except Exception as e:
-                        pass
-        
+
+        for move in arca_moves:
+            try:
+                move.action_request_afip_cae()
+            except Exception:
+                pass
+
         return res
 
 
