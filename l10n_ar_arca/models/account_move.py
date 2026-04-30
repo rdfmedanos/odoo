@@ -531,6 +531,12 @@ class AccountMove(models.Model):
         for move in arca_moves:
             if move.journal_id.l10n_ar_afip_auto_authorize and not move.cae:
                 move.afip_document_type = move._get_afip_document_type()
+                pto_vta = move.journal_id.l10n_ar_afip_pto_vta or 1
+                cbte_tipo = move._get_tipo_comprobante_afip()
+                wsfe = move._get_afip_service()
+                last_nro = wsfe.get_last_voucher_number(pto_vta, cbte_tipo)
+                next_nro = last_nro + 1
+                move.name = f"{str(pto_vta).zfill(4)}-{str(next_nro).zfill(8)}"
 
         res = super().action_post()
 
