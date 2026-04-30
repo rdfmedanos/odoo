@@ -177,13 +177,13 @@ class AccountMove(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """Asigna nombre provisorio a facturas ARCA antes de crearlas."""
+        """Asigna nombre provisorio a facturas ARCA al crearlas."""
         for vals in vals_list:
             move_type = vals.get('move_type')
             journal_id = vals.get('journal_id')
             if move_type in ('out_invoice', 'out_refund') and journal_id:
                 journal = self.env['account.journal'].browse(journal_id)
-                if getattr(journal, 'l10n_latam_use_documents', False) and getattr(journal, 'l10n_ar_afip_auto_authorize', False):
+                if getattr(journal, 'l10n_latam_use_documents', False):
                     existing = self.search_count([('journal_id', '=', journal_id), ('move_type', '=', move_type)])
                     vals['name'] = f"Fac{str(existing + 1).zfill(5)}"
         return super().create(vals_list)
@@ -535,30 +535,16 @@ class AccountMove(models.Model):
         return super().button_draft()
 
     def action_post(self):
-        """Override del método post para solicitar CAE automáticamente."""
-        arca_moves = self.filtered(
-            lambda m: m.company_id.afip_ws_environment
-            and m.move_type in ('out_invoice', 'out_refund')
-            and m.journal_id.l10n_ar_afip_auto_authorize
-            and m.l10n_ar_afip_available
-        )
-        for move in arca_moves:
-            if not move.name or move.name.startswith('New'):
-                existing = self.search_count([
-                    ('journal_id', '=', move.journal_id.id),
-                    ('move_type', '=', move.move_type),
-                    ('l10n_ar_afip_state', '=', 'authorized'),
-                ])
-                move.name = f"Fac{str(existing + 1).zfill(5)}"
-            move.afip_document_type = move._get_afip_document_type()
-
+        """Override del método post para validar facturas ARCA sin autorizar CAE automáticamente."""
         res = super().action_post()
 
-        for move in arca_moves:
-            try:
-                move.action_request_afip_cae()
-            except Exception:
-                pass
+        for move in self.filtered(
+            lambda m: m.company_id.afip_ws_environment
+            and m.move_type in ('out_invoice', 'out_refund')
+            and m.l10n_ar_afip_available
+        ):
+            if move.journal_id.l10n_ar_afip_auto_authorize and not move.cae:
+                move.afip_document_type = move._get_afip_document_type()
 
         return res
 
