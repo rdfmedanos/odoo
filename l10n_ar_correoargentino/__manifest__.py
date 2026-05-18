@@ -11,8 +11,8 @@ Integracion de Correo Argentino para Odoo 19 CE.
 - Gestion de envios, etiquetas y tracking
 - Portal del cliente con seguimiento
     """,
-    'author': 'AgroSentinel',
-    'website': 'https://agrosentinel.com',
+    'author': 'AxialPyme',
+    'website': 'https://axialpyme.jaz.ar',
     'category': 'Website/Website',
     'depends': ['delivery', 'website_sale', 'sale_management', 'sale_stock', 'stock', 'portal'],
     'data': [
