@@ -82,7 +82,7 @@
         <field name="name">l10n.ar.correo.shipment.search</field>
         <field name="model">l10n_ar.correo.shipment</field>
         <field name="arch" type="xml">
-            <search>
+            <search string="Buscar envios Correo Argentino">
                 <field name="tracking_number"/>
                 <field name="sale_order_id"/>
                 <field name="partner_id"/>
@@ -90,10 +90,9 @@
                 <filter string="En transito" name="in_transit" domain="[('state', '=', 'in_transit')]"/>
                 <filter string="Entregados" name="delivered" domain="[('state', '=', 'delivered')]"/>
                 <filter string="Con error" name="error" domain="[('state', '=', 'error')]"/>
-                <group expand="0" string="Agrupar por">
-                    <filter string="Estado" name="group_state" context="{'group_by': 'state'}"/>
-                    <filter string="Tipo entrega" name="group_delivery_type" context="{'group_by': 'delivery_type'}"/>
-                </group>
+                <separator/>
+                <filter string="Agrupar por estado" name="group_state" context="{'group_by': 'state'}"/>
+                <filter string="Agrupar por tipo" name="group_delivery_type" context="{'group_by': 'delivery_type'}"/>
             </search>
         </field>
     </record>
