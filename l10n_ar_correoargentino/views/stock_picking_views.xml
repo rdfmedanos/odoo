@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_form_l10n_ar_correoargentino" model="ir.ui.view">
+        <field name="name">stock.picking.form.l10n.ar.correoargentino</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_create_correo_shipment" string="Crear envio Correo" type="object" class="oe_highlight" invisible="not sale_id or sale_id.carrier_id.delivery_type != 'l10n_ar_correoargentino' or l10n_ar_correo_shipment_count &gt; 0"/>
+                <button name="action_fetch_correo_label" string="Descargar etiqueta" type="object" invisible="l10n_ar_correo_shipment_count == 0"/>
+                <button name="action_refresh_correo_tracking" string="Actualizar tracking" type="object" invisible="l10n_ar_correo_shipment_count == 0"/>
+                <button name="action_cancel_correo_shipment" string="Cancelar envio" type="object" invisible="l10n_ar_correo_shipment_count == 0"/>
+            </xpath>
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Correo Argentino">
+                    <field name="l10n_ar_correo_shipment_ids" readonly="1">
+                        <list>
+                            <field name="tracking_number"/>
+                            <field name="state"/>
+                            <field name="visible_state"/>
+                            <field name="latest_status"/>
+                            <field name="latest_event_date"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_correo_shipments" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="/my/correo-shipments">
+                <span>Mis envios</span>
+                <span class="badge rounded-pill text-bg-primary">
+                    <t t-esc="request.env['l10n_ar.correo.shipment'].sudo().search_count([('partner_id', 'child_of', request.env.user.partner_id.commercial_partner_id.id)])"/>
+                </span>
+            </a>
+        </xpath>
+    </template>
+
+    <template id="portal_my_shipments" name="Portal Mis Envios Correo Argentino">
+        <t t-call="portal.portal_layout">
+            <div class="container oe_structure mt-4 mb-5">
+                <h2>Mis envios</h2>
+                <t t-if="shipments">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Pedido</th>
+                                    <th>Tracking</th>
+                                    <th>Estado</th>
+                                    <th>Destino</th>
+                                    <th>Ultima novedad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="shipments" t-as="shipment">
+                                    <td>
+                                        <a t-att-href="'/my/correo-shipments/%s' % shipment.id">
+                                            <t t-esc="shipment.sale_order_id.name or shipment.name"/>
+                                        </a>
+                                    </td>
+                                    <td><t t-esc="shipment.tracking_number or '-'"/></td>
+                                    <td><t t-esc="shipment.visible_state"/></td>
+                                    <td>
+                                        <t t-if="shipment.delivery_type == 'S'">
+                                            <span t-esc="shipment.agency_name or shipment.agency_code"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="shipment.partner_id.contact_address or shipment.partner_id.city or '-'"/>
+                                        </t>
+                                    </td>
+                                    <td><t t-esc="shipment.latest_event_summary or '-'"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="alert alert-info">Todavia no tenes envios de Correo Argentino.</div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_shipment_detail" name="Portal Detalle Envio Correo Argentino">
+        <t t-call="portal.portal_layout">
+            <div class="container oe_structure mt-4 mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2>Seguimiento de envio</h2>
+                    <a href="/my/correo-shipments" class="btn btn-secondary">Volver</a>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div><strong>Pedido:</strong> <span t-esc="shipment.sale_order_id.name or '-'"/></div>
+                        <div><strong>Tracking:</strong> <span t-esc="shipment.tracking_number or '-'"/></div>
+                        <div><strong>Estado:</strong> <span t-esc="shipment.visible_state or '-'"/></div>
+                        <div t-if="shipment.delivery_type == 'S'"><strong>Sucursal:</strong> <span t-esc="shipment.agency_name or '-'"/> - <span t-esc="shipment.agency_address or '-'"/></div>
+                        <div t-else=""><strong>Destino:</strong> <span t-esc="shipment.partner_id.contact_address or '-'"/></div>
+                        <div><strong>Ultima actualizacion:</strong> <span t-esc="shipment.latest_event_date or '-'"/></div>
+                    </div>
+                </div>
+                <h4>Historial</h4>
+                <t t-if="tracking_events">
+                    <ul class="list-group">
+                        <li class="list-group-item" t-foreach="tracking_events" t-as="event">
+                            <div class="fw-bold"><t t-esc="event.get('status') or event.get('event') or '-'"/></div>
+                            <div><t t-esc="event.get('date') or '-'"/></div>
+                            <div><t t-esc="event.get('facility') or event.get('branch') or event.get('facilityCode') or '-'"/></div>
+                        </li>
+                    </ul>
+                </t>
+                <t t-else="">
+                    <div class="alert alert-info">Aun no hay eventos de seguimiento disponibles.</div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

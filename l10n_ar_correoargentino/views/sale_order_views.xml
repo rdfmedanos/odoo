@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_form_l10n_ar_correoargentino" model="ir.ui.view">
+        <field name="name">sale.order.form.l10n.ar.correoargentino</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Correo Argentino">
+                    <group>
+                        <group string="Cotizacion web">
+                            <field name="carrier_id"/>
+                            <field name="l10n_ar_correo_delivery_type"/>
+                            <field name="l10n_ar_correo_destination_postal_code"/>
+                            <field name="l10n_ar_correo_destination_province_code"/>
+                            <field name="l10n_ar_correo_product_name"/>
+                            <field name="l10n_ar_correo_product_type"/>
+                            <field name="l10n_ar_correo_shipping_price"/>
+                            <field name="l10n_ar_correo_delivery_time_min"/>
+                            <field name="l10n_ar_correo_delivery_time_max"/>
+                            <field name="l10n_ar_correo_rate_valid_to"/>
+                        </group>
+                        <group string="Sucursal y tracking">
+                            <field name="l10n_ar_correo_agency_code"/>
+                            <field name="l10n_ar_correo_agency_name"/>
+                            <field name="l10n_ar_correo_agency_address"/>
+                            <field name="l10n_ar_correo_tracking_numbers" readonly="1"/>
+                            <field name="l10n_ar_correo_visible_state" readonly="1"/>
+                            <button name="action_view_l10n_ar_correo_shipments" string="Ver envios Correo" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group string="Auditoria">
+                        <field name="l10n_ar_correo_quote_payload" widget="text" readonly="1"/>
+                        <field name="l10n_ar_correo_quote_response" widget="text" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

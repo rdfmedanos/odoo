@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_sale_cart_l10n_ar_correoargentino" inherit_id="website_sale.cart" priority="30">
+        <xpath expr="//div[@id='o_wsale_cart_summary']" position="inside">
+            <t t-set="correo_carriers" t-value="request.env['delivery.carrier'].sudo().search([('delivery_type', '=', 'l10n_ar_correoargentino')])"/>
+            <t t-if="correo_carriers">
+                <div class="card mt-3 o_wsale_correo_quote" id="o_wsale_correo_quote">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Correo Argentino</h5>
+                        <div class="mb-2">
+                            <label class="form-label">Transportista</label>
+                            <select class="form-select js_correo_carrier_id">
+                                <option t-foreach="correo_carriers" t-as="carrier" t-att-value="carrier.id">
+                                    <t t-esc="carrier.name"/>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Codigo postal destino</label>
+                            <input type="text" class="form-control js_correo_postal_code" t-att-value="request.website.sale_get_order().l10n_ar_correo_destination_postal_code or ''"/>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Tipo de entrega</label>
+                            <select class="form-select js_correo_delivery_type">
+                                <option value="D">Domicilio</option>
+                                <option value="S">Sucursal</option>
+                            </select>
+                        </div>
+                        <div class="mb-2 js_correo_province_wrapper d-none">
+                            <label class="form-label">Provincia de sucursal</label>
+                            <select class="form-select js_correo_province_code">
+                                <option value="">Seleccionar</option>
+                                <option value="A">Salta</option>
+                                <option value="B">Buenos Aires</option>
+                                <option value="C">CABA</option>
+                                <option value="D">San Luis</option>
+                                <option value="E">Entre Rios</option>
+                                <option value="F">La Rioja</option>
+                                <option value="G">Santiago del Estero</option>
+                                <option value="H">Chaco</option>
+                                <option value="J">San Juan</option>
+                                <option value="K">Catamarca</option>
+                                <option value="L">La Pampa</option>
+                                <option value="M">Mendoza</option>
+                                <option value="N">Misiones</option>
+                                <option value="P">Formosa</option>
+                                <option value="Q">Neuquen</option>
+                                <option value="R">Rio Negro</option>
+                                <option value="S">Santa Fe</option>
+                                <option value="T">Tucuman</option>
+                                <option value="U">Chubut</option>
+                                <option value="V">Tierra del Fuego</option>
+                                <option value="W">Corrientes</option>
+                                <option value="X">Cordoba</option>
+                                <option value="Y">Jujuy</option>
+                                <option value="Z">Santa Cruz</option>
+                            </select>
+                        </div>
+                        <div class="mb-2 js_correo_agency_wrapper d-none">
+                            <label class="form-label">Sucursal Correo</label>
+                            <select class="form-select js_correo_agency_select"></select>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-primary js_correo_fetch_agencies d-none">Buscar sucursales</button>
+                            <button type="button" class="btn btn-outline-primary js_correo_quote">Cotizar envio</button>
+                        </div>
+                        <div class="mt-3 text-danger js_correo_error d-none"></div>
+                        <div class="mt-3 js_correo_rates d-none"></div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

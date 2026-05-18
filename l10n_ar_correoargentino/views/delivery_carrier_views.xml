@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delivery_carrier_form_l10n_ar_correoargentino" model="ir.ui.view">
+        <field name="name">delivery.carrier.form.l10n.ar.correoargentino</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Correo Argentino" invisible="delivery_type != 'l10n_ar_correoargentino'">
+                    <group>
+                        <group string="MiCorreo">
+                            <field name="l10n_ar_micorreo_environment"/>
+                            <field name="l10n_ar_micorreo_api_username" password="True"/>
+                            <field name="l10n_ar_micorreo_api_password" password="True"/>
+                            <field name="l10n_ar_micorreo_customer_id"/>
+                            <field name="l10n_ar_micorreo_email"/>
+                            <field name="l10n_ar_micorreo_password" password="True"/>
+                            <field name="l10n_ar_micorreo_token_expires" readonly="1"/>
+                            <button name="l10n_ar_action_test_micorreo" string="Probar MiCorreo" type="object" class="oe_highlight"/>
+                            <button name="l10n_ar_action_validate_micorreo_user" string="Validar usuario MiCorreo" type="object"/>
+                        </group>
+                        <group string="PaqAr">
+                            <field name="l10n_ar_paqar_environment"/>
+                            <field name="l10n_ar_paqar_api_key" password="True"/>
+                            <field name="l10n_ar_paqar_agreement"/>
+                            <field name="l10n_ar_paqar_seller_id"/>
+                            <field name="l10n_ar_paqar_ext_client"/>
+                            <button name="l10n_ar_action_test_paqar" string="Probar PaqAr" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Origen logistico">
+                            <field name="l10n_ar_origin_business_name"/>
+                            <field name="l10n_ar_origin_email"/>
+                            <field name="l10n_ar_origin_phone"/>
+                            <field name="l10n_ar_origin_cellphone"/>
+                            <field name="l10n_ar_origin_street_name"/>
+                            <field name="l10n_ar_origin_street_number"/>
+                            <field name="l10n_ar_origin_floor"/>
+                            <field name="l10n_ar_origin_apartment"/>
+                            <field name="l10n_ar_origin_city"/>
+                            <field name="l10n_ar_origin_province_code"/>
+                            <field name="l10n_ar_origin_postal_code"/>
+                        </group>
+                        <group string="Defaults y opciones web">
+                            <field name="l10n_ar_default_product_type"/>
+                            <field name="l10n_ar_default_weight_g"/>
+                            <field name="l10n_ar_default_height_cm"/>
+                            <field name="l10n_ar_default_width_cm"/>
+                            <field name="l10n_ar_default_length_cm"/>
+                            <field name="l10n_ar_price_margin"/>
+                            <field name="l10n_ar_allow_home_delivery"/>
+                            <field name="l10n_ar_allow_agency_delivery"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
