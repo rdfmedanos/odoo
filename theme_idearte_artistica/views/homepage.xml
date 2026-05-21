@@ -16,6 +16,15 @@
         </xpath>
     </template>
 
+    <!-- Head layout override for Google Fonts -->
+    <template id="layout" inherit_id="website.layout" name="Idearte Layout">
+        <xpath expr="//head" position="inside">
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+        </xpath>
+    </template>
+
     <!-- Custom Menu Items for Purchase-Oriented Navigation -->
     <data noupdate="1">
         <record id="menu_local" model="website.menu">
