@@ -24,7 +24,7 @@
                         <div class="position-absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 250px; height: 250px; background-color: var(--color-violeta); border-radius: 50%; filter: blur(50px); opacity: 0.3; z-index: 1;"></div>
                         
                         <div class="art-gallery-img position-relative z-index-2 mx-auto" style="max-width: 90%; border: 8px solid white; box-shadow: 0 20px 40px rgba(0,0,0,0.06);">
-                            <img src="/theme_idearte_artistica/static/src/img/modelos1.png" alt="Diseños Idearte Artística" class="img-fluid w-100" style="object-fit: cover; max-height: 450px; display: block;"/>
+                            <img src="/theme_idearte_artistica/static/src/img/hero_fibrofacil.png" alt="Diseños Fibrofácil" class="img-fluid w-100" style="object-fit: cover; max-height: 450px; display: block;"/>
                         </div>
                     </div>
                 </div>

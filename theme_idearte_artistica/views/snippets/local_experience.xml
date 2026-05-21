@@ -72,7 +72,7 @@
                         <div class="row g-3">
                             <div class="col-8">
                                 <div class="art-gallery-img" style="box-shadow: 0 15px 30px rgba(0,0,0,0.04); border: 6px solid white; transform: rotate(-2deg);">
-                                    <img src="/theme_idearte_artistica/static/src/img/modelos2.png" alt="Interior local Idearte Artística" class="img-fluid w-100" style="object-fit: cover; height: 320px; display: block;"/>
+                                    <img src="/theme_idearte_artistica/static/src/img/local_shop.png" alt="Interior Tienda Fibrofácil" class="img-fluid w-100" style="object-fit: cover; height: 320px; display: block;"/>
                                 </div>
                             </div>
                             <div class="col-4">
