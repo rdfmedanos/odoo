@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_idearte_gallery" name="Galería de Inspiración Idearte">
+        <section class="s_idearte_gallery py-5 art-watercolor-bg" style="background-color: var(--color-marfil);">
+            <div class="container py-4">
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <span class="text-fucsia font-weight-bold uppercase" style="font-family: var(--font-headings); font-size: 0.9rem; letter-spacing: 0.1em;">GALERÍA DE IDEAS</span>
+                        <h2 class="display-5 mt-2 font-weight-bold" style="font-family: var(--font-headings);">
+                            Inspirate con <span class="art-title-highlight highlight-azul">Nuestros Trabajos</span>
+                        </h2>
+                        <p class="text-muted mt-3">Mirá cómo quedan nuestros productos terminados, pintados o ensamblados. Proyectos reales para clientes reales.</p>
+                    </div>
+                </div>
+                
+                <div class="row g-4 align-items-center">
+                    <!-- Gallery Item 1 -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="art-gallery-img p-2 bg-white" style="border: 1px solid rgba(0,0,0,0.05); transform: rotate(-1.5deg); box-shadow: 0 10px 25px rgba(0,0,0,0.04);">
+                            <div class="position-relative overflow-hidden" style="height: 350px; border-radius: 12px;">
+                                <img src="/theme_idearte_artistica/static/src/img/modelos1.png" alt="Trabajo terminado 1" class="w-100 h-100" style="object-fit: cover;"/>
+                                <div class="position-absolute bottom-3 left-3 bg-dark text-white px-3 py-1 rounded-pill" style="bottom: 15px; left: 15px; font-size: 0.8rem; font-family: var(--font-headings); opacity: 0.9;">
+                                    Pintado a Mano
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Item 2 (Double/Tall center collage) -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="d-flex flex-column gap-4">
+                            <div class="art-gallery-img p-2 bg-white" style="border: 1px solid rgba(0,0,0,0.05); transform: rotate(1deg); box-shadow: 0 10px 25px rgba(0,0,0,0.04);">
+                                <div class="position-relative overflow-hidden" style="height: 200px; border-radius: 12px;">
+                                    <img src="/theme_idearte_artistica/static/src/img/modelos2.png" alt="Trabajo terminado 2" class="w-100 h-100" style="object-fit: cover;"/>
+                                    <div class="position-absolute bottom-3 left-3 bg-fucsia text-white px-3 py-1 rounded-pill" style="bottom: 15px; left: 15px; font-size: 0.8rem; font-family: var(--font-headings); opacity: 0.9;">
+                                        Letras Corpóreas
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="art-gallery-img p-2 bg-white" style="border: 1px solid rgba(0,0,0,0.05); transform: rotate(-2deg); box-shadow: 0 10px 25px rgba(0,0,0,0.04);">
+                                <div class="position-relative overflow-hidden" style="height: 200px; border-radius: 12px;">
+                                    <img src="/theme_idearte_artistica/static/src/img/modelos1.png" alt="Trabajo terminado 3" class="w-100 h-100" style="object-fit: cover; filter: hue-rotate(240deg);"/>
+                                    <div class="position-absolute bottom-3 left-3 bg-violeta text-white px-3 py-1 rounded-pill" style="bottom: 15px; left: 15px; font-size: 0.8rem; font-family: var(--font-headings); opacity: 0.9;">
+                                        Taller Creativo
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Item 3 -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="art-gallery-img p-2 bg-white" style="border: 1px solid rgba(0,0,0,0.05); transform: rotate(2deg); box-shadow: 0 10px 25px rgba(0,0,0,0.04);">
+                            <div class="position-relative overflow-hidden" style="height: 350px; border-radius: 12px;">
+                                <img src="/theme_idearte_artistica/static/src/img/modelos2.png" alt="Trabajo terminado 4" class="w-100 h-100" style="object-fit: cover; filter: grayscale(20%);"/>
+                                <div class="position-absolute bottom-3 left-3 bg-azul text-white px-3 py-1 rounded-pill" style="bottom: 15px; left: 15px; font-size: 0.8rem; font-family: var(--font-headings); opacity: 0.9;">
+                                    Cortes CNC
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

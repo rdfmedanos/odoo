@@ -1,0 +1,375 @@
+/* Main Style for Theme Idearte Artística */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap');
+
+// Global Styles
+body {
+  font-family: var(--font-body) !important;
+  background-color: var(--color-marfil) !important;
+  color: var(--color-dark) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-headings) !important;
+  font-weight: 700;
+  color: var(--color-dark);
+  letter-spacing: -0.02em;
+}
+
+// Custom Utilities for Artistic Feel
+.text-fucsia { color: var(--color-fucsia) !important; }
+.text-violeta { color: var(--color-violeta) !important; }
+.text-azul { color: var(--color-azul) !important; }
+.text-verde { color: var(--color-verde) !important; }
+.text-naranja { color: var(--color-naranja) !important; }
+.text-amarillo { color: var(--color-amarillo) !important; }
+
+.bg-fucsia { background-color: var(--color-fucsia) !important; }
+.bg-violeta { background-color: var(--color-violeta) !important; }
+.bg-azul { background-color: var(--color-azul) !important; }
+.bg-verde { background-color: var(--color-verde) !important; }
+.bg-naranja { background-color: var(--color-naranja) !important; }
+.bg-amarillo { background-color: var(--color-amarillo) !important; }
+.bg-marfil { background-color: var(--color-marfil) !important; }
+.bg-beige-suave { background-color: var(--color-beige-suave) !important; }
+
+// Soft Watercolor Spots Backgrounds (manchas inspiradas en el logo)
+.art-watercolor-bg {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(225, 45, 123, 0.1) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(123, 44, 191, 0.08) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+}
+
+.art-watercolor-secondary-bg {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    right: -5%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+  }
+}
+
+// Title Brush Highlight
+.art-title-highlight {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: -2px;
+    right: -2px;
+    height: 12px;
+    background: rgba(225, 45, 123, 0.18);
+    z-index: -1;
+    border-radius: 4px;
+    transform: rotate(-1deg);
+  }
+  
+  &.highlight-violeta::after {
+    background: rgba(123, 44, 191, 0.18);
+  }
+  &.highlight-azul::after {
+    background: rgba(37, 99, 235, 0.18);
+  }
+  &.highlight-verde::after {
+    background: rgba(16, 185, 129, 0.18);
+  }
+  &.highlight-naranja::after {
+    background: rgba(249, 115, 22, 0.18);
+  }
+  &.highlight-amarillo::after {
+    background: rgba(234, 179, 8, 0.25);
+  }
+}
+
+// Creative Cards (tarjetas redondeadas moderadamente con sombras muy livianas)
+.art-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -15px rgba(225, 45, 123, 0.1);
+    border-color: rgba(225, 45, 123, 0.15);
+  }
+  
+  &.card-violeta:hover {
+    box-shadow: 0 20px 40px -15px rgba(123, 44, 191, 0.1);
+    border-color: rgba(123, 44, 191, 0.15);
+  }
+  
+  &.card-azul:hover {
+    box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.1);
+    border-color: rgba(37, 99, 235, 0.15);
+  }
+}
+
+// Micro-animations and Interactions
+.art-btn {
+  font-family: var(--font-headings);
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 12px 28px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%);
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-violeta) 0%, var(--color-fucsia) 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  color: #fff !important;
+  
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(225, 45, 123, 0.25);
+    &::after {
+      opacity: 1;
+    }
+  }
+  
+  &.btn-secondary-art {
+    background: transparent;
+    color: var(--color-dark) !important;
+    border: 2px solid var(--color-dark);
+    &::before, &::after {
+      display: none;
+    }
+    &:hover {
+      background: var(--color-dark);
+      color: #fff !important;
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(30, 30, 36, 0.15);
+    }
+  }
+
+  &.btn-whatsapp {
+    background: #25d366;
+    color: #fff !important;
+    &::before, &::after {
+      display: none;
+    }
+    &:hover {
+      background: #128c7e;
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.25);
+    }
+  }
+}
+
+// Special Creative Overlays for Category Cards
+.art-cat-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(0deg, rgba(30, 30, 36, 0.8) 0%, rgba(30, 30, 36, 0) 100%);
+  padding: 20px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.art-cat-card {
+  position: relative;
+  height: 250px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  .img-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    .img-bg {
+      transform: scale(1.08);
+    }
+    .art-cat-overlay {
+      background: linear-gradient(0deg, rgba(225, 45, 123, 0.85) 0%, rgba(225, 45, 123, 0.2) 100%);
+    }
+  }
+}
+
+// Header/Navbar customizing
+header.o_affix_enabled {
+  background-color: rgba(251, 251, 249, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand img {
+  max-height: 55px !important;
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: rotate(-3deg) scale(1.05);
+  }
+}
+
+.navbar-nav .nav-link {
+  font-family: var(--font-headings);
+  font-weight: 600;
+  color: var(--color-dark) !important;
+  position: relative;
+  margin: 0 6px;
+  padding: 8px 12px !important;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: var(--color-fucsia);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover::after, &.active::after {
+    transform: scaleX(1);
+  }
+}
+
+// Custom Shop layout improvements
+.oe_product {
+  border: none !important;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #fff !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+  transition: all 0.3s ease !important;
+  
+  &:hover {
+    box-shadow: 0 12px 30px rgba(225, 45, 123, 0.08) !important;
+    transform: translateY(-4px);
+  }
+  
+  .o_wsale_product_information {
+    background-color: #fff !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.03) !important;
+  }
+}
+
+// CNC block custom background
+.cnc-block-container {
+  background: linear-gradient(135deg, #1e1e24 0%, #2e2e38 100%);
+  color: #fff;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  
+  .cnc-accent-line {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-azul) 0%, var(--color-fucsia) 100%);
+    border-radius: 2px;
+  }
+}
+
+// Carousel and gallery border rounded
+.art-gallery-img {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  
+  img {
+    transition: transform 0.5s ease;
+  }
+  
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Footer Customizing
+footer {
+  background-color: #1e1e24 !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  
+  h4, h5, h6 {
+    color: #fff !important;
+  }
+  
+  a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: color 0.2s ease;
+    &:hover {
+      color: var(--color-fucsia) !important;
+      text-decoration: none;
+    }
+  }
+}

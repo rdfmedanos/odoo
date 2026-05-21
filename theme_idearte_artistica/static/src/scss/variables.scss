@@ -1,0 +1,42 @@
+// Brand Color Palette inspired by the logo
+$brand-fucsia: #e12d7b;
+$brand-violeta: #7b2cbf;
+$brand-azul: #2563eb;
+$brand-verde: #10b981;
+$brand-naranja: #f97316;
+$brand-amarillo: #eab308;
+
+// Neutral Colors
+$brand-marfil: #fbfbf9;
+$brand-beige-suave: #f5f0e6;
+$brand-dark: #1e1e24;
+$brand-muted: #6b7280;
+
+// Bootstrap Overrides (if compiling in the asset pipeline)
+$primary: $brand-fucsia;
+$secondary: $brand-violeta;
+$body-bg: $brand-marfil;
+$body-color: $brand-dark;
+
+:root {
+  --color-fucsia: #e12d7b;
+  --color-fucsia-rgb: 225, 45, 123;
+  --color-violeta: #7b2cbf;
+  --color-violeta-rgb: 123, 44, 191;
+  --color-azul: #2563eb;
+  --color-azul-rgb: 37, 99, 235;
+  --color-verde: #10b981;
+  --color-verde-rgb: 16, 185, 129;
+  --color-naranja: #f97316;
+  --color-naranja-rgb: 249, 115, 22;
+  --color-amarillo: #eab308;
+  --color-amarillo-rgb: 234, 179, 8;
+  
+  --color-marfil: #fbfbf9;
+  --color-beige-suave: #f5f0e6;
+  --color-dark: #1e1e24;
+  --color-muted: #6b7280;
+  
+  --font-headings: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="snippets" inherit_id="website.snippets" name="Idearte Snippets">
+        <xpath expr="//div[@id='snippet_structure']" position="inside">
+            <t t-snippet="theme_idearte_artistica.s_idearte_hero" string="Hero Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
+            <t t-snippet="theme_idearte_artistica.s_idearte_categories" string="Categorías Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
+            <t t-snippet="theme_idearte_artistica.s_idearte_featured_products" string="Productos Destacados Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
+            <t t-snippet="theme_idearte_artistica.s_idearte_local_experience" string="Local Físico Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
+            <t t-snippet="theme_idearte_artistica.s_idearte_gallery" string="Galería de Inspiración Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
+            <t t-snippet="theme_idearte_artistica.s_idearte_cnc_section" string="Bloque CNC Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
+            <t t-snippet="theme_idearte_artistica.s_idearte_final_cta" string="CTA Final Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
+        </xpath>
+    </template>
+</odoo>

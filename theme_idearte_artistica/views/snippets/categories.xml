@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_idearte_categories" name="Categorías Idearte">
+        <section class="s_idearte_categories py-5 art-watercolor-secondary-bg" style="background-color: var(--color-marfil);">
+            <div class="container py-4">
+                <div class="row mb-5">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <span class="text-fucsia font-weight-bold uppercase" style="font-family: var(--font-headings); font-size: 0.9rem; letter-spacing: 0.1em;">¿QUÉ ESTÁS BUSCANDO?</span>
+                        <h2 class="display-5 mt-2 font-weight-bold" style="font-family: var(--font-headings);">
+                            Explorá nuestras <span class="art-title-highlight highlight-violet">Categorías</span>
+                        </h2>
+                        <p class="text-muted mt-3">Encontrá el producto ideal para pintar, decorar o armar tus propios proyectos artísticos.</p>
+                    </div>
+                </div>
+                
+                <div class="row g-4">
+                    <!-- Letras y nombres -->
+                    <div class="col-lg-4 col-md-6">
+                        <a href="/shop?search=letras" class="text-decoration-none">
+                            <div class="art-cat-card" style="background-color: var(--color-fucsia);">
+                                <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(225, 45, 123, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
+                                    <div class="align-self-end bg-white-10 p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18 10l-4-4L4 16v4M13.5 6.5l4 4"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="h4 font-weight-bold text-white mb-1">Letras y Nombres</h3>
+                                        <p class="text-white-50 small mb-0">En todas las tipografías y tamaños para eventos o decoración.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Souvenirs -->
+                    <div class="col-lg-4 col-md-6">
+                        <a href="/shop?search=souvenirs" class="text-decoration-none">
+                            <div class="art-cat-card" style="background-color: var(--color-violeta);">
+                                <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(123, 44, 191, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
+                                    <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="h4 font-weight-bold text-white mb-1">Souvenirs</h3>
+                                        <p class="text-white-50 small mb-0">Detalles únicos para cumpleaños, casamientos y bautismos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Figuras decorativas -->
+                    <div class="col-lg-4 col-md-6">
+                        <a href="/shop?search=figuras" class="text-decoration-none">
+                            <div class="art-cat-card" style="background-color: var(--color-azul);">
+                                <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
+                                    <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="h4 font-weight-bold text-white mb-1">Figuras Decorativas</h3>
+                                        <p class="text-white-50 small mb-0">Formas de animales, siluetas temáticas y arte de pared.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Bases y soportes -->
+                    <div class="col-lg-4 col-md-6">
+                        <a href="/shop?search=bases" class="text-decoration-none">
+                            <div class="art-cat-card" style="background-color: var(--color-naranja);">
+                                <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
+                                    <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 12H3M12 3v18"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="h4 font-weight-bold text-white mb-1">Bases y Soportes</h3>
+                                        <p class="text-white-50 small mb-0">Estructuras firmes para tortas, bandejas y marcos de fotos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Cartelería -->
+                    <div class="col-lg-4 col-md-6">
+                        <a href="/shop?search=carteleria" class="text-decoration-none">
+                            <div class="art-cat-card" style="background-color: var(--color-verde);">
+                                <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
+                                    <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12H4V4h16v8h-8z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="h4 font-weight-bold text-white mb-1">Cartelería</h3>
+                                        <p class="text-white-50 small mb-0">Diseños corporativos, carteles comerciales y logos en relieve.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Manualidades -->
+                    <div class="col-lg-4 col-md-6">
+                        <a href="/shop?search=manualidades" class="text-decoration-none">
+                            <div class="art-cat-card" style="background-color: var(--color-amarillo);">
+                                <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
+                                    <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="h4 font-weight-bold text-white mb-1">Manualidades</h3>
+                                        <p class="text-white-50 small mb-0">Cajitas, marcos, figuras pequeñas y accesorios listos para crear.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>
