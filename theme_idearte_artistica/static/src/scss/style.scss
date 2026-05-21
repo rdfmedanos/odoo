@@ -257,44 +257,149 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   }
 }
 
-// Header/Navbar customizing
-header.o_affix_enabled {
-  background-color: rgba(251, 251, 249, 0.9) !important;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+// ═══════════════════════════════════════
+// HEADER / NAVBAR — Custom Idearte Style
+// ═══════════════════════════════════════
+
+// Base header — always visible
+#top,
+header#top,
+header.o_header_standard,
+nav.navbar {
+  background-color: #fbfbf9 !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
-.navbar-brand img {
-  max-height: 55px !important;
-  transition: transform 0.3s ease;
+// Decorative gradient accent line at the very bottom of the header
+header#top::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg,
+    #e12d7b 0%,
+    #7b2cbf 35%,
+    #2563eb 65%,
+    #10b981 100%);
+}
+
+// Sticky / scrolled version — glassmorphism
+header#top.o_affix_enabled,
+header.o_affix_enabled {
+  background-color: rgba(251, 251, 249, 0.94) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06) !important;
+  border-bottom: none !important;
+}
+
+// Navbar inner padding
+header#top .navbar {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+// Logo
+.navbar-brand img,
+header#top .navbar-brand img {
+  max-height: 52px !important;
+  width: auto !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
-    transform: rotate(-3deg) scale(1.05);
+    transform: rotate(-3deg) scale(1.08);
   }
 }
 
+// Nav links
+header#top .navbar-nav .nav-link,
 .navbar-nav .nav-link {
-  font-family: var(--font-headings);
-  font-weight: 600;
-  color: var(--color-dark) !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.92rem !important;
+  letter-spacing: 0.01em;
+  color: #1e1e24 !important;
   position: relative;
-  margin: 0 6px;
-  padding: 8px 12px !important;
-  
-  &::after {
+  margin: 0 2px;
+  padding: 10px 14px !important;
+  border-radius: 8px;
+  transition: color 0.25s ease, background-color 0.25s ease !important;
+
+  // Underline decoration
+  &::before {
     content: "";
     position: absolute;
-    bottom: 2px;
-    left: 12px;
-    right: 12px;
+    bottom: 6px;
+    left: 14px;
+    right: 14px;
     height: 2px;
-    background: var(--color-fucsia);
+    border-radius: 2px;
+    background: linear-gradient(90deg, #e12d7b 0%, #7b2cbf 100%);
     transform: scaleX(0);
-    transition: transform 0.3s ease;
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  
-  &:hover::after, &.active::after {
-    transform: scaleX(1);
+
+  &:hover,
+  &.active {
+    color: #e12d7b !important;
+    background-color: rgba(225, 45, 123, 0.05) !important;
+    &::before {
+      transform: scaleX(1);
+    }
   }
+}
+
+// Highlight the "Tienda" link as a pill button
+header#top .navbar-nav .nav-link[href="/shop"],
+.navbar-nav .nav-link[href="/shop"] {
+  background: linear-gradient(135deg, #e12d7b 0%, #7b2cbf 100%) !important;
+  color: #fff !important;
+  border-radius: 30px !important;
+  padding: 8px 20px !important;
+  margin-left: 10px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(225, 45, 123, 0.3);
+  transition: all 0.3s ease !important;
+
+  &::before { display: none !important; }
+
+  &:hover {
+    background: linear-gradient(135deg, #7b2cbf 0%, #e12d7b 100%) !important;
+    transform: scale(1.04);
+    box-shadow: 0 6px 20px rgba(225, 45, 123, 0.4) !important;
+    color: #fff !important;
+  }
+}
+
+// Cart icon area
+.o_cart_total,
+header#top .o_cart_total {
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 700 !important;
+  color: #1e1e24 !important;
+}
+
+// Mobile hamburger
+.navbar-toggler {
+  border: 2px solid rgba(225, 45, 123, 0.4) !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28225%2C 45%2C 123%2C 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  }
+}
+
+// Mobile menu open
+.navbar-collapse.show,
+.navbar-collapse.collapsing {
+  background-color: #fbfbf9 !important;
+  border-radius: 0 0 16px 16px;
+  padding: 10px 0 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.07);
 }
 
 // Custom Shop layout improvements
