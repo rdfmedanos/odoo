@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="snippets" inherit_id="website.snippets" name="Idearte Snippets">
-        <xpath expr="//div[@id='snippet_structure']" position="inside">
+        <xpath expr="//snippets[@id='snippet_structure']" position="inside">
             <t t-snippet="theme_idearte_artistica.s_idearte_hero" string="Hero Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
             <t t-snippet="theme_idearte_artistica.s_idearte_categories" string="Categorías Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
             <t t-snippet="theme_idearte_artistica.s_idearte_featured_products" string="Productos Destacados Idearte" t-thumbnail="/theme_idearte_artistica/static/src/img/logo.png"/>
