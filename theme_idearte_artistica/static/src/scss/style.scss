@@ -342,10 +342,19 @@ header#top .navbar-nav .nav-link,
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  &:hover,
-  &.active {
+  // Hover: fondo suave + color
+  &:hover {
     color: #e12d7b !important;
     background-color: rgba(225, 45, 123, 0.05) !important;
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+
+  // Active: solo subrayado, sin fondo (para que no quede "trabado")
+  &.active {
+    color: #1e1e24 !important;
+    background-color: transparent !important;
     &::before {
       transform: scaleX(1);
     }
@@ -400,6 +409,30 @@ header#top .o_cart_total {
   border-radius: 0 0 16px 16px;
   padding: 10px 0 16px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.07);
+}
+
+// ── Botón "Contáctanos" del header ──────────────────────
+header#top .btn,
+header#top .btn-primary,
+header#top a.btn {
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.88rem !important;
+  border-radius: 30px !important;
+  padding: 8px 20px !important;
+  border: none !important;
+  background: transparent !important;
+  color: #1e1e24 !important;
+  border: 2px solid rgba(30, 30, 36, 0.2) !important;
+  box-shadow: none !important;
+  transition: all 0.25s ease !important;
+
+  &:hover {
+    background: #1e1e24 !important;
+    color: #fff !important;
+    border-color: #1e1e24 !important;
+    transform: scale(1.03);
+  }
 }
 
 // Custom Shop layout improvements
