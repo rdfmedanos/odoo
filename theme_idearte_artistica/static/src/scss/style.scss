@@ -596,13 +596,23 @@ header#top a.btn {
   }
 
   .oe_product,
-  .oe_product_cart,
   .o_wsale_product_grid_wrapper {
     border-radius: 22px !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     border: 1px solid rgba(30, 30, 36, 0.05) !important;
     background: #fff !important;
     box-shadow: 0 14px 35px rgba(30, 30, 36, 0.05) !important;
+  }
+
+  .oe_product_cart {
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+  }
+
+  .oe_product:hover,
+  .o_wsale_product_grid_wrapper:hover {
+    z-index: 3;
   }
 
   .oe_product_image,
@@ -626,6 +636,12 @@ header#top a.btn {
   .o_wsale_product_btn,
   .o_wsale_product_information .btn {
     border-radius: 999px !important;
+  }
+
+  .o_wsale_product_sub,
+  .o_wsale_product_btn {
+    position: relative;
+    overflow: visible !important;
   }
 
   .pagination .page-link {
