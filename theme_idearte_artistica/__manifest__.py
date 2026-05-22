@@ -20,6 +20,7 @@
     ],
     'assets': {
         'web.assets_frontend': [
+            'theme_idearte_artistica/static/src/js/theme_idearte_ui.js',
             'theme_idearte_artistica/static/src/scss/variables.scss',
             'theme_idearte_artistica/static/src/scss/style.scss',
         ],
