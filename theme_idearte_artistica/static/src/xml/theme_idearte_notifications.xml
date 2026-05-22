@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="theme_idearte_artistica.addToCartNotification"
+       t-inherit="website_sale.addToCartNotification"
+       t-inherit-mode="extension">
+        <xpath expr="//a[@href='/shop/cart']" position="replace">
+            <a role="button" class="w-100 btn art-btn" href="/shop/cart">
+                Ver carro
+            </a>
+        </xpath>
+    </t>
+
+    <t t-name="theme_idearte_artistica.cartLine"
+       t-inherit="website_sale.cartLine"
+       t-inherit-mode="extension">
+        <xpath expr="//span[contains(@class, 'o_cart_item_count')]" position="attributes">
+            <attribute name="class">o_cart_item_count badge position-absolute top-0 start-100 translate-middle</attribute>
+        </xpath>
+        <xpath expr="//span[contains(@class, 'bg-light')]" position="attributes">
+            <attribute name="class">badge mt-1 bg-white text-dark border</attribute>
+        </xpath>
+    </t>
+
+</templates>
