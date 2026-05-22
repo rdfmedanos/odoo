@@ -759,6 +759,43 @@ header#top a.btn {
   .btn-link {
     color: var(--color-fucsia) !important;
   }
+
+  .js_cart_lines.w-100 {
+    text-align: center;
+
+    > .mt-5.mb-3 {
+      margin-top: 2rem !important;
+      margin-bottom: 1rem !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg,
+      img {
+        display: none !important;
+      }
+
+      &::before {
+        content: "\f07a";
+        font-family: FontAwesome;
+        width: 88px;
+        height: 88px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 26px;
+        background: linear-gradient(135deg, rgba(225, 45, 123, 0.14) 0%, rgba(123, 44, 191, 0.14) 100%);
+        color: var(--color-fucsia);
+        box-shadow: 0 16px 30px rgba(225, 45, 123, 0.1);
+        font-size: 2rem;
+      }
+    }
+
+    h5,
+    p {
+      text-align: center !important;
+    }
+  }
 }
 
 // Cart icon, empty cart state and add-to-cart modal
