@@ -42,12 +42,12 @@
                         <div class="art-card h-100 d-flex flex-column card-violeta">
                             <div class="position-relative overflow-hidden bg-light" style="height: 250px;">
                                 <span class="position-absolute top-3 left-3 badge bg-violeta text-white px-2.5 py-1.5 rounded-pill font-weight-bold z-index-2" style="font-size: 0.75rem; font-family: var(--font-headings); top: 12px; left: 12px;">MÁS VENDIDO</span>
-                                <img src="/theme_idearte_artistica/static/src/img/modelos2.png" alt="Caja de Té con Divisiones" class="w-100 h-100" style="object-fit: cover; object-position: center;"/>
+                                <img src="/theme_idearte_artistica/static/src/img/modelos2.png" alt="Producto infantil de fibrofácil" class="w-100 h-100" style="object-fit: cover; object-position: center;"/>
                             </div>
                             <div class="p-4 d-flex flex-column flex-grow-1">
-                                <span class="text-muted text-uppercase mb-1" style="font-size: 0.75rem; font-weight: 600;">Manualidades</span>
-                                <h3 class="h5 font-weight-bold mb-2" style="font-family: var(--font-headings);">Caja de Té Organizada</h3>
-                                <p class="text-muted small mb-3 flex-grow-1">Caja con 6 divisiones y tapa de vidrio lista para decorar y personalizar.</p>
+                                <span class="text-muted text-uppercase mb-1" style="font-size: 0.75rem; font-weight: 600;">Niños</span>
+                                <h3 class="h5 font-weight-bold mb-2" style="font-family: var(--font-headings);">Set Infantil para Decorar</h3>
+                                <p class="text-muted small mb-3 flex-grow-1">Una propuesta colorida para chicos, ideal para regalar, jugar y personalizar.</p>
                                 <div class="d-flex justify-content-between align-items-center mt-auto">
                                     <span class="h5 font-weight-extrabold text-dark mb-0">$3.800</span>
                                     <a href="/shop" class="btn btn-sm btn-outline-dark rounded-circle p-2" title="Agregar al Carrito">

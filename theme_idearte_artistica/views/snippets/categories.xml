@@ -99,17 +99,17 @@
                         </a>
                     </div>
                     
-                    <!-- Manualidades -->
+                    <!-- Niños -->
                     <div class="col-lg-4 col-md-6">
-                        <a href="/shop?search=manualidades" class="text-decoration-none">
+                        <a href="/shop?search=ninos" class="text-decoration-none">
                             <div class="art-cat-card" style="background-color: var(--color-amarillo);">
                                 <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
                                     <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
                                     </div>
                                     <div>
-                                        <h3 class="h4 font-weight-bold text-white mb-1">Manualidades</h3>
-                                        <p class="text-white-50 small mb-0">Cajitas, marcos, figuras pequeñas y accesorios listos para crear.</p>
+                                        <h3 class="h4 font-weight-bold text-white mb-1">Niños</h3>
+                                        <p class="text-white-50 small mb-0">Productos pensados para chicos, con opciones divertidas para jugar, regalar y decorar.</p>
                                     </div>
                                 </div>
                             </div>
