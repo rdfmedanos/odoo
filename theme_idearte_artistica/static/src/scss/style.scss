@@ -893,6 +893,8 @@ header#top {
   .btn,
   a.btn,
   button,
+  .modal-footer .btn,
+  .modal-body .btn,
   .btn-primary,
   .btn-secondary,
   .btn-outline-primary,
@@ -906,7 +908,10 @@ header#top {
 
   .btn-primary,
   .btn-outline-primary,
-  .btn-link {
+  .btn-link,
+  a[href*="/shop/cart"],
+  .modal-footer a.btn[href*="/shop/cart"],
+  .modal-body a.btn[href*="/shop/cart"] {
     background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
     border: none !important;
     color: #fff !important;
@@ -915,7 +920,9 @@ header#top {
   }
 
   .btn-secondary,
-  .btn-outline-secondary {
+  .btn-outline-secondary,
+  .modal-footer .btn-secondary:not([href*="/shop/cart"]),
+  .modal-body .btn-secondary:not([href*="/shop/cart"]) {
     background: #fff !important;
     border: 2px solid rgba(30, 30, 36, 0.12) !important;
     color: var(--color-dark) !important;
