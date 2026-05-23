@@ -1298,25 +1298,28 @@ footer {
 .oe_website_sale .oe_product .o_wsale_product_sub {
   display: flex !important;
   align-items: center !important;
-  gap: 0.6rem !important;
+  gap: 0.4rem !important; /* reduce vertical/hor gap */
+  padding: 0.25rem 0 !important; /* reduce extra vertical space */
 }
 
 .oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
   flex: 1 1 auto !important;
   min-width: 0 !important;
+  padding: 0.5rem 0.75rem !important; /* reduce height of price box */
+  border-radius: 12px !important;
 }
 
 .oe_website_sale .o_wsale_product_sub .o_wsale_product_btn {
   flex: 0 0 auto !important;
-  margin-left: auto !important;
+  margin-left: 0.6rem !important;
   display: flex !important;
   align-items: center !important;
-  gap: 0.5rem !important;
+  gap: 0.4rem !important;
 }
 
 .oe_website_sale .o_wsale_product_btn .o_add_wishlist,
 .oe_website_sale .o_wsale_product_btn .o_add_compare {
-  order: 1 !important;
+  order: 3 !important; /* wishlist right */
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1327,13 +1330,14 @@ footer {
 .oe_website_sale .o_wsale_product_btn .o_wsale_product_action_row {
   order: 2 !important;
   display: flex !important;
-  gap: 0.5rem !important;
+  gap: 0.4rem !important;
   align-items: center !important;
+  margin: 0 !important; /* remove extra vertical margins */
 }
 
 .oe_website_sale .o_wsale_product_btn .o_wsale_product_btn_primary,
 .oe_website_sale .o_wsale_product_btn .btn-primary {
-  order: 3 !important;
+  order: 1 !important; /* primary left */
 }
 
 /* Cart summary strong rule */
