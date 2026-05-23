@@ -1387,7 +1387,8 @@ footer {
   top: 50% !important;
   left: 0 !important;
   right: 0 !important;
-  height: 0 !important; /* container doesn't add height */
+  width: 100% !important;
+  height: auto !important; /* allow proper positioning context */
   pointer-events: none !important; /* let children handle clicks */
 }
 
@@ -1396,6 +1397,7 @@ footer {
 .oe_website_sale .o_wsale_product_btn .btn-primary {
   position: absolute !important;
   left: 12px !important;
+  right: auto !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   z-index: 30 !important;
@@ -1407,6 +1409,7 @@ footer {
 .oe_website_sale .o_wsale_product_btn .btn.o_add_wishlist {
   position: absolute !important;
   right: 12px !important;
+  left: auto !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   z-index: 30 !important;
@@ -1421,6 +1424,9 @@ footer {
 .oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
   padding-top: 0.45rem !important;
   padding-bottom: 0.45rem !important;
+  /* leave space at left/right so buttons don't overlap price box */
+  padding-left: 56px !important;
+  padding-right: 56px !important;
 }
 
 /* Make sure image area doesn't get overlapped visually (optional small inset) */
