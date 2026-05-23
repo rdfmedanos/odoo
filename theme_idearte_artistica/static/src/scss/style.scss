@@ -656,6 +656,21 @@ header#top a.btn {
     vertical-align: middle;
   }
 
+  /* Make product action area layout consistent: keep buttons grouped and aligned */
+  .o_wsale_product_sub {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* keep CTAs on the right consistently */
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  /* Force ordering so primary (add to cart) appears after wishlist/compare consistently */
+  .o_wsale_product_sub .o_add_wishlist { order: 1; }
+  .o_wsale_product_sub .o_add_compare { order: 2; }
+  .o_wsale_product_sub #add_to_cart,
+  .o_wsale_product_sub .btn-primary { order: 3; }
+
   .pagination .page-link {
     border: none !important;
     border-radius: 12px !important;
@@ -782,6 +797,20 @@ header#top a.btn {
   #cart_total,
   .o_website_sale_cart_summary {
     padding: 1rem !important;
+    box-sizing: border-box;
+    /* give the summary a consistent max width and spacing from product list */
+    max-width: 380px;
+    margin-left: 1rem;
+  }
+
+  /* On small screens the summary should be full width and stacked below products */
+  @media (max-width: 991.98px) {
+    .o_cart_summary,
+    #cart_total,
+    .o_website_sale_cart_summary {
+      max-width: 100% !important;
+      margin-left: 0 !important;
+    }
   }
 
   .input-group,
