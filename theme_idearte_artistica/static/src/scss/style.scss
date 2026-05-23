@@ -526,8 +526,7 @@ header#top a.btn {
 
   .o_wsale_products_main_row,
   #products_grid_before,
-  .o_wsale_products_grid_table_wrapper,
-  .o_wsale_product_sub {
+  .o_wsale_products_grid_table_wrapper {
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(30, 30, 36, 0.05);
     border-radius: 24px;
@@ -625,6 +624,26 @@ header#top a.btn {
   .o_wsale_product_information,
   .o_wsale_product_information_text {
     padding: 1rem 1rem 1.15rem !important;
+  }
+
+  /* Price panel: separate rounded box for price so actions stay visually outside */
+  .o_wsale_product_sub .o_l10n_ar_product_price {
+    background: #fff !important;
+    border: 1px solid rgba(30,30,36,0.05) !important;
+    border-radius: 14px !important;
+    padding: 0.9rem 1rem !important;
+    box-shadow: 0 8px 20px rgba(30,30,36,0.04) !important;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  /* Ensure the action buttons sit outside the price box */
+  .o_wsale_product_sub .o_wsale_product_btn {
+    margin-left: 0.8rem !important;
+    flex: 0 0 auto !important;
   }
 
   .oe_subdescription,
