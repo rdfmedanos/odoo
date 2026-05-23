@@ -1416,6 +1416,45 @@ footer {
   pointer-events: auto !important;
 }
 
+/* Make buttons smaller and circular so they don't overlap content */
+.oe_website_sale .o_wsale_product_btn .btn,
+.oe_website_sale .o_wsale_product_btn button,
+.oe_website_sale .o_wsale_product_btn .o_add_wishlist {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 6px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.95rem !important;
+  background: #fff !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06) !important;
+  border: 1px solid rgba(30,30,36,0.06) !important;
+}
+
+/* Shrink icon inside button to fit */
+.oe_website_sale .o_wsale_product_btn .btn i.fa,
+.oe_website_sale .o_wsale_product_btn .btn svg {
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Give product card a bit more vertical room so edge buttons are visible */
+.oe_website_sale .oe_product .p-4,
+.oe_website_sale .o_wsale_product_grid_wrapper .p-4,
+.art-card .p-4 {
+  padding-bottom: 1.25rem !important;
+}
+
+/* If some product cards hide overflow, ensure visible for button area */
+.oe_website_sale .oe_product,
+.oe_website_sale .o_wsale_product_grid_wrapper,
+.art-card {
+  overflow: visible !important;
+}
+
 /* Reduce vertical spacing around the actions and price */
 .oe_website_sale .o_wsale_product_sub {
   padding-top: 0.1rem !important;
