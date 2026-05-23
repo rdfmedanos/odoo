@@ -667,11 +667,11 @@ header#top a.btn {
     box-sizing: border-box;
   }
 
-  /* Force ordering so primary (add to cart) appears after wishlist/compare consistently */
-  .o_wsale_product_sub .o_add_wishlist { order: 1; }
-  .o_wsale_product_sub .o_add_compare { order: 2; }
+  /* Force ordering: primary (add to cart) should appear first (left), wishlist last (right) */
   .o_wsale_product_sub #add_to_cart,
-  .o_wsale_product_sub .btn-primary { order: 3; }
+  .o_wsale_product_sub .btn-primary { order: 1; }
+  .o_wsale_product_sub .o_add_compare { order: 2; }
+  .o_wsale_product_sub .o_add_wishlist { order: 3; }
 
   /* Stronger, more specific overrides to beat other !important rules coming from elsewhere */
   .oe_website_sale .oe_product .o_wsale_product_sub {
@@ -683,10 +683,10 @@ header#top a.btn {
     width: 100% !important;
   }
 
-  .oe_website_sale .oe_product .o_wsale_product_sub .o_add_wishlist { order: 1 !important; }
-  .oe_website_sale .oe_product .o_wsale_product_sub .o_add_compare { order: 2 !important; }
   .oe_website_sale .oe_product .o_wsale_product_sub #add_to_cart,
-  .oe_website_sale .oe_product .o_wsale_product_sub .btn-primary { order: 3 !important; }
+  .oe_website_sale .oe_product .o_wsale_product_sub .btn-primary { order: 1 !important; }
+  .oe_website_sale .oe_product .o_wsale_product_sub .o_add_compare { order: 2 !important; }
+  .oe_website_sale .oe_product .o_wsale_product_sub .o_add_wishlist { order: 3 !important; }
 
   .oe_website_sale .oe_product .o_wsale_product_sub .btn,
   .oe_website_sale .oe_product .o_wsale_product_information .btn {
