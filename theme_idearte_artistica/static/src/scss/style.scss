@@ -1372,3 +1372,60 @@ footer {
 }
 
 /* End appended fixes */
+
+/* ===== Absolute-positioned edge buttons: primary left, wishlist right ===== */
+/* Ensure product card is a positioning context */
+.oe_website_sale .oe_product,
+.oe_website_sale .o_wsale_product_grid_wrapper,
+.oe_website_sale .o_wsale_product_grid_wrapper_1_1 {
+  position: relative !important;
+}
+
+/* Make the button wrapper non-intrusive and allow children to be positioned */
+.oe_website_sale .o_wsale_product_btn {
+  position: absolute !important;
+  top: 50% !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 0 !important; /* container doesn't add height */
+  pointer-events: none !important; /* let children handle clicks */
+}
+
+/* Primary (add to cart) placed at left edge */
+.oe_website_sale .o_wsale_product_btn .o_wsale_product_btn_primary,
+.oe_website_sale .o_wsale_product_btn .btn-primary {
+  position: absolute !important;
+  left: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 30 !important;
+  pointer-events: auto !important;
+}
+
+/* Wishlist placed at right edge */
+.oe_website_sale .o_wsale_product_btn .o_add_wishlist,
+.oe_website_sale .o_wsale_product_btn .btn.o_add_wishlist {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 30 !important;
+  pointer-events: auto !important;
+}
+
+/* Reduce vertical spacing around the actions and price */
+.oe_website_sale .o_wsale_product_sub {
+  padding-top: 0.1rem !important;
+  padding-bottom: 0.1rem !important;
+}
+.oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
+  padding-top: 0.45rem !important;
+  padding-bottom: 0.45rem !important;
+}
+
+/* Make sure image area doesn't get overlapped visually (optional small inset) */
+.oe_website_sale .oe_product_image,
+.oe_website_sale .o_wsale_product_img_wrapper {
+  padding-right: 0.75rem !important;
+  padding-left: 0.75rem !important;
+}
