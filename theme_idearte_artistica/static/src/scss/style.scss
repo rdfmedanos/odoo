@@ -641,7 +641,19 @@ header#top a.btn {
   .o_wsale_product_sub,
   .o_wsale_product_btn {
     position: relative;
-    overflow: visible !important;
+    /* Allow overflow when needed, but don't force it globally with !important
+       Forcing visible caused the add-to-cart button to escape its layout and overlap
+       other controls (wishlist). Use non-!important so more specific rules can
+       control overflow per-context. */
+    overflow: visible;
+  }
+
+  /* Ensure buttons inside product actions stay inline and don't break the flow */
+  .o_wsale_product_btn .btn,
+  .o_wsale_product_information .btn {
+    display: inline-flex !important;
+    align-items: center;
+    vertical-align: middle;
   }
 
   .pagination .page-link {
@@ -741,7 +753,8 @@ header#top a.btn {
 
   #cart_products,
   .js_cart_lines {
-    overflow: hidden;
+    /* keep overflow visible so long product names or controls don't get clipped */
+    overflow: visible;
   }
 
   table {
@@ -760,6 +773,15 @@ header#top a.btn {
   td,
   th {
     vertical-align: middle !important;
+    padding: 0.75rem 0.9rem !important; /* ensure cell content has breathing room */
+    white-space: normal !important; /* allow wrapping instead of cutting */
+  }
+
+  /* Make sure the cart summary box has inner padding so items aren't visually cut */
+  .o_cart_summary,
+  #cart_total,
+  .o_website_sale_cart_summary {
+    padding: 1rem !important;
   }
 
   .input-group,
