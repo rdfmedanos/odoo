@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="brand_promotion_message" inherit_id="web.brand_promotion_message" name="Brand Promotion Idearte">
+        <xpath expr="//t[@t-set='odoo_logo']" position="replace">
+            <t t-set="odoo_logo">
+                <a target="_blank" href="https://axialpyme.jaz.ar" class="badge text-bg-light">
+                    <img alt="Odoo" src="/web/static/img/odoo_logo_tiny.png" width="62" height="20" style="width: auto; height: 1em; vertical-align: baseline;"/>
+                </a>
+            </t>
+        </xpath>
+        <xpath expr="//t[@t-set='final_message']" position="replace">
+            <t t-set="final_message"/>
+        </xpath>
+        <xpath expr="//t[@t-out]" position="replace">
+            Con la tecnología de Odoo <a target="_blank" href="https://axialpyme.jaz.ar">By AxialPyme</a>
+        </xpath>
+    </template>
+</odoo>

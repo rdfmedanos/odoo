@@ -17,6 +17,7 @@
         'views/snippets/final_cta.xml',
         'views/snippets.xml',
         'views/homepage.xml',
+        'views/brand_promotion.xml',
     ],
     'assets': {
         'web.assets_frontend': [
