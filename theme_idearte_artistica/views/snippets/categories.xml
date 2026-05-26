@@ -16,7 +16,7 @@
                 <div class="row g-4">
                     <!-- Letras y nombres -->
                     <div class="col-lg-4 col-md-6">
-                        <a href="/shop?search=letras" class="text-decoration-none">
+                        <a href="/shop/category/letras-y-nombres-2" class="text-decoration-none">
                             <div class="art-cat-card" style="background-color: var(--color-fucsia);">
                                 <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(225, 45, 123, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
                                     <div class="align-self-end bg-white-10 p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
@@ -33,7 +33,7 @@
                     
                     <!-- Souvenirs -->
                     <div class="col-lg-4 col-md-6">
-                        <a href="/shop?search=souvenirs" class="text-decoration-none">
+                        <a href="/shop/category/souvenirs-3" class="text-decoration-none">
                             <div class="art-cat-card" style="background-color: var(--color-violeta);">
                                 <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(123, 44, 191, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
                                     <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
@@ -50,7 +50,7 @@
                     
                     <!-- Figuras decorativas -->
                     <div class="col-lg-4 col-md-6">
-                        <a href="/shop?search=figuras" class="text-decoration-none">
+                        <a href="/shop/category/figuras-decorativas-4" class="text-decoration-none">
                             <div class="art-cat-card" style="background-color: var(--color-azul);">
                                 <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
                                     <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
@@ -67,7 +67,7 @@
                     
                     <!-- Bases y soportes -->
                     <div class="col-lg-4 col-md-6">
-                        <a href="/shop?search=bases" class="text-decoration-none">
+                        <a href="/shop/category/bases-y-soportes-5" class="text-decoration-none">
                             <div class="art-cat-card" style="background-color: var(--color-naranja);">
                                 <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(249, 115, 22, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
                                     <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
@@ -84,7 +84,7 @@
                     
                     <!-- Cartelería -->
                     <div class="col-lg-4 col-md-6">
-                        <a href="/shop?search=carteleria" class="text-decoration-none">
+                        <a href="/shop/category/carteleria-6" class="text-decoration-none">
                             <div class="art-cat-card" style="background-color: var(--color-verde);">
                                 <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
                                     <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
@@ -101,7 +101,7 @@
                     
                     <!-- Niños -->
                     <div class="col-lg-4 col-md-6">
-                        <a href="/shop?search=ninos" class="text-decoration-none">
+                        <a href="/shop/category/ninos-1" class="text-decoration-none">
                             <div class="art-cat-card" style="background-color: var(--color-amarillo);">
                                 <div class="position-absolute w-100 h-100 d-flex flex-column justify-content-between p-4 z-index-2" style="background: linear-gradient(135deg, rgba(234, 179, 8, 0.4) 0%, rgba(30, 30, 36, 0.75) 100%);">
                                     <div class="align-self-end p-3 rounded-circle" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(5px);">
