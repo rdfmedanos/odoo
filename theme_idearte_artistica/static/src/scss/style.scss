@@ -1373,38 +1373,36 @@ footer {
 
 /* End appended fixes */
 
-/* ===== Product card: buttons below price, collapsible on hover ===== */
+/* ===== Product card: hover buttons in fixed padding area below price ===== */
 
 .oe_website_sale .oe_product .o_wsale_product_sub {
-  flex-wrap: wrap !important;
+  position: static !important;
 }
 
-.oe_website_sale .oe_product .o_wsale_product_sub .o_l10n_ar_product_price {
-  flex: 1 1 100% !important;
-  padding: 0.4rem 0.7rem !important;
-  margin-bottom: 0 !important;
+.oe_website_sale .oe_product .o_wsale_product_information {
+  position: relative !important;
+  padding: 0.5rem 0.8rem 2.8rem !important;
 }
 
 .oe_website_sale .oe_product .o_wsale_product_sub .o_wsale_product_btn {
+  position: absolute !important;
+  bottom: 0.5rem !important;
+  right: 0.8rem !important;
   display: flex !important;
   align-items: center !important;
   gap: 0.35rem !important;
-  margin-left: auto !important;
-  flex: 0 0 auto !important;
   opacity: 0 !important;
-  max-height: 0 !important;
-  overflow: hidden !important;
-  visibility: hidden !important;
-  transition: opacity 0.25s ease, max-height 0.3s ease !important;
+  transition: opacity 0.25s ease !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  margin: 0 !important;
   padding: 0 !important;
   border: none !important;
 }
 
 .oe_website_sale .oe_product:hover .o_wsale_product_sub .o_wsale_product_btn {
   opacity: 1 !important;
-  max-height: 50px !important;
-  overflow: visible !important;
-  visibility: visible !important;
+  pointer-events: auto !important;
 }
 
 .oe_website_sale .oe_product .o_wsale_product_sub .o_wsale_product_btn .btn,
@@ -1453,16 +1451,19 @@ footer {
   transform: scale(1.1) !important;
 }
 
-.oe_website_sale .oe_product .o_wsale_product_information {
-  padding: 0.5rem 0.8rem 0.6rem !important;
+.oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
+  padding: 0.4rem 0.7rem !important;
 }
 
 @media (hover: none) and (pointer: coarse) {
   .oe_website_sale .oe_product .o_wsale_product_sub .o_wsale_product_btn {
     opacity: 1 !important;
-    max-height: 50px !important;
-    overflow: visible !important;
-    visibility: visible !important;
     position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    margin-top: 0.3rem !important;
+  }
+  .oe_website_sale .oe_product .o_wsale_product_information {
+    padding-bottom: 0.6rem !important;
   }
 }
