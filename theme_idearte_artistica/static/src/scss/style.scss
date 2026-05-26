@@ -555,33 +555,77 @@ header#top a.btn {
   }
 
   .nav-pills .nav-link,
-  .nav .nav-link,
+  .nav .nav-link {
+    border-radius: 14px !important;
+    transition: all 0.25s ease !important;
+  }
+
   .list-group-item,
   .accordion-button,
-  .form-check-label,
-  .css_attribute_category .nav-link,
-  .js_attributes a {
+  .form-check-label {
     border-radius: 14px !important;
-    color: var(--color-dark) !important;
     transition: all 0.25s ease !important;
   }
 
   .nav-pills .nav-link:hover,
   .nav .nav-link:hover,
-  .css_attribute_category .nav-link:hover,
-  .js_attributes a:hover,
   .accordion-button:hover {
     background: rgba(225, 45, 123, 0.07) !important;
     color: var(--color-fucsia) !important;
   }
 
-  .nav-pills .nav-link.active,
+  /* Variant selector pills - styled like theme buttons */
+  .css_attribute_category .nav-link,
+  .js_attributes a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 999px !important;
+    padding: 0.5rem 1.4rem !important;
+    font-family: var(--font-headings) !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    background: #fff !important;
+    border: 2px solid rgba(30, 30, 36, 0.12) !important;
+    color: var(--color-dark) !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    min-height: 40px !important;
+  }
+
+  .css_attribute_category .nav-link:hover,
+  .js_attributes a:hover {
+    border-color: rgba(225, 45, 123, 0.3) !important;
+    color: var(--color-fucsia) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(225, 45, 123, 0.12) !important;
+  }
+
   .css_attribute_category .active > .nav-link,
   .css_attribute_category .nav-link.active,
   .js_attributes .active a {
-    background: linear-gradient(135deg, rgba(225, 45, 123, 0.12) 0%, rgba(123, 44, 191, 0.12) 100%) !important;
-    color: var(--color-fucsia) !important;
-    font-weight: 700 !important;
+    background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
+    border-color: transparent !important;
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(225, 45, 123, 0.3) !important;
+  }
+
+  .css_attribute_category .active > .nav-link:hover,
+  .css_attribute_category .nav-link.active:hover,
+  .js_attributes .active a:hover {
+    border-color: transparent !important;
+    color: #fff !important;
+  }
+
+  /* Variant attribute label */
+  .css_attribute_category label {
+    font-family: var(--font-headings) !important;
+    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+    color: var(--color-muted) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .accordion-item,
