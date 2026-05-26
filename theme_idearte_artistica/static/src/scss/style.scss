@@ -877,6 +877,7 @@ header#top a.btn {
   .js_cart_lines {
     /* keep overflow visible so long product names or controls don't get clipped */
     overflow: visible;
+    padding: 1.5rem !important;
   }
 
   table {
