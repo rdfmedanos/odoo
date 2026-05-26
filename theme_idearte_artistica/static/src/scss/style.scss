@@ -927,6 +927,15 @@ header#top a.btn {
     overflow: hidden;
   }
 
+  .css_quantity {
+    border: 1px solid rgba(30, 30, 36, 0.08);
+
+    .btn-link,
+    .form-control {
+      border: none !important;
+    }
+  }
+
   .form-control {
     border-radius: 14px !important;
   }
