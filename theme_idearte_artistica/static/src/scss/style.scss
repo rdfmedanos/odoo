@@ -1373,102 +1373,84 @@ footer {
 
 /* End appended fixes */
 
-/* ===== Product card: hover buttons overlaid on image (top-right) ===== */
+/* ===== Product card: hover to show buttons next to price (no height change) ===== */
 
-.oe_website_sale .oe_product_cart {
-  position: relative !important;
-  overflow: visible !important;
-}
-
-.oe_website_sale .oe_product .o_wsale_product_sub {
-  position: static !important;
-}
-
-.oe_website_sale .oe_product .o_wsale_product_information {
-  position: static !important;
-  padding: 0.5rem 0.8rem 0.6rem !important;
-}
-
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn {
-  position: absolute !important;
-  top: 1rem !important;
-  right: 1rem !important;
+.oe_website_sale .oe_product .o_wsale_product_btn {
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
   display: flex !important;
   align-items: center !important;
-  gap: 0.35rem !important;
-  opacity: 0 !important;
-  transition: opacity 0.25s ease !important;
-  pointer-events: none !important;
-  z-index: 10 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: none !important;
+  gap: 0.3rem !important;
+  flex: 0 0 auto !important;
+  margin-left: 0.3rem !important;
 }
 
-.oe_website_sale .oe_product_cart:hover .o_wsale_product_sub .o_wsale_product_btn {
+.oe_website_sale .oe_product:hover .o_wsale_product_btn {
   opacity: 1 !important;
-  pointer-events: auto !important;
 }
 
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn .btn,
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn button,
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn .o_add_wishlist {
+.oe_website_sale .o_wsale_product_sub {
+  flex-wrap: nowrap !important;
+}
+
+.oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  padding: 0.35rem 0.6rem !important;
+}
+
+.oe_website_sale .oe_product .o_wsale_product_btn .btn,
+.oe_website_sale .oe_product .o_wsale_product_btn button,
+.oe_website_sale .oe_product .o_wsale_product_btn .o_add_wishlist {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 36px !important;
-  height: 36px !important;
+  width: 30px !important;
+  height: 30px !important;
   padding: 0 !important;
   border-radius: 999px !important;
   border: none !important;
   margin: 0 !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
   transition: all 0.2s ease !important;
   background: #fff !important;
   color: var(--color-dark) !important;
-  font-size: 0.8rem !important;
+  font-size: 0.75rem !important;
 }
 
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn .btn-primary {
+.oe_website_sale .oe_product .o_wsale_product_btn .btn-primary {
   background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
   color: #fff !important;
   width: auto !important;
-  padding: 0 0.8rem !important;
-  gap: 0.25rem !important;
+  padding: 0 0.6rem !important;
+  gap: 0.2rem !important;
   font-family: var(--font-headings) !important;
   font-weight: 600 !important;
-  font-size: 0.75rem !important;
-  height: 36px !important;
+  font-size: 0.7rem !important;
+  height: 30px !important;
 }
 
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn .o_add_wishlist {
+.oe_website_sale .oe_product .o_wsale_product_btn .o_add_wishlist {
   color: var(--color-fucsia) !important;
 }
 
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn .btn i.fa,
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn .btn svg {
-  font-size: 15px !important;
-  width: 15px !important;
-  height: 15px !important;
+.oe_website_sale .oe_product .o_wsale_product_btn .btn i.fa,
+.oe_website_sale .oe_product .o_wsale_product_btn .btn svg {
+  font-size: 13px !important;
+  width: 13px !important;
+  height: 13px !important;
 }
 
-.oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn .btn:hover {
+.oe_website_sale .oe_product .o_wsale_product_btn .btn:hover {
   transform: scale(1.1) !important;
 }
 
-.oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
-  padding: 0.4rem 0.7rem !important;
+.oe_website_sale .oe_product .o_wsale_product_information {
+  padding: 0.4rem 0.7rem 0.5rem !important;
 }
 
 @media (hover: none) and (pointer: coarse) {
-  .oe_website_sale .oe_product_cart .o_wsale_product_sub .o_wsale_product_btn {
+  .oe_website_sale .oe_product .o_wsale_product_btn {
     opacity: 1 !important;
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    margin-top: 0.3rem !important;
-  }
-  .oe_website_sale .oe_product_cart .o_wsale_product_information {
-    position: relative !important;
   }
 }
