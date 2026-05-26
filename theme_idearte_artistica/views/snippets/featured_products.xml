@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_idearte_featured_products" name="Productos Destacados Idearte">
+        <t t-set="website" t-value="env['website'].get_current_website()"/>
+        <t t-set="pricelist" t-value="website.get_current_pricelist()"/>
         <t t-set="featured_products" t-value="env['product.template'].search([('website_published', '=', True)], limit=4, order='write_date desc')"/>
         <section class="s_idearte_featured_products py-5" style="background-color: var(--color-marfil);">
             <div class="container py-4">
@@ -18,7 +20,7 @@
                 
                 <div class="row g-4">
                     <t t-foreach="featured_products" t-as="product">
-                        <t t-set="product_info" t-value="product._get_combination_info_v2(only_template=True)"/>
+                        <t t-set="product_info" t-value="product.with_context(pricelist=pricelist.id)._get_combination_info_v2(only_template=True)"/>
                         <div class="col-xl-3 col-lg-4 col-sm-6">
                             <div class="art-card h-100 d-flex flex-column">
                                 <div class="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
