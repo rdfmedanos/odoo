@@ -19,7 +19,7 @@
 
                 <div class="row g-4">
                     <t t-foreach="products" t-as="product">
-                        <t t-set="info" t-value="product.with_context(pricelist=pricelist.id)._get_combination_info_v2(only_template=True, pricelist=pricelist)"/>
+                        <t t-set="info" t-value="product.product_variant_id.sudo().with_context(pricelist=pricelist.id)._get_combination_info_v2(product_template_id=product.id, pricelist=pricelist.id, only_template=True)"/>
                         <div class="col-xl-3 col-lg-4 col-sm-6">
                             <div class="art-card h-100 d-flex flex-column">
                                 <div class="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
