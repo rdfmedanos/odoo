@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="s_idearte_featured_products" name="Productos Destacados Idearte">
+
         <t t-set="featured_products" t-value="env['product.template'].search([('website_published', '=', True)], limit=4, order='write_date desc')"/>
+
         <section class="s_idearte_featured_products py-5" style="background-color: var(--color-marfil);">
             <div class="container py-4">
                 <div class="row mb-5 align-items-end">
@@ -15,7 +17,7 @@
                         <a href="/shop" class="btn art-btn btn-secondary-art">Ver Catálogo Completo</a>
                     </div>
                 </div>
-                
+
                 <div class="row g-4">
                     <t t-foreach="featured_products" t-as="product">
                         <div class="col-xl-3 col-lg-4 col-sm-6">
