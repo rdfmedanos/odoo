@@ -972,6 +972,94 @@ header#top a.btn {
   }
 }
 
+/* ===== Odoo 19 Cart Total Card ===== */
+
+.o_total_card {
+  border-radius: 24px !important;
+  border: 1px solid rgba(30, 30, 36, 0.05) !important;
+  box-shadow: 0 16px 40px rgba(30, 30, 36, 0.05) !important;
+  background: rgba(255, 255, 255, 0.86) !important;
+}
+
+.o_total_card .card-body {
+  padding: 1.5rem !important;
+}
+
+.o_total_card .o_cart_total table {
+  margin-bottom: 0 !important;
+}
+
+.o_total_card .o_cart_total td {
+  vertical-align: middle !important;
+  padding: 0.5rem 0 !important;
+  border: none !important;
+}
+
+.o_total_card .o_cart_total .border-top td {
+  border-top: 1px solid rgba(30, 30, 36, 0.08) !important;
+}
+
+.o_total_card .o_cart_total .monetary_field {
+  font-family: var(--font-headings) !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+}
+
+.o_total_card .o_cart_total strong .monetary_field {
+  font-size: 1.15rem !important;
+  color: var(--color-dark) !important;
+}
+
+.o_total_card .btn-primary[name="website_sale_main_button"] {
+  background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 10px 24px rgba(225, 45, 123, 0.18) !important;
+  border-radius: 30px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-family: var(--font-headings) !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.o_total_card .btn-primary[name="website_sale_main_button"]:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 14px 30px rgba(123, 44, 191, 0.22) !important;
+}
+
+.o_total_card .coupon_form .input-group {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(30, 30, 36, 0.1) !important;
+}
+
+.o_total_card .coupon_form input {
+  border: none !important;
+  min-height: 44px !important;
+  box-shadow: none !important;
+}
+
+.o_total_card .coupon_form .btn-light {
+  border: none !important;
+  border-left: 1px solid rgba(30, 30, 36, 0.1) !important;
+  border-radius: 0 !important;
+  min-height: 44px !important;
+  color: var(--color-fucsia) !important;
+  font-weight: 600 !important;
+}
+
+.o_total_card a[href="/shop"] {
+  color: var(--color-fucsia) !important;
+  font-family: var(--font-headings) !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.25s ease !important;
+}
+
+.o_total_card a[href="/shop"]:hover {
+  opacity: 0.7 !important;
+}
+
 // Cart icon, empty cart state and add-to-cart modal
 header#top {
   .my_cart_quantity:not(.d-none):not(.hidden),
@@ -1403,32 +1491,15 @@ footer {
   order: 1 !important; /* primary left */
 }
 
-/* Cart summary strong rule */
-.oe_cart .o_cart_summary,
-.oe_cart #cart_total,
-.oe_cart .o_website_sale_cart_summary,
-.o_cart_summary,
-#cart_total {
-  padding: 1rem !important;
+/* Cart summary card margin */
+.o_total_card {
   margin: 0.75rem !important;
-  box-sizing: border-box !important;
   max-width: 420px !important;
-}
-
-.oe_cart table td,
-.oe_cart table th,
-.o_cart_summary table td,
-.o_cart_summary table th {
-  white-space: normal !important;
-  padding: 0.6rem 0.8rem !important;
 }
 
 /* responsive: cart summary full width on small screens */
 @media (max-width: 991.98px) {
-  .oe_cart .o_cart_summary,
-  .oe_cart #cart_total,
-  .o_cart_summary,
-  #cart_total {
+  .o_total_card {
     max-width: 100% !important;
     margin: 0.6rem 0 !important;
   }
