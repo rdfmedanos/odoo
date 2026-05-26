@@ -1373,20 +1373,27 @@ footer {
 
 /* End appended fixes */
 
-/* ===== Product card: hover to show action buttons below price ===== */
+/* ===== Product card: hover overlay buttons (no extra space) ===== */
 
 .oe_website_sale .oe_product .o_wsale_product_btn {
-  opacity: 0 !important;
-  transition: opacity 0.25s ease !important;
+  position: absolute !important;
+  right: 0.5rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
   display: flex !important;
   align-items: center !important;
-  gap: 0.4rem !important;
-  flex: 0 0 auto !important;
-  margin-left: 0.4rem !important;
+  gap: 0.35rem !important;
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .oe_website_sale .oe_product:hover .o_wsale_product_btn {
   opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .oe_website_sale .oe_product .o_wsale_product_btn .btn,
@@ -1395,28 +1402,29 @@ footer {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 38px !important;
-  height: 38px !important;
+  width: 34px !important;
+  height: 34px !important;
   padding: 0 !important;
   border-radius: 999px !important;
   border: none !important;
   margin: 0 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
   transition: all 0.2s ease !important;
   background: #fff !important;
   color: var(--color-dark) !important;
-  font-size: 0.85rem !important;
+  font-size: 0.8rem !important;
 }
 
 .oe_website_sale .oe_product .o_wsale_product_btn .btn-primary {
   background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
   color: #fff !important;
   width: auto !important;
-  padding: 0 1rem !important;
-  gap: 0.3rem !important;
+  padding: 0 0.75rem !important;
+  gap: 0.25rem !important;
   font-family: var(--font-headings) !important;
   font-weight: 600 !important;
-  font-size: 0.8rem !important;
+  font-size: 0.75rem !important;
+  height: 34px !important;
 }
 
 .oe_website_sale .oe_product .o_wsale_product_btn .o_add_wishlist {
@@ -1425,21 +1433,33 @@ footer {
 
 .oe_website_sale .oe_product .o_wsale_product_btn .btn i.fa,
 .oe_website_sale .oe_product .o_wsale_product_btn .btn svg {
-  font-size: 15px !important;
-  width: 15px !important;
-  height: 15px !important;
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
 }
 
 .oe_website_sale .oe_product .o_wsale_product_btn .btn:hover {
-  transform: scale(1.08) !important;
+  transform: scale(1.1) !important;
 }
 
 .oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
-  padding: 0.5rem 0.75rem !important;
+  padding: 0.4rem 0.7rem !important;
+}
+
+.oe_website_sale .oe_product .o_wsale_product_information {
+  padding: 0.6rem 0.8rem 0.7rem !important;
 }
 
 @media (hover: none) and (pointer: coarse) {
   .oe_website_sale .oe_product .o_wsale_product_btn {
     opacity: 1 !important;
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin-left: 0.4rem !important;
+  }
+  .oe_website_sale .oe_product .o_wsale_product_sub {
+    position: relative !important;
   }
 }
