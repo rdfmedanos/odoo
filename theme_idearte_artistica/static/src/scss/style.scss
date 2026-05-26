@@ -1373,104 +1373,119 @@ footer {
 
 /* End appended fixes */
 
-/* ===== Absolute-positioned edge buttons: primary left, wishlist right ===== */
-/* Ensure product card is a positioning context */
+/* ===== Hover overlay buttons on product cards (add to cart + wishlist) ===== */
+
+/* Card as positioning context */
 .oe_website_sale .oe_product,
-.oe_website_sale .o_wsale_product_grid_wrapper,
-.oe_website_sale .o_wsale_product_grid_wrapper_1_1 {
+.oe_website_sale .o_wsale_product_grid_wrapper {
   position: relative !important;
-}
-
-/* Make the button wrapper non-intrusive and allow children to be positioned */
-.oe_website_sale .o_wsale_product_btn {
-  position: absolute !important;
-  top: 50% !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  height: auto !important; /* allow proper positioning context */
-  pointer-events: none !important; /* let children handle clicks */
-}
-
-/* Primary (add to cart) placed at left edge */
-.oe_website_sale .o_wsale_product_btn .o_wsale_product_btn_primary,
-.oe_website_sale .o_wsale_product_btn .btn-primary {
-  position: absolute !important;
-  left: 12px !important;
-  right: auto !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  z-index: 30 !important;
-  pointer-events: auto !important;
-}
-
-/* Wishlist placed at right edge */
-.oe_website_sale .o_wsale_product_btn .o_add_wishlist,
-.oe_website_sale .o_wsale_product_btn .btn.o_add_wishlist {
-  position: absolute !important;
-  right: 12px !important;
-  left: auto !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  z-index: 30 !important;
-  pointer-events: auto !important;
-}
-
-/* Make buttons smaller and circular so they don't overlap content */
-.oe_website_sale .o_wsale_product_btn .btn,
-.oe_website_sale .o_wsale_product_btn button,
-.oe_website_sale .o_wsale_product_btn .o_add_wishlist {
-  width: 42px !important;
-  height: 42px !important;
-  padding: 6px !important;
-  border-radius: 999px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 0.95rem !important;
-  background: #fff !important;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06) !important;
-  border: 1px solid rgba(30,30,36,0.06) !important;
-}
-
-/* Shrink icon inside button to fit */
-.oe_website_sale .o_wsale_product_btn .btn i.fa,
-.oe_website_sale .o_wsale_product_btn .btn svg {
-  font-size: 16px !important;
-  width: 16px !important;
-  height: 16px !important;
-}
-
-/* Give product card a bit more vertical room so edge buttons are visible */
-.oe_website_sale .oe_product .p-4,
-.oe_website_sale .o_wsale_product_grid_wrapper .p-4,
-.art-card .p-4 {
-  padding-bottom: 1.25rem !important;
-}
-
-/* If some product cards hide overflow, ensure visible for button area */
-.oe_website_sale .oe_product,
-.oe_website_sale .o_wsale_product_grid_wrapper,
-.art-card {
   overflow: visible !important;
 }
 
-/* Reduce vertical spacing around the actions and price */
-.oe_website_sale .o_wsale_product_sub {
-  padding-top: 0.1rem !important;
-  padding-bottom: 0.1rem !important;
-}
-.oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
-  padding-top: 0.45rem !important;
-  padding-bottom: 0.45rem !important;
-  /* leave space at left/right so buttons don't overlap price box */
-  padding-left: 56px !important;
-  padding-right: 56px !important;
+/* Remove position:relative from sub so absolute children use card as reference */
+.oe_website_sale .oe_product .o_wsale_product_sub {
+  position: static !important;
 }
 
-/* Make sure image area doesn't get overlapped visually (optional small inset) */
-.oe_website_sale .oe_product_image,
-.oe_website_sale .o_wsale_product_img_wrapper {
-  padding-right: 0.75rem !important;
+/* Button wrapper: centered in the image area, hidden by default */
+.oe_website_sale .oe_product .o_wsale_product_btn {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 38% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.8rem !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  pointer-events: none !important;
+  z-index: 20 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  width: auto !important;
+  flex: none !important;
+}
+
+/* Show on card hover */
+.oe_website_sale .oe_product:hover .o_wsale_product_btn,
+.oe_website_sale .o_wsale_product_grid_wrapper:hover .o_wsale_product_btn {
+  opacity: 1 !important;
+}
+
+/* All buttons inside the overlay */
+.oe_website_sale .oe_product .o_wsale_product_btn .btn,
+.oe_website_sale .oe_product .o_wsale_product_btn button,
+.oe_website_sale .oe_product .o_wsale_product_btn .o_add_wishlist {
+  pointer-events: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  border: none !important;
+  position: relative !important;
+  transform: none !important;
+  margin: 0 !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.25s ease !important;
+  background: #fff !important;
+  color: var(--color-dark) !important;
+}
+
+/* Primary (add to cart) gradient */
+.oe_website_sale .oe_product .o_wsale_product_btn .btn-primary {
+  background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 24px rgba(225, 45, 123, 0.3) !important;
+}
+
+/* Wishlist icon color */
+.oe_website_sale .oe_product .o_wsale_product_btn .o_add_wishlist {
+  color: var(--color-fucsia) !important;
+}
+
+/* Button icons */
+.oe_website_sale .oe_product .o_wsale_product_btn .btn i.fa,
+.oe_website_sale .oe_product .o_wsale_product_btn .btn svg {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Button hover scale effect */
+.oe_website_sale .oe_product .o_wsale_product_btn .btn:hover {
+  transform: scale(1.12) !important;
+}
+
+/* Ensure product info background stays solid above overlay */
+.oe_website_sale .oe_product .o_wsale_product_information {
+  position: relative !important;
+  z-index: 5 !important;
+  background: #fff !important;
+}
+
+/* Remove the extra price box padding from the old absolute approach */
+.oe_website_sale .o_wsale_product_sub .o_l10n_ar_product_price {
   padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+/* Always show buttons on touch devices (no hover) */
+@media (hover: none) and (pointer: coarse) {
+  .oe_website_sale .oe_product .o_wsale_product_btn {
+    opacity: 1 !important;
+    top: auto !important;
+    bottom: 0.5rem !important;
+    transform: none !important;
+    position: relative !important;
+    margin-top: 0.5rem !important;
+  }
+  .oe_website_sale .oe_product .o_wsale_product_sub {
+    position: relative !important;
+  }
 }
