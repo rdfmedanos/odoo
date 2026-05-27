@@ -1561,16 +1561,18 @@ footer {
     background: linear-gradient(135deg, rgba(225, 45, 123, 0.15), rgba(123, 44, 191, 0.15));
   }
 
-  span {
-    font-family: var(--font-headings);
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: var(--color-dark);
-    transition: color 0.2s ease;
+  .o_wsale_filmstrip_item {
+    span {
+      font-family: var(--font-headings);
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--color-dark);
+      transition: color 0.2s ease;
+    }
   }
 
-  .o_wsale_filmstrip_link:hover span {
-    color: var(--color-fucsia);
+  .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item span {
+    color: var(--color-fucsia) !important;
   }
 }
 
