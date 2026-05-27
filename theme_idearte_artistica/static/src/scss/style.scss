@@ -1517,21 +1517,52 @@ footer {
 
 /* End appended fixes */
 
-/* ===== Shop Category Cards (override filmstrip) ===== */
-.idearte-cat-card {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
-  cursor: pointer;
+/* ===== Shop Category Filmstrip — themed colors ===== */
+.o_wsale_filmstrip_container {
+  background: var(--color-marfil);
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+  .o_wsale_filmstrip_link {
+    border-radius: 16px;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: rgba(225, 45, 123, 0.06);
+    }
   }
 
-  &.active {
-    box-shadow: 0 10px 25px rgba(225, 45, 123, 0.2);
-    outline: 3px solid var(--color-fucsia);
-    outline-offset: -3px;
+  .o_wsale_filmstrip_item.active {
+    background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%);
+    border-radius: 16px;
+    padding: 4px;
+
+    .o_wsale_filmstrip_image {
+      border-radius: 12px;
+    }
+
+    span {
+      color: #fff !important;
+    }
+  }
+
+  .o_wsale_filmstrip_image {
+    border-radius: 12px;
+  }
+
+  .o_wsale_filmstrip_placeholder {
+    background: linear-gradient(135deg, rgba(225, 45, 123, 0.15), rgba(123, 44, 191, 0.15));
+    border-radius: 12px;
+  }
+
+  span {
+    font-family: var(--font-headings);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-dark);
+    transition: color 0.2s ease;
+  }
+
+  .o_wsale_filmstrip_link:hover span {
+    color: var(--color-fucsia);
   }
 }
 
