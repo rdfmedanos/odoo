@@ -1520,63 +1520,48 @@ footer {
 /* ===== Shop Category Filmstrip — themed colors ===== */
 .o_wsale_filmstrip_container {
   background: var(--color-marfil);
+}
 
-  .o_wsale_filmstrip_link {
-    border-radius: 16px;
-    transition: all 0.25s ease;
+.o_wsale_filmstrip_container .o_wsale_filmstrip_link {
+  border-radius: 16px;
+  transition: all 0.25s ease;
+}
 
-  .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item,
-  .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item.active {
-      background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
-      border-radius: 16px;
-      outline: none;
+.o_wsale_filmstrip_container .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item,
+.o_wsale_filmstrip_container .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item.active {
+  background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
+  border-radius: 16px;
+}
 
-      .o_wsale_filmstrip_image {
-        border-color: transparent;
-        box-shadow: 0 0 0 2px rgba(225, 45, 123, 0.15);
-      }
+.o_wsale_filmstrip_container .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item span,
+.o_wsale_filmstrip_container .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item span[data-oe-field="name"] {
+  color: #fff !important;
+}
 
-      span, span[data-oe-field="name"] {
-        color: #fff !important;
-      }
-  }
-  }
+.o_wsale_filmstrip_container .o_wsale_filmstrip_item.active {
+  background: transparent;
+  border-radius: 16px;
+}
 
-  .o_wsale_filmstrip_item.active {
-    background: transparent;
-    border-radius: 16px;
+.o_wsale_filmstrip_container .o_wsale_filmstrip_item.active span {
+  color: var(--color-fucsia) !important;
+}
 
-    .o_wsale_filmstrip_image {
-      border: 2px solid var(--color-fucsia);
-    }
+.o_wsale_filmstrip_container .o_wsale_filmstrip_image,
+.o_wsale_filmstrip_container .o_wsale_filmstrip_placeholder {
+  border-radius: 12px;
+}
 
-    span {
-      color: var(--color-fucsia) !important;
-    }
-  }
+.o_wsale_filmstrip_container .o_wsale_filmstrip_placeholder {
+  background: linear-gradient(135deg, rgba(225, 45, 123, 0.15), rgba(123, 44, 191, 0.15));
+}
 
-  .o_wsale_filmstrip_image,
-  .o_wsale_filmstrip_placeholder {
-    border-radius: 12px;
-  }
-
-  .o_wsale_filmstrip_placeholder {
-    background: linear-gradient(135deg, rgba(225, 45, 123, 0.15), rgba(123, 44, 191, 0.15));
-  }
-
-  .o_wsale_filmstrip_item {
-    span {
-      font-family: var(--font-headings);
-      font-weight: 600;
-      font-size: 0.85rem;
-      color: var(--color-dark);
-      transition: color 0.2s ease;
-    }
-  }
-
-  .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item span {
-    color: var(--color-fucsia) !important;
-  }
+.o_wsale_filmstrip_container .o_wsale_filmstrip_item span {
+  font-family: var(--font-headings);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-dark);
+  transition: color 0.2s ease;
 }
 
 /* ===== Product card: hover to show buttons next to price (no height change) ===== */
