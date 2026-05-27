@@ -1525,19 +1525,21 @@ footer {
     border-radius: 16px;
     transition: all 0.25s ease;
 
-    &:hover .o_wsale_filmstrip_item {
+  .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item,
+  .o_wsale_filmstrip_link:hover .o_wsale_filmstrip_item.active {
       background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
       border-radius: 16px;
+      outline: none;
 
       .o_wsale_filmstrip_image {
-        border-color: var(--color-fucsia);
+        border-color: transparent;
         box-shadow: 0 0 0 2px rgba(225, 45, 123, 0.15);
       }
 
-      span {
+      span, span[data-oe-field="name"] {
         color: #fff !important;
       }
-    }
+  }
   }
 
   .o_wsale_filmstrip_item.active {
