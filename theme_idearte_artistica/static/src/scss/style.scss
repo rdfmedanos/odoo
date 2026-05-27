@@ -1437,11 +1437,11 @@ header#top {
 footer {
   background-color: #1e1e24 !important;
   color: rgba(255, 255, 255, 0.7) !important;
-  
+
   h4, h5, h6 {
     color: #fff !important;
   }
-  
+
   a {
     color: rgba(255, 255, 255, 0.8) !important;
     transition: color 0.2s ease;
@@ -1450,6 +1450,22 @@ footer {
       text-decoration: none;
     }
   }
+}
+
+.o_footer_copyright {
+  background-color: #1e1e24 !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+
+  a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    &:hover {
+      color: var(--color-fucsia) !important;
+    }
+  }
+}
+
+.o_footer_copyright_name {
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /* ===== Extra fixes appended: ensure product action alignment and cart summary padding ===== */
