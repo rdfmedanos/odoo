@@ -1531,26 +1531,25 @@ footer {
   }
 
   .o_wsale_filmstrip_item.active {
-    background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%);
+    background: transparent;
     border-radius: 16px;
-    padding: 4px;
 
     .o_wsale_filmstrip_image {
-      border-radius: 12px;
+      border: 2px solid var(--color-fucsia);
     }
 
     span {
-      color: #fff !important;
+      color: var(--color-fucsia) !important;
     }
   }
 
-  .o_wsale_filmstrip_image {
+  .o_wsale_filmstrip_image,
+  .o_wsale_filmstrip_placeholder {
     border-radius: 12px;
   }
 
   .o_wsale_filmstrip_placeholder {
     background: linear-gradient(135deg, rgba(225, 45, 123, 0.15), rgba(123, 44, 191, 0.15));
-    border-radius: 12px;
   }
 
   span {
