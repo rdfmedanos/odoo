@@ -1526,7 +1526,16 @@ footer {
     transition: all 0.25s ease;
 
     &:hover {
-      background: rgba(225, 45, 123, 0.06);
+      background: rgba(225, 45, 123, 0.08) !important;
+
+      .o_wsale_filmstrip_image {
+        border-color: var(--color-fucsia);
+        box-shadow: 0 0 0 2px rgba(225, 45, 123, 0.15);
+      }
+
+      span {
+        color: var(--color-fucsia) !important;
+      }
     }
   }
 
