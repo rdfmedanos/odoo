@@ -18,6 +18,7 @@
         'views/snippets.xml',
         'views/homepage.xml',
         'views/brand_promotion.xml',
+        'views/category_filmstrip.xml',
     ],
     'assets': {
         'web.assets_frontend': [

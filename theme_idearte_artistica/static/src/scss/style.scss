@@ -1517,6 +1517,24 @@ footer {
 
 /* End appended fixes */
 
+/* ===== Shop Category Cards (override filmstrip) ===== */
+.idearte-cat-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  &.active {
+    box-shadow: 0 10px 25px rgba(225, 45, 123, 0.2);
+    outline: 3px solid var(--color-fucsia);
+    outline-offset: -3px;
+  }
+}
+
 /* ===== Product card: hover to show buttons next to price (no height change) ===== */
 
 .oe_website_sale .oe_product .o_wsale_product_btn {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_idearte_filmstrip_categories" inherit_id="website_sale.filmstrip_categories" name="Categories Idearte">
+        <xpath expr="//div[@id='o_wsale_categories_filmstrip']" position="replace">
+            <div id="o_wsale_categories_filmstrip" class="o_wsale_filmstrip_container o_wsale_filmstrip_default">
+                <div class="container py-4">
+                    <ul class="row g-3 list-unstyled mb-0" role="menu" aria-label="Categories">
+                        <li t-foreach="entries" t-as="c"
+                            t-att-data-publish="c.has_published_products and 'on' or 'off'"
+                            role="presentation"
+                            class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                            <a t-att-href="keep('%s/category/%s' % (shop_path, slug(c)))"
+                               class="text-decoration-none d-block h-100"
+                               draggable="false"
+                               role="menuitem"
+                               t-att-aria-label="c.name">
+                                <input type="radio"
+                                       t-attf-name="wsale_categories_top_radios_{{parentCategoryId}}"
+                                       class="btn-check pe-none position-absolute"
+                                       t-att-id="c.id"
+                                       t-att-value="c.id"
+                                       t-att-checked="'true' if c.id == category.id else None"
+                                       tabindex="-1"
+                                       style="opacity: 0; width: 0; height: 0;"/>
+                                <div t-att-class="'idearte-cat-card position-relative d-flex flex-column justify-content-end p-3 overflow-hidden border-0 h-100' + (c.id == category.id and ' active' or '')"
+                                     style="min-height: 160px; border-radius: 20px; background: linear-gradient(135deg, var(--color-fucsia) 0%, #1e1e24 100%);">
+                                    <div t-if="c.image_128"
+                                         class="position-absolute w-100 h-100 top-0 start-0"
+                                         t-attf-style="background-image: url('data:image/png;base64, #{c.image_128}'); background-size: cover; background-position: center; opacity: 0.3; border-radius: 20px;">
+                                    </div>
+                                    <span class="position-relative text-white font-weight-bold"
+                                          style="font-family: var(--font-headings); font-size: 1rem; z-index: 1;">
+                                        <t t-esc="c.name"/>
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
