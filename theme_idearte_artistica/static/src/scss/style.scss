@@ -1525,15 +1525,16 @@ footer {
     border-radius: 16px;
     transition: all 0.25s ease;
 
-    &:hover {
+    &:hover .o_wsale_filmstrip_item {
       background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-violeta) 100%) !important;
+      border-radius: 16px;
 
       .o_wsale_filmstrip_image {
         border-color: var(--color-fucsia);
         box-shadow: 0 0 0 2px rgba(225, 45, 123, 0.15);
       }
 
-      .o_wsale_filmstrip_item span {
+      span {
         color: #fff !important;
       }
     }
