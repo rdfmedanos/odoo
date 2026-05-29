@@ -23,7 +23,7 @@ class PaymentTransaction(models.Model):
 
         self.ensure_one()
         provider = self.provider_id
-        public_key = provider.mercado_pago_public_key or ''
+        public_key = provider.l10n_ar_mp_public_key or provider.mercado_pago_public_key or ''
         return {
             'api_url': '',
             'url_params': {},

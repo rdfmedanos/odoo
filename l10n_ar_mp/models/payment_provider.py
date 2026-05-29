@@ -24,6 +24,11 @@ class PaymentProvider(models.Model):
         string='Client Secret',
         groups='base.group_system',
     )
+    l10n_ar_mp_public_key = fields.Char(
+        string='Public Key',
+        groups='base.group_system',
+        help='Clave publica de Mercado Pago (empieza con TEST- o APP_USR-).'
+    )
     l10n_ar_mp_webhook_url = fields.Char(
         string='Webhook URL',
         compute='_compute_l10n_ar_mp_webhook_url',
@@ -65,7 +70,7 @@ class PaymentProvider(models.Model):
         self.ensure_one()
         if self.code != 'mercado_pago':
             return super()._get_specific_inline_form_values(*args, **kwargs)
-        pk = self.mercado_pago_public_key or ''
+        pk = self.l10n_ar_mp_public_key or self.mercado_pago_public_key or ''
         return {
             'public_key': pk,
             'email': '',

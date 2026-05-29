@@ -8,7 +8,7 @@
             <group name="provider_credentials" position="after">
                 <group string="Mercado Pago Checkout API Orders" invisible="code != 'mercado_pago'" groups="base.group_system">
                     <field name="is_published" string="Publicado en el sitio web"/>
-                    <field name="mercado_pago_public_key"/>
+                    <field name="l10n_ar_mp_public_key"/>
                     <field name="mercado_pago_access_token" password="True"/>
                     <field name="l10n_ar_mp_client_id"/>
                     <field name="l10n_ar_mp_client_secret" password="True"/>
