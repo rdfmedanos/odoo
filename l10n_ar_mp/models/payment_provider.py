@@ -15,21 +15,6 @@ _logger = logging.getLogger(__name__)
 class PaymentProvider(models.Model):
     _inherit = 'payment.provider'
 
-    code = fields.Selection(
-        selection_add=[('mercado_pago', 'Mercado Pago')],
-        ondelete={'mercado_pago': 'set default'},
-    )
-    mercado_pago_access_token = fields.Char(
-        string='Mercado Pago Access Token',
-        required_if_provider='mercado_pago',
-        copy=False,
-        groups='base.group_system',
-    )
-    mercado_pago_public_key = fields.Char(
-        string='Mercado Pago Public Key',
-        copy=False,
-        groups='base.group_system',
-    )
     l10n_ar_mp_client_id = fields.Char(
         string='Client ID',
         groups='base.group_system',
@@ -67,10 +52,6 @@ class PaymentProvider(models.Model):
         for provider in self.filtered(lambda p: p.code == 'mercado_pago' and p.state != 'disabled'):
             if not provider.mercado_pago_access_token:
                 raise ValidationError(_('Configure el Access Token de Mercado Pago antes de habilitar el proveedor.'))
-
-    def _get_default_payment_method_codes(self):
-        self.ensure_one()
-        return super()._get_default_payment_method_codes()
 
     def _mercado_pago_get_api_url(self, endpoint):
         self.ensure_one()

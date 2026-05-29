@@ -5,20 +5,13 @@
         <field name="model">payment.provider</field>
         <field name="inherit_id" ref="payment.payment_provider_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//sheet" position="inside">
-                <group string="Mercado Pago Checkout API Orders" invisible="code != 'mercado_pago'">
-                    <group>
-                        <field name="mercado_pago_account_country_id" required="code == 'mercado_pago' and state != 'disabled'"/>
-                        <field name="mercado_pago_access_token" password="True" required="code == 'mercado_pago' and state != 'disabled'"/>
-                        <field name="mercado_pago_public_key"/>
-                        <field name="l10n_ar_mp_client_id"/>
-                        <field name="l10n_ar_mp_client_secret" password="True"/>
-                    </group>
-                    <group>
-                        <field name="l10n_ar_mp_webhook_url" readonly="1"/>
-                    </group>
+            <group name="provider_credentials" position="after">
+                <group string="Mercado Pago Checkout API Orders" invisible="code != 'mercado_pago'" groups="base.group_system">
+                    <field name="l10n_ar_mp_client_id"/>
+                    <field name="l10n_ar_mp_client_secret" password="True"/>
+                    <field name="l10n_ar_mp_webhook_url" readonly="1"/>
                 </group>
-            </xpath>
+            </group>
         </field>
     </record>
 </odoo>
