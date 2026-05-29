@@ -168,11 +168,6 @@ class PaymentProvider(models.Model):
             'payer': {
                 'email': transaction.partner_email or transaction.partner_id.email,
             },
-            'back_urls': {
-                'success': urljoin(base_url, '/payment/mercado_pago/return'),
-                'failure': urljoin(base_url, '/payment/mercado_pago/return'),
-                'pending': urljoin(base_url, '/payment/mercado_pago/return'),
-            },
         }
         _logger.info('Payload Mercado Pago Checkout Pro: %s', payload)
         idempotency_key = transaction.l10n_ar_mp_idempotency_key or str(uuid.uuid4())
