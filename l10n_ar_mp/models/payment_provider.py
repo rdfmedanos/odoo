@@ -163,16 +163,23 @@ class PaymentProvider(models.Model):
             },
         }
 
+    def _is_sandbox(self):
+        token = (self.mercado_pago_access_token or '').strip()
+        return token.startswith('TEST-')
+
     def _mercado_pago_create_order_from_card(self, transaction, card_data):
         self.ensure_one()
         amount = float(transaction.amount)
+        email = card_data.get('payer', {}).get('email') or transaction.partner_email or transaction.partner_id.email
+        if self._is_sandbox() and email and '@testuser.com' not in email:
+            email = email.replace(email.split('@')[1], 'testuser.com')
         payload = {
             'type': 'online',
             'processing_mode': 'automatic',
             'total_amount': '%.2f' % amount,
             'external_reference': transaction.reference,
             'payer': {
-                'email': card_data.get('payer', {}).get('email') or transaction.partner_email or transaction.partner_id.email,
+                'email': email,
             },
             'transactions': {
                 'payments': [
@@ -195,9 +202,9 @@ class PaymentProvider(models.Model):
                 'number': identification['number'],
             }
         _logger.info('Payload Orders API: %s', payload)
-        idempotency_key = transaction.l10n_ar_mp_idempotency_key or str(uuid.uuid4())
-        transaction.l10n_ar_mp_idempotency_key = idempotency_key
         for retry in range(3):
+            idempotency_key = str(uuid.uuid4())
+            transaction.l10n_ar_mp_idempotency_key = idempotency_key
             try:
                 result = self._mercado_pago_request('POST', '/v1/orders', payload, idempotency_key=idempotency_key)
                 _logger.info('Respuesta Orders API: %s', result)
@@ -206,8 +213,6 @@ class PaymentProvider(models.Model):
                 _logger.warning('Intento %d fallo: %s', retry + 1, e)
                 if retry == 2:
                     raise
-                idempotency_key = str(uuid.uuid4())
-                transaction.l10n_ar_mp_idempotency_key = idempotency_key
 
     def _mercado_pago_get_order(self, order_id):
         self.ensure_one()
