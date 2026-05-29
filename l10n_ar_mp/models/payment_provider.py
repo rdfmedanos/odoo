@@ -159,25 +159,27 @@ class PaymentProvider(models.Model):
         amount = float(transaction.amount)
         payload = {
             'external_reference': transaction.reference,
-            'notification_url': urljoin(base_url, '/payment/mercado_pago/webhook'),
-            'back_urls': {
-                'success': urljoin(base_url, '/payment/mercado_pago/return'),
-                'pending': urljoin(base_url, '/payment/mercado_pago/return'),
-                'failure': urljoin(base_url, '/payment/mercado_pago/return'),
-            },
             'items': [{
-                'title': transaction.reference,
+                'title': transaction.reference[:256],
                 'quantity': 1,
+                'unit_price': float(amount),
                 'currency_id': currency,
-                'unit_price': amount,
             }],
             'payer': {
                 'email': transaction.partner_email or transaction.partner_id.email,
             },
+            'back_urls': {
+                'success': urljoin(base_url, '/payment/mercado_pago/return'),
+                'failure': urljoin(base_url, '/payment/mercado_pago/return'),
+                'pending': urljoin(base_url, '/payment/mercado_pago/return'),
+            },
         }
+        _logger.info('Payload Mercado Pago Checkout Pro: %s', payload)
         idempotency_key = transaction.l10n_ar_mp_idempotency_key or str(uuid.uuid4())
         transaction.l10n_ar_mp_idempotency_key = idempotency_key
-        return self._mercado_pago_request('POST', '/checkout/preferences', payload, idempotency_key=idempotency_key)
+        result = self._mercado_pago_request('POST', '/checkout/preferences', payload, idempotency_key=idempotency_key)
+        _logger.info('Respuesta completa Mercado Pago Checkout Pro: %s', result)
+        return result
 
     def _mercado_pago_get_order(self, order_id):
         self.ensure_one()
