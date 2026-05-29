@@ -47,6 +47,25 @@ class PaymentProvider(models.Model):
             'support_refund': 'none',
         })
 
+    def _get_default_payment_method_codes(self):
+        self.ensure_one()
+        default_codes = super()._get_default_payment_method_codes()
+        if self.code != 'mercado_pago':
+            return default_codes
+        return set(default_codes) | {'card'}
+
+    def write(self, values):
+        result = super().write(values)
+        mercado_pago_providers = self.filtered(lambda provider: provider.code == 'mercado_pago')
+        if mercado_pago_providers and ('state' in values or 'payment_method_ids' not in values):
+            card_method = self.env.ref('payment.payment_method_card', raise_if_not_found=False)
+            if card_method:
+                card_method.active = True
+                for provider in mercado_pago_providers:
+                    if card_method not in provider.payment_method_ids:
+                        provider.payment_method_ids = [(4, card_method.id)]
+        return result
+
     @api.constrains('state', 'mercado_pago_access_token')
     def _check_mercado_pago_credentials_are_set_before_enabling(self):
         for provider in self.filtered(lambda p: p.code == 'mercado_pago' and p.state != 'disabled'):
