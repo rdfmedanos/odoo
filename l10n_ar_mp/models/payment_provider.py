@@ -152,34 +152,51 @@ class PaymentProvider(models.Model):
             },
         }
 
-    def _mercado_pago_create_order(self, transaction):
+    def _mercado_pago_create_order_from_card(self, transaction, card_data):
         self.ensure_one()
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url') or ''
-        currency = transaction.currency_id.name
         amount = float(transaction.amount)
         payload = {
+            'type': 'online',
+            'processing_mode': 'automatic',
+            'total_amount': '%.2f' % amount,
             'external_reference': transaction.reference,
-            'items': [{
-                'title': transaction.reference[:256],
-                'quantity': 1,
-                'unit_price': float(amount),
-                'currency_id': currency,
-            }],
             'payer': {
-                'email': transaction.partner_email or transaction.partner_id.email,
+                'email': card_data.get('payer', {}).get('email') or transaction.partner_email or transaction.partner_id.email,
             },
-            'back_urls': {
-                'success': urljoin(base_url, '/payment/mercado_pago/return'),
-                'failure': urljoin(base_url, '/payment/mercado_pago/return'),
-                'pending': urljoin(base_url, '/payment/mercado_pago/return'),
+            'transactions': {
+                'payments': [
+                    {
+                        'amount': '%.2f' % amount,
+                        'payment_method': {
+                            'id': card_data['payment_method_id'],
+                            'type': card_data['payment_type_id'],
+                            'token': card_data['token'],
+                            'installments': int(card_data['installments']),
+                        },
+                    }
+                ],
             },
         }
-        _logger.info('Payload Mercado Pago Checkout Pro: %s', payload)
+        identification = card_data.get('payer', {}).get('identification', {})
+        if identification.get('type') and identification.get('number'):
+            payload['payer']['identification'] = {
+                'type': identification['type'],
+                'number': identification['number'],
+            }
+        _logger.info('Payload Orders API: %s', payload)
         idempotency_key = transaction.l10n_ar_mp_idempotency_key or str(uuid.uuid4())
         transaction.l10n_ar_mp_idempotency_key = idempotency_key
-        result = self._mercado_pago_request('POST', '/checkout/preferences', payload, idempotency_key=idempotency_key)
-        _logger.info('Respuesta completa Mercado Pago Checkout Pro: %s', result)
-        return result
+        for retry in range(3):
+            try:
+                result = self._mercado_pago_request('POST', '/v1/orders', payload, idempotency_key=idempotency_key)
+                _logger.info('Respuesta Orders API: %s', result)
+                return result
+            except ValidationError as e:
+                _logger.warning('Intento %d fallo: %s', retry + 1, e)
+                if retry == 2:
+                    raise
+                idempotency_key = str(uuid.uuid4())
+                transaction.l10n_ar_mp_idempotency_key = idempotency_key
 
     def _mercado_pago_get_order(self, order_id):
         self.ensure_one()

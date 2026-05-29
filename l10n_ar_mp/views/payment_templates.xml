@@ -1,10 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="redirect_form">
-        <form t-att-action="api_url" method="get">
-            <t t-foreach="url_params" t-as="param">
-                <input type="hidden" t-att-name="param" t-att-value="url_params[param]"/>
-            </t>
-        </form>
+        <div id="cardPaymentBrick_container" style="min-height: 400px;">
+            <div id="mp-loading" style="text-align: center; padding: 40px;">
+                <p>Cargando formulario de pago...</p>
+            </div>
+        </div>
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
+        <script>
+            (async function() {
+                var publicKey = "<t t-esc="render_values.get('public_key', '')"/>";
+                var amount = <t t-esc="render_values.get('amount', 0)"/>;
+                var reference = "<t t-esc="render_values.get('reference', '')"/>";
+                var email = "<t t-esc="render_values.get('partner_email', '')"/>";
+
+                if (!publicKey) {
+                    document.getElementById('cardPaymentBrick_container').innerHTML =
+                        '<p style="color: red; padding: 20px;">Error: Mercado Pago no esta configurado (falta Public Key).</p>';
+                    return;
+                }
+                if (amount <= 0) {
+                    document.getElementById('cardPaymentBrick_container').innerHTML =
+                        '<p style="color: red; padding: 20px;">Error: El monto de la transaccion es invalido.</p>';
+                    return;
+                }
+
+                var mp = new MercadoPago(publicKey, { locale: 'es-AR' });
+                var bricksBuilder = mp.bricks();
+
+                var settings = {
+                    initialization: { amount: amount },
+                    callbacks: {
+                        onReady: function() {
+                            var el = document.getElementById('mp-loading');
+                            if (el) el.style.display = 'none';
+                        },
+                        onSubmit: function(formData, additionalData) {
+                            return new Promise(function(resolve, reject) {
+                                var submitData = {
+                                    token: formData.token,
+                                    payment_method_id: formData.payment_method_id,
+                                    payment_type_id: formData.payment_type_id || (additionalData && additionalData.paymentTypeId) || 'credit_card',
+                                    installments: formData.installments,
+                                    transaction_amount: formData.transaction_amount,
+                                    external_reference: reference,
+                                    payer: {
+                                        email: formData.payer.email || email,
+                                        identification: formData.payer.identification || {},
+                                    },
+                                };
+                                fetch('/payment/mercado_pago/process_order', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(submitData),
+                                })
+                                .then(function(res) { return res.json(); })
+                                .then(function(data) {
+                                    if (data.success) {
+                                        window.location.href = data.redirect_url;
+                                    } else {
+                                        alert('Error: ' + (data.error || 'No se pudo procesar el pago'));
+                                        reject();
+                                    }
+                                    resolve();
+                                })
+                                .catch(function(err) {
+                                    alert('Error de conexion al procesar el pago');
+                                    reject();
+                                });
+                            });
+                        },
+                        onError: function(error) {
+                            console.error('CardPaymentBrick error:', error);
+                            var el = document.getElementById('mp-loading');
+                            if (el) {
+                                el.innerHTML = '<p style="color: red; padding: 20px;">Error al cargar el formulario de pago. Recargue la pagina e intente nuevamente.</p>';
+                            }
+                        },
+                    },
+                };
+                try {
+                    await bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings);
+                } catch (error) {
+                    console.error('Error creating brick:', error);
+                    var el = document.getElementById('mp-loading');
+                    if (el) {
+                        el.innerHTML = '<p style="color: red; padding: 20px;">Error al cargar formulario: ' + error.message + '</p>';
+                    }
+                }
+            })();
+        </script>
     </template>
 </odoo>

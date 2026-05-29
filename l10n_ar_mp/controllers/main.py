@@ -5,11 +5,33 @@ import logging
 from odoo import http
 from odoo.http import request
 
-
 _logger = logging.getLogger(__name__)
 
 
 class MercadoPagoController(http.Controller):
+
+    @http.route('/payment/mercado_pago/process_order', type='json', auth='public', methods=['POST'], csrf=False, save_session=False)
+    def mercado_pago_process_order(self, **kwargs):
+        data = request.get_json_data()
+        _logger.info('Procesando pago con tarjeta MP: %s', {k: v for k, v in data.items() if k != 'token'})
+
+        reference = data.get('external_reference', '')
+        tx = request.env['payment.transaction'].sudo().search([
+            ('provider_code', '=', 'mercado_pago'),
+            ('reference', '=', reference),
+        ], limit=1)
+        if not tx:
+            return {'success': False, 'error': 'Transaccion no encontrada'}
+
+        try:
+            tx._mercado_pago_process_card_payment(data)
+            return {
+                'success': True,
+                'redirect_url': '/payment/status',
+            }
+        except Exception as e:
+            _logger.exception('Error al procesar pago MP')
+            return {'success': False, 'error': str(e)}
 
     @http.route('/payment/mercado_pago/return', type='http', auth='public', methods=['GET', 'POST'], csrf=False, save_session=False)
     def mercado_pago_return(self, **data):
