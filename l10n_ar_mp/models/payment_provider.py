@@ -19,12 +19,15 @@ class PaymentProvider(models.Model):
         selection_add=[('mercado_pago', 'Mercado Pago')],
         ondelete={'mercado_pago': 'set default'},
     )
-    l10n_ar_mp_access_token = fields.Char(
-        string='Access Token',
+    mercado_pago_access_token = fields.Char(
+        string='Mercado Pago Access Token',
+        required_if_provider='mercado_pago',
+        copy=False,
         groups='base.group_system',
     )
-    l10n_ar_mp_public_key = fields.Char(
-        string='Public Key',
+    mercado_pago_public_key = fields.Char(
+        string='Mercado Pago Public Key',
+        copy=False,
         groups='base.group_system',
     )
     l10n_ar_mp_client_id = fields.Char(
@@ -47,11 +50,27 @@ class PaymentProvider(models.Model):
         for provider in self:
             provider.l10n_ar_mp_webhook_url = webhook_url if provider.code == 'mercado_pago' else False
 
+    def _compute_mercado_pago_is_oauth_supported(self):
+        for provider in self:
+            provider.mercado_pago_is_oauth_supported = False
+
+    def _compute_feature_support_fields(self):
+        super()._compute_feature_support_fields()
+        self.filtered(lambda p: p.code == 'mercado_pago').update({
+            'support_tokenization': False,
+            'support_manual_capture': None,
+            'support_refund': 'none',
+        })
+
+    @api.constrains('state', 'mercado_pago_access_token')
+    def _check_mercado_pago_credentials_are_set_before_enabling(self):
+        for provider in self.filtered(lambda p: p.code == 'mercado_pago' and p.state != 'disabled'):
+            if not provider.mercado_pago_access_token:
+                raise ValidationError(_('Configure el Access Token de Mercado Pago antes de habilitar el proveedor.'))
+
     def _get_default_payment_method_codes(self):
         self.ensure_one()
-        if self.code != 'mercado_pago':
-            return super()._get_default_payment_method_codes()
-        return ['mercado_pago']
+        return super()._get_default_payment_method_codes()
 
     def _mercado_pago_get_api_url(self, endpoint):
         self.ensure_one()
@@ -59,11 +78,11 @@ class PaymentProvider(models.Model):
 
     def _mercado_pago_get_headers(self, idempotency_key=None):
         self.ensure_one()
-        if not self.l10n_ar_mp_access_token:
+        if not self.mercado_pago_access_token:
             raise ValidationError(_('Configure el Access Token de Mercado Pago antes de operar.'))
 
         headers = {
-            'Authorization': 'Bearer %s' % self.l10n_ar_mp_access_token,
+            'Authorization': 'Bearer %s' % self.mercado_pago_access_token,
             'Content-Type': 'application/json',
         }
         if idempotency_key:

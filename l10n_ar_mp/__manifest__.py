@@ -13,7 +13,7 @@
     'author': 'AgroSentinel',
     'website': 'https://agrosentinel.com',
     'category': 'Accounting/Localizations',
-    'depends': ['account', 'payment'],
+    'depends': ['account', 'payment', 'payment_mercado_pago'],
     'data': [
         'security/ir.model.access.csv',
         'data/payment_provider_data.xml',

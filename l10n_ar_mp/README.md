@@ -43,6 +43,7 @@ El modulo registra Mercado Pago como proveedor estandar de pago de Odoo y agrega
 1. Ir a `Contabilidad / Configuracion / Proveedores de pago`.
 2. Abrir `Mercado Pago`.
 3. Cargar las credenciales:
+   - `Pais de la cuenta Mercado Pago`
    - `Access Token`
    - `Public Key`
    - `Client ID`, si aplica

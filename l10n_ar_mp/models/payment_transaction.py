@@ -19,9 +19,8 @@ class PaymentTransaction(models.Model):
     l10n_ar_mp_idempotency_key = fields.Char(string='Mercado Pago Idempotency Key', readonly=True, copy=False)
 
     def _get_specific_rendering_values(self, processing_values):
-        res = super()._get_specific_rendering_values(processing_values)
         if self.provider_code != 'mercado_pago':
-            return res
+            return super()._get_specific_rendering_values(processing_values)
 
         self.ensure_one()
         order_data = self.provider_id._mercado_pago_create_order(self)
@@ -38,7 +37,7 @@ class PaymentTransaction(models.Model):
         })
         if not checkout_url:
             raise ValidationError(_('Mercado Pago no devolvio una URL de checkout.'))
-        return {'api_url': checkout_url}
+        return {'api_url': checkout_url, 'url_params': {}}
 
     def _get_tx_from_notification_data(self, provider_code, notification_data):
         if provider_code != 'mercado_pago':

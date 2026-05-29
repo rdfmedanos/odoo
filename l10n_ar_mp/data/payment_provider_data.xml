@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="1">
-    <record id="payment_method_mercado_pago" model="payment.method">
-        <field name="name">Mercado Pago</field>
+<odoo>
+    <record id="payment.payment_provider_mercado_pago" model="payment.provider">
         <field name="code">mercado_pago</field>
-        <field name="sequence">10</field>
-        <field name="active">True</field>
-    </record>
-
-    <record id="payment_provider_mercado_pago" model="payment.provider">
-        <field name="name">Mercado Pago</field>
-        <field name="code">mercado_pago</field>
+        <field name="redirect_form_view_id" ref="payment_mercado_pago.redirect_form"/>
+        <field name="inline_form_view_id" ref="payment_mercado_pago.inline_form"/>
         <field name="state">disabled</field>
         <field name="is_published">False</field>
+        <field name="allow_tokenization">False</field>
     </record>
 </odoo>
