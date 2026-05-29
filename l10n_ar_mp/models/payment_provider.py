@@ -93,6 +93,27 @@ class PaymentProvider(models.Model):
         except ValueError as error:
             raise ValidationError(_('Mercado Pago devolvio una respuesta invalida.')) from error
 
+    def action_l10n_ar_mp_test_connection(self):
+        self.ensure_one()
+        if self.code != 'mercado_pago':
+            return False
+
+        user_data = self._mercado_pago_request('GET', '/users/me')
+        account_name = user_data.get('nickname') or user_data.get('email') or user_data.get('id')
+        message = _('Conexion exitosa con Mercado Pago.')
+        if account_name:
+            message = _('Conexion exitosa con Mercado Pago: %s') % account_name
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Mercado Pago'),
+                'message': message,
+                'type': 'success',
+                'sticky': False,
+            },
+        }
+
     def _mercado_pago_create_order(self, transaction):
         self.ensure_one()
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')

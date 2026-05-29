@@ -10,6 +10,13 @@
                     <field name="l10n_ar_mp_client_id"/>
                     <field name="l10n_ar_mp_client_secret" password="True"/>
                     <field name="l10n_ar_mp_webhook_url" readonly="1"/>
+                    <button
+                        name="action_l10n_ar_mp_test_connection"
+                        string="Test conexion"
+                        type="object"
+                        class="btn-primary"
+                        invisible="not mercado_pago_access_token"
+                    />
                 </group>
             </group>
         </field>
