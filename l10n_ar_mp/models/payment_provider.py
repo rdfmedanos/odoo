@@ -202,6 +202,7 @@ class PaymentProvider(models.Model):
                 'number': identification['number'],
             }
         _logger.info('Payload Orders API: %s', payload)
+        max_retries = 1
         for retry in range(3):
             idempotency_key = str(uuid.uuid4())
             transaction.l10n_ar_mp_idempotency_key = idempotency_key
@@ -210,6 +211,9 @@ class PaymentProvider(models.Model):
                 _logger.info('Respuesta Orders API: %s', result)
                 return result
             except ValidationError as e:
+                msg = str(e)
+                if any(x in msg for x in ('rejected_by_issuer', 'invalid_card_token', 'insufficient_amount', 'call_for_auth', 'bad_filled_card_number', 'cc_rejected')):
+                    raise
                 _logger.warning('Intento %d fallo: %s', retry + 1, e)
                 if retry == 2:
                     raise

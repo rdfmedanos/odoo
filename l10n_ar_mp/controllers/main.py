@@ -52,7 +52,16 @@ class MercadoPagoController(http.Controller):
             }
         except Exception as e:
             _logger.exception('Error al procesar pago MP')
-            return {'success': False, 'error': str(e)}
+            msg = str(e)
+            if 'rejected_by_issuer' in msg:
+                msg = 'La tarjeta fue rechazada por el banco emisor. Probá con otra tarjeta.'
+            elif 'invalid_card_token' in msg:
+                msg = 'El token de la tarjeta expiro o es invalido. Recarga la pagina y completa los datos de la tarjeta nuevamente.'
+            elif 'insufficient_amount' in msg:
+                msg = 'La tarjeta no tiene fondos suficientes.'
+            elif 'call_for_auth' in msg:
+                msg = 'La tarjeta requiere autorizacion del banco emisor.'
+            return {'success': False, 'error': msg}
 
     @http.route('/payment/mercado_pago/return', type='http', auth='public', methods=['GET', 'POST'], csrf=False, save_session=False)
     def mercado_pago_return(self, **data):
