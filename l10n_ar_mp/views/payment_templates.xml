@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Redirect form: auto-submits to our payment page -->
     <template id="redirect_form">
-        <div id="cardPaymentBrick_container"
-             style="min-height: 400px;">
-            <div id="mp-loading" style="text-align: center; padding: 40px;">
-                <p>Cargando formulario de pago...</p>
-            </div>
-            <div id="mp-error" style="display: none; text-align: center; padding: 20px; color: red;"></div>
-        </div>
+        <form action="/payment/mercado_pago/pay" method="GET">
+            <input type="hidden" name="reference" t-att-value="render_values.get('reference', '')"/>
+        </form>
+    </template>
 
-        <t t-set="l10n_ar_mp_pk" t-value="render_values and render_values.get('public_key', '') or ''"/>
-        <t t-set="l10n_ar_mp_amount" t-value="render_values and render_values.get('amount', 0) or 0"/>
-        <t t-set="l10n_ar_mp_ref" t-value="render_values and render_values.get('reference', '') or ''"/>
-        <t t-set="l10n_ar_mp_email" t-value="render_values and render_values.get('partner_email', '') or ''"/>
+    <!-- Full payment page with Card Payment Brick -->
+    <template id="payment_page" name="Mercado Pago Card Payment">
+        <t t-call="website.layout">
+            <div id="wrap" class="container py-4">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title mb-3">Pago con tarjeta</h4>
+                                <p class="text-muted mb-3">
+                                    Monto: <strong>$<t t-esc="'%.2f' % amount"/></strong>
+                                </p>
+
+                                <div id="cardPaymentBrick_container" style="min-height: 350px;">
+                                    <div id="mp-loading" style="text-align: center; padding: 40px;">
+                                        <p>Cargando formulario de pago...</p>
+                                    </div>
+                                    <div id="mp-error" style="display: none; text-align: center; padding: 20px; color: red;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <t t-set="l10n_ar_mp_pk" t-value="public_key"/>
+        <t t-set="l10n_ar_mp_amount" t-value="amount"/>
+        <t t-set="l10n_ar_mp_ref" t-value="reference"/>
+        <t t-set="l10n_ar_mp_email" t-value="partner_email"/>
 
         <script>
             window.l10nArMpConfig = {
@@ -24,8 +48,7 @@
         </script>
 
         <script src="https://sdk.mercadopago.com/js/v2"></script>
-        <script>
-<![CDATA[
+        <script><![CDATA[
             (function() {
                 console.log('[MP] init', window.l10nArMpConfig);
                 var cfg = window.l10nArMpConfig;
@@ -114,7 +137,6 @@
                     err.style.display = 'block';
                 });
             })();
-]]>
-        </script>
+        ]]></script>
     </template>
 </odoo>

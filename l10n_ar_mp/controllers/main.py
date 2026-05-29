@@ -10,6 +10,27 @@ _logger = logging.getLogger(__name__)
 
 class MercadoPagoController(http.Controller):
 
+    @http.route('/payment/mercado_pago/pay', type='http', auth='public', methods=['GET'], csrf=False, save_session=False)
+    def mercado_pago_pay(self, **kwargs):
+        reference = kwargs.get('reference', '')
+        tx = request.env['payment.transaction'].sudo().search([
+            ('provider_code', '=', 'mercado_pago'),
+            ('reference', '=', reference),
+        ], limit=1)
+        if not tx:
+            return request.not_found('Transaccion no encontrada')
+
+        provider = tx.provider_id
+        public_key = provider.l10n_ar_mp_public_key or provider.mercado_pago_public_key or ''
+        partner = tx.partner_id
+        return request.render('l10n_ar_mp.payment_page', {
+            'amount': tx.amount,
+            'public_key': public_key,
+            'reference': tx.reference,
+            'partner_email': tx.partner_email or (partner and partner.email) or '',
+            'partner_name': tx.partner_name or (partner and partner.name) or '',
+        })
+
     @http.route('/payment/mercado_pago/process_order', type='json', auth='public', methods=['POST'], csrf=False, save_session=False)
     def mercado_pago_process_order(self, **kwargs):
         data = request.get_json_data()
