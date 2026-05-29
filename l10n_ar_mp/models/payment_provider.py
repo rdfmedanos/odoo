@@ -36,7 +36,7 @@ class PaymentProvider(models.Model):
 
     @api.depends('code')
     def _compute_l10n_ar_mp_webhook_url(self):
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        base_url = (self.env['ir.config_parameter'].sudo().get_param('web.base.url') or '').rstrip('/')
         webhook_url = '%s/payment/mercado_pago/webhook' % (base_url or '')
         for provider in self:
             provider.l10n_ar_mp_webhook_url = webhook_url if provider.code == 'mercado_pago' else False

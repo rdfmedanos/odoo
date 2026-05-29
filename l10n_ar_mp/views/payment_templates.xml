@@ -25,10 +25,10 @@
 
         <script src="https://sdk.mercadopago.com/js/v2"></script>
         <script>
+<![CDATA[
             (function() {
                 console.log('[MP] init', window.l10nArMpConfig);
                 var cfg = window.l10nArMpConfig;
-                var container = document.getElementById('cardPaymentBrick_container');
 
                 if (!cfg.publicKey) {
                     document.getElementById('mp-loading').style.display = 'none';
@@ -114,6 +114,7 @@
                     err.style.display = 'block';
                 });
             })();
+]]>
         </script>
     </template>
 </odoo>
