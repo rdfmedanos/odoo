@@ -154,14 +154,12 @@ class PaymentProvider(models.Model):
 
     def _mercado_pago_create_order(self, transaction):
         self.ensure_one()
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url') or ''
         currency = transaction.currency_id.name
         amount = float(transaction.amount)
         payload = {
             'type': 'online',
             'processing_mode': 'automatic',
             'total_amount': str(amount),
-            'currency_id': currency,
             'external_reference': transaction.reference,
             'payer': {
                 'email': transaction.partner_email or transaction.partner_id.email,
@@ -171,18 +169,12 @@ class PaymentProvider(models.Model):
                     {
                         'amount': str(amount),
                         'payment_method': {
-                            'id': 'all',
-                            'type': 'credit_card',
+                            'id': 'account_money',
+                            'type': 'wallet',
                         },
                     }
                 ],
             },
-            'back_urls': {
-                'success': urljoin(base_url, '/payment/mercado_pago/return'),
-                'failure': urljoin(base_url, '/payment/mercado_pago/return'),
-                'pending': urljoin(base_url, '/payment/mercado_pago/return'),
-            },
-            'notification_url': urljoin(base_url, '/payment/mercado_pago/webhook'),
         }
         _logger.info('Payload Mercado Pago Orders API: %s', payload)
         idempotency_key = transaction.l10n_ar_mp_idempotency_key or str(uuid.uuid4())
