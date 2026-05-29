@@ -44,12 +44,15 @@ class PaymentTransaction(models.Model):
             return super()._get_tx_from_notification_data(provider_code, notification_data)
 
         reference = notification_data.get('external_reference') or notification_data.get('reference')
-        order_id = notification_data.get('id') or notification_data.get('order_id')
+        order_id = notification_data.get('preference_id') or notification_data.get('merchant_order_id') or notification_data.get('order_id')
+        payment_id = notification_data.get('payment_id') or notification_data.get('collection_id')
         domain = [('provider_code', '=', 'mercado_pago')]
         if reference:
             domain.append(('reference', '=', reference))
         elif order_id:
             domain.append(('l10n_ar_mp_order_id', '=', order_id))
+        elif payment_id:
+            domain.append(('l10n_ar_mp_payment_id', '=', payment_id))
         else:
             raise ValidationError(_('No se pudo identificar la transaccion de Mercado Pago.'))
 
@@ -62,10 +65,11 @@ class PaymentTransaction(models.Model):
         if self.provider_code != 'mercado_pago':
             return super()._process_notification_data(notification_data)
 
-        order_id = notification_data.get('id') or notification_data.get('order_id') or self.l10n_ar_mp_order_id
-        order_data = self.provider_id._mercado_pago_get_order(order_id) if order_id else notification_data
+        payment_id = notification_data.get('payment_id') or notification_data.get('collection_id')
+        order_id = notification_data.get('preference_id') or notification_data.get('merchant_order_id') or notification_data.get('order_id') or self.l10n_ar_mp_order_id
+        order_data = self.provider_id._mercado_pago_get_payment(payment_id) if payment_id else notification_data
         status = order_data.get('status') or notification_data.get('status')
-        payment_id = order_data.get('payment_id') or notification_data.get('payment_id')
+        payment_id = order_data.get('id') or payment_id
         if not payment_id:
             payments = order_data.get('transactions', {}).get('payments', [])
             if payments:

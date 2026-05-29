@@ -2,6 +2,7 @@
 
 import logging
 import uuid
+from urllib.parse import urljoin
 
 import requests
 
@@ -107,10 +108,21 @@ class PaymentProvider(models.Model):
                 headers=self._mercado_pago_get_headers(idempotency_key=idempotency_key),
                 timeout=30,
             )
-            response.raise_for_status()
         except requests.exceptions.RequestException as error:
             _logger.exception('Error en llamada a Mercado Pago: %s', error)
             raise ValidationError(_('Mercado Pago no respondio correctamente: %s') % error) from error
+
+        if response.status_code >= 400:
+            try:
+                error_data = response.json()
+            except ValueError:
+                error_data = {'message': response.text or response.reason}
+            message = error_data.get('message') or error_data.get('error') or response.reason
+            details = error_data.get('cause') or error_data.get('errors') or error_data.get('details')
+            if details:
+                message = '%s - %s' % (message, details)
+            _logger.error('Mercado Pago rechazo la llamada %s %s: %s', method, url, error_data)
+            raise ValidationError(_('Mercado Pago no respondio correctamente: %s') % message)
 
         if not response.content:
             return {}
@@ -142,40 +154,36 @@ class PaymentProvider(models.Model):
 
     def _mercado_pago_create_order(self, transaction):
         self.ensure_one()
-        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url') or ''
         currency = transaction.currency_id.name
         amount = float(transaction.amount)
         payload = {
-            'type': 'online',
             'external_reference': transaction.reference,
-            'total_amount': str(amount),
-            'transactions': {
-                'payments': [
-                    {
-                        'amount': str(amount),
-                        'payment_method': {
-                            'id': 'account_money',
-                            'type': 'wallet',
-                        },
-                    }
-                ],
+            'notification_url': urljoin(base_url, '/payment/mercado_pago/webhook'),
+            'back_urls': {
+                'success': urljoin(base_url, '/payment/mercado_pago/return'),
+                'pending': urljoin(base_url, '/payment/mercado_pago/return'),
+                'failure': urljoin(base_url, '/payment/mercado_pago/return'),
             },
+            'auto_return': 'approved',
+            'items': [{
+                'title': transaction.reference,
+                'quantity': 1,
+                'currency_id': currency,
+                'unit_price': amount,
+            }],
             'payer': {
                 'email': transaction.partner_email or transaction.partner_id.email,
             },
-            'back_urls': {
-                'success': '%s/payment/mercado_pago/return' % base_url,
-                'pending': '%s/payment/mercado_pago/return' % base_url,
-                'failure': '%s/payment/mercado_pago/return' % base_url,
-            },
-            'notification_url': '%s/payment/mercado_pago/webhook' % base_url,
-            'description': transaction.reference,
-            'currency': currency,
         }
         idempotency_key = transaction.l10n_ar_mp_idempotency_key or str(uuid.uuid4())
         transaction.l10n_ar_mp_idempotency_key = idempotency_key
-        return self._mercado_pago_request('POST', '/v1/orders', payload, idempotency_key=idempotency_key)
+        return self._mercado_pago_request('POST', '/checkout/preferences', payload, idempotency_key=idempotency_key)
 
     def _mercado_pago_get_order(self, order_id):
         self.ensure_one()
         return self._mercado_pago_request('GET', '/v1/orders/%s' % order_id)
+
+    def _mercado_pago_get_payment(self, payment_id):
+        self.ensure_one()
+        return self._mercado_pago_request('GET', '/v1/payments/%s' % payment_id)
