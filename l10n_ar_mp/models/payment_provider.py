@@ -55,15 +55,16 @@ class PaymentProvider(models.Model):
         return set(default_codes) | {'card'}
 
     def write(self, values):
+        card_method = self.env.ref('payment.payment_method_card', raise_if_not_found=False)
+        if (
+            card_method
+            and 'payment_method_ids' not in values
+            and self
+            and all(provider.code == 'mercado_pago' for provider in self)
+        ):
+            values = dict(values, payment_method_ids=[(4, card_method.id)])
+
         result = super().write(values)
-        mercado_pago_providers = self.filtered(lambda provider: provider.code == 'mercado_pago')
-        if mercado_pago_providers and ('state' in values or 'payment_method_ids' not in values):
-            card_method = self.env.ref('payment.payment_method_card', raise_if_not_found=False)
-            if card_method:
-                card_method.active = True
-                for provider in mercado_pago_providers:
-                    if card_method not in provider.payment_method_ids:
-                        provider.payment_method_ids = [(4, card_method.id)]
         return result
 
     @api.constrains('state', 'mercado_pago_access_token')

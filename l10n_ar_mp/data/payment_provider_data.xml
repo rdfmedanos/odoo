@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="payment.payment_method_card" model="payment.method">
-        <field name="active">True</field>
-    </record>
-
     <record id="payment.payment_provider_mercado_pago" model="payment.provider">
         <field name="code">mercado_pago</field>
         <field name="redirect_form_view_id" ref="payment_mercado_pago.redirect_form"/>
