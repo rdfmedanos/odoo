@@ -54,6 +54,12 @@ class PaymentProvider(models.Model):
             return default_codes
         return set(default_codes) | {'card'}
 
+    def _get_redirect_form_view(self, is_validation=False):
+        self.ensure_one()
+        if self.code != 'mercado_pago':
+            return super()._get_redirect_form_view(is_validation=is_validation)
+        return self.env.ref('l10n_ar_mp.redirect_form')
+
     def write(self, values):
         card_method = self.env.ref('payment.payment_method_card', raise_if_not_found=False)
         if (

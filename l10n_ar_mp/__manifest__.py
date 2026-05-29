@@ -16,6 +16,7 @@
     'depends': ['account', 'payment', 'payment_mercado_pago'],
     'data': [
         'security/ir.model.access.csv',
+        'views/payment_templates.xml',
         'data/payment_provider_data.xml',
         'views/payment_provider_views.xml',
     ],
