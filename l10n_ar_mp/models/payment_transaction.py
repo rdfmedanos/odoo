@@ -27,8 +27,8 @@ class PaymentTransaction(models.Model):
         checkout_url = (
             order_data.get('redirect_url')
             or order_data.get('checkout_url')
-            or order_data.get('init_point')
             or order_data.get('sandbox_init_point')
+            or order_data.get('init_point')
         )
         self.write({
             'l10n_ar_mp_order_id': order_data.get('id'),
