@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 class MercadoPagoController(http.Controller):
 
-    @http.route('/payment/mercado_pago/pay', type='http', auth='public', methods=['GET'], csrf=False, save_session=False)
+    @http.route('/payment/mercado_pago/pay', type='http', auth='public', website=True, methods=['GET'], csrf=False, save_session=False)
     def mercado_pago_pay(self, **kwargs):
         reference = kwargs.get('reference', '')
         tx = request.env['payment.transaction'].sudo().search([
