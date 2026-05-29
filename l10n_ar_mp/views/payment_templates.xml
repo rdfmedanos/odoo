@@ -1,54 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="redirect_form">
-        <div id="cardPaymentBrick_container" style="min-height: 400px;">
+        <div id="cardPaymentBrick_container"
+             style="min-height: 400px;">
             <div id="mp-loading" style="text-align: center; padding: 40px;">
                 <p>Cargando formulario de pago...</p>
             </div>
+            <div id="mp-error" style="display: none; text-align: center; padding: 20px; color: red;"></div>
         </div>
+
+        <t t-set="l10n_ar_mp_pk" t-value="render_values and render_values.get('public_key', '') or ''"/>
+        <t t-set="l10n_ar_mp_amount" t-value="render_values and render_values.get('amount', 0) or 0"/>
+        <t t-set="l10n_ar_mp_ref" t-value="render_values and render_values.get('reference', '') or ''"/>
+        <t t-set="l10n_ar_mp_email" t-value="render_values and render_values.get('partner_email', '') or ''"/>
+
+        <script>
+            window.l10nArMpConfig = {
+                publicKey: "<t t-esc="l10n_ar_mp_pk"/>",
+                amount: <t t-esc="l10n_ar_mp_amount"/>,
+                reference: "<t t-esc="l10n_ar_mp_ref"/>",
+                email: "<t t-esc="l10n_ar_mp_email"/>",
+            };
+        </script>
+
         <script src="https://sdk.mercadopago.com/js/v2"></script>
         <script>
-            (async function() {
-                var publicKey = "<t t-esc="render_values.get('public_key', '')"/>";
-                var amount = <t t-esc="render_values.get('amount', 0)"/>;
-                var reference = "<t t-esc="render_values.get('reference', '')"/>";
-                var email = "<t t-esc="render_values.get('partner_email', '')"/>";
+            (function() {
+                console.log('[MP] init', window.l10nArMpConfig);
+                var cfg = window.l10nArMpConfig;
+                var container = document.getElementById('cardPaymentBrick_container');
 
-                if (!publicKey) {
-                    document.getElementById('cardPaymentBrick_container').innerHTML =
-                        '<p style="color: red; padding: 20px;">Error: Mercado Pago no esta configurado (falta Public Key).</p>';
+                if (!cfg.publicKey) {
+                    document.getElementById('mp-loading').style.display = 'none';
+                    var err = document.getElementById('mp-error');
+                    err.textContent = 'Error: Mercado Pago no esta configurado (falta Public Key).';
+                    err.style.display = 'block';
                     return;
                 }
-                if (amount <= 0) {
-                    document.getElementById('cardPaymentBrick_container').innerHTML =
-                        '<p style="color: red; padding: 20px;">Error: El monto de la transaccion es invalido.</p>';
+                if (!cfg.amount || cfg.amount <= 0) {
+                    document.getElementById('mp-loading').style.display = 'none';
+                    var err = document.getElementById('mp-error');
+                    err.textContent = 'Error: El monto de la transaccion es invalido.';
+                    err.style.display = 'block';
                     return;
                 }
 
-                var mp = new MercadoPago(publicKey, { locale: 'es-AR' });
+                var mp = new MercadoPago(cfg.publicKey, { locale: 'es-AR' });
                 var bricksBuilder = mp.bricks();
 
                 var settings = {
-                    initialization: { amount: amount },
+                    initialization: { amount: Number(cfg.amount) },
                     callbacks: {
                         onReady: function() {
-                            var el = document.getElementById('mp-loading');
-                            if (el) el.style.display = 'none';
+                            console.log('[MP] brick ready');
+                            document.getElementById('mp-loading').style.display = 'none';
                         },
                         onSubmit: function(formData, additionalData) {
+                            console.log('[MP] onSubmit', formData, additionalData);
                             return new Promise(function(resolve, reject) {
                                 var submitData = {
                                     token: formData.token,
                                     payment_method_id: formData.payment_method_id,
                                     payment_type_id: formData.payment_type_id || (additionalData && additionalData.paymentTypeId) || 'credit_card',
-                                    installments: formData.installments,
-                                    transaction_amount: formData.transaction_amount,
-                                    external_reference: reference,
+                                    installments: Number(formData.installments) || 1,
+                                    external_reference: cfg.reference,
                                     payer: {
-                                        email: formData.payer.email || email,
-                                        identification: formData.payer.identification || {},
+                                        email: (formData.payer && formData.payer.email) || cfg.email,
+                                        identification: (formData.payer && formData.payer.identification) || {},
                                     },
                                 };
+                                console.log('[MP] sending', submitData);
                                 fetch('/payment/mercado_pago/process_order', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
@@ -56,6 +77,7 @@
                                 })
                                 .then(function(res) { return res.json(); })
                                 .then(function(data) {
+                                    console.log('[MP] response', data);
                                     if (data.success) {
                                         window.location.href = data.redirect_url;
                                     } else {
@@ -65,29 +87,32 @@
                                     resolve();
                                 })
                                 .catch(function(err) {
+                                    console.error('[MP] fetch error', err);
                                     alert('Error de conexion al procesar el pago');
                                     reject();
                                 });
                             });
                         },
                         onError: function(error) {
-                            console.error('CardPaymentBrick error:', error);
-                            var el = document.getElementById('mp-loading');
-                            if (el) {
-                                el.innerHTML = '<p style="color: red; padding: 20px;">Error al cargar el formulario de pago. Recargue la pagina e intente nuevamente.</p>';
-                            }
+                            console.error('[MP] brick error', error);
+                            document.getElementById('mp-loading').style.display = 'none';
+                            var err = document.getElementById('mp-error');
+                            err.textContent = 'Error al cargar el formulario de pago. Recargue la pagina e intente nuevamente.';
+                            err.style.display = 'block';
                         },
                     },
                 };
-                try {
-                    await bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings);
-                } catch (error) {
-                    console.error('Error creating brick:', error);
-                    var el = document.getElementById('mp-loading');
-                    if (el) {
-                        el.innerHTML = '<p style="color: red; padding: 20px;">Error al cargar formulario: ' + error.message + '</p>';
-                    }
-                }
+                bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings)
+                .then(function() {
+                    console.log('[MP] brick created');
+                })
+                .catch(function(error) {
+                    console.error('[MP] create error', error);
+                    document.getElementById('mp-loading').style.display = 'none';
+                    var err = document.getElementById('mp-error');
+                    err.textContent = 'Error al cargar formulario: ' + (error.message || JSON.stringify(error));
+                    err.style.display = 'block';
+                });
             })();
         </script>
     </template>
