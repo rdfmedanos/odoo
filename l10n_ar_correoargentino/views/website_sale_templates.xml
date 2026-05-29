@@ -2,7 +2,7 @@
 <odoo>
     <template id="website_sale_cart_l10n_ar_correoargentino" inherit_id="website_sale.cart" priority="30">
         <xpath expr="//div[hasclass('oe_website_sale')]" position="inside">
-            <t t-set="correo_carriers" t-value="request.env['delivery.carrier'].sudo().search([('delivery_type', '=', 'l10n_ar_correoargentino')])"/>
+            <t t-set="correo_carriers" t-value="request.env['delivery.carrier'].sudo().search([('delivery_type', '=', 'l10n_ar_correoargentino')]).filtered(lambda carrier: carrier._l10n_ar_is_ready_for_website())"/>
             <t t-if="correo_carriers">
                 <div class="card mt-3 o_wsale_correo_quote" id="o_wsale_correo_quote">
                     <div class="card-body">

@@ -205,6 +205,16 @@ class DeliveryCarrier(models.Model):
             return _('Falta codigo postal de origen en el transportista.')
         return False
 
+    def _l10n_ar_is_ready_for_website(self):
+        self.ensure_one()
+        return not self._l10n_ar_get_rate_configuration_error()
+
+    def _is_available_for_order(self, order):
+        self.ensure_one()
+        if self.delivery_type == 'l10n_ar_correoargentino' and self._l10n_ar_get_rate_configuration_error():
+            return False
+        return super()._is_available_for_order(order)
+
     def rate_shipment(self, order):
         self.ensure_one()
         configuration_error = self._l10n_ar_get_rate_configuration_error()
