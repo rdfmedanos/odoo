@@ -41,10 +41,6 @@ class PaymentProvider(models.Model):
         for provider in self:
             provider.l10n_ar_mp_webhook_url = webhook_url if provider.code == 'mercado_pago' else False
 
-    def _compute_mercado_pago_is_oauth_supported(self):
-        for provider in self:
-            provider.mercado_pago_is_oauth_supported = False
-
     def _compute_feature_support_fields(self):
         super()._compute_feature_support_fields()
         self.filtered(lambda p: p.code == 'mercado_pago').update({
