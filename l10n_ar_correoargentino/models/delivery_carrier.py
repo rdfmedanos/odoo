@@ -215,7 +215,7 @@ class DeliveryCarrier(models.Model):
             return False
         return super()._is_available_for_order(order)
 
-    def rate_shipment(self, order):
+    def l10n_ar_correoargentino_rate_shipment(self, order):
         self.ensure_one()
         configuration_error = self._l10n_ar_get_rate_configuration_error()
         if configuration_error:

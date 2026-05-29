@@ -23,6 +23,7 @@ Integracion de Correo Argentino para Odoo 19 CE.
         'views/stock_picking_views.xml',
         'views/correo_shipment_views.xml',
         'views/portal_templates.xml',
+        'views/website_sale_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
