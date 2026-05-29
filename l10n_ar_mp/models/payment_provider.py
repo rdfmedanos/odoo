@@ -165,7 +165,6 @@ class PaymentProvider(models.Model):
                 'pending': urljoin(base_url, '/payment/mercado_pago/return'),
                 'failure': urljoin(base_url, '/payment/mercado_pago/return'),
             },
-            'auto_return': 'approved',
             'items': [{
                 'title': transaction.reference,
                 'quantity': 1,
