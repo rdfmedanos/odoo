@@ -78,6 +78,8 @@ class DeliveryCarrier(models.Model):
 
     def _l10n_ar_get_micorreo_token(self, force=False):
         self.ensure_one()
+        if not self.l10n_ar_micorreo_api_username or not self.l10n_ar_micorreo_api_password:
+            raise UserError(_('Debe configurar usuario y password API de MiCorreo en el transportista.'))
         if not force and self.l10n_ar_micorreo_last_token and self.l10n_ar_micorreo_token_expires and self.l10n_ar_micorreo_token_expires > fields.Datetime.now():
             return self.l10n_ar_micorreo_last_token
         token_data = self._l10n_ar_get_micorreo_api().get_token()
@@ -193,7 +195,16 @@ class DeliveryCarrier(models.Model):
 
     def rate_shipment(self, order):
         self.ensure_one()
-        response = self._l10n_ar_fetch_rates(order, delivery_type=order.l10n_ar_correo_delivery_type or None)
+        try:
+            response = self._l10n_ar_fetch_rates(order, delivery_type=order.l10n_ar_correo_delivery_type or None)
+        except Exception as err:
+            _logger.exception('No se pudo cotizar Correo Argentino para la orden %s', order.name)
+            return {
+                'success': False,
+                'price': 0.0,
+                'warning_message': False,
+                'error_message': _('No se pudo cotizar Correo Argentino: %s') % err,
+            }
         rates = response.get('rates') or []
         delivery_type = order.l10n_ar_correo_delivery_type
         if delivery_type:
