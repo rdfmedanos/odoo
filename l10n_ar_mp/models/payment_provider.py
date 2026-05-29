@@ -158,22 +158,37 @@ class PaymentProvider(models.Model):
         currency = transaction.currency_id.name
         amount = float(transaction.amount)
         payload = {
+            'type': 'online',
+            'processing_mode': 'automatic',
+            'total_amount': str(amount),
+            'currency_id': currency,
             'external_reference': transaction.reference,
-            'items': [{
-                'title': transaction.reference[:256],
-                'quantity': 1,
-                'unit_price': float(amount),
-                'currency_id': currency,
-            }],
             'payer': {
                 'email': transaction.partner_email or transaction.partner_id.email,
             },
+            'transactions': {
+                'payments': [
+                    {
+                        'amount': str(amount),
+                        'payment_method': {
+                            'id': 'all',
+                            'type': 'credit_card',
+                        },
+                    }
+                ],
+            },
+            'back_urls': {
+                'success': urljoin(base_url, '/payment/mercado_pago/return'),
+                'failure': urljoin(base_url, '/payment/mercado_pago/return'),
+                'pending': urljoin(base_url, '/payment/mercado_pago/return'),
+            },
+            'notification_url': urljoin(base_url, '/payment/mercado_pago/webhook'),
         }
-        _logger.info('Payload Mercado Pago Checkout Pro: %s', payload)
+        _logger.info('Payload Mercado Pago Orders API: %s', payload)
         idempotency_key = transaction.l10n_ar_mp_idempotency_key or str(uuid.uuid4())
         transaction.l10n_ar_mp_idempotency_key = idempotency_key
-        result = self._mercado_pago_request('POST', '/checkout/preferences', payload, idempotency_key=idempotency_key)
-        _logger.info('Respuesta completa Mercado Pago Checkout Pro: %s', result)
+        result = self._mercado_pago_request('POST', '/v1/orders', payload, idempotency_key=idempotency_key)
+        _logger.info('Respuesta completa Mercado Pago Orders API: %s', result)
         return result
 
     def _mercado_pago_get_order(self, order_id):

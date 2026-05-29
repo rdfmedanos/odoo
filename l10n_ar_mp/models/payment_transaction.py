@@ -25,10 +25,10 @@ class PaymentTransaction(models.Model):
         self.ensure_one()
         order_data = self.provider_id._mercado_pago_create_order(self)
         checkout_url = (
-            order_data.get('redirect_url')
-            or order_data.get('checkout_url')
+            order_data.get('init_point')
             or order_data.get('sandbox_init_point')
-            or order_data.get('init_point')
+            or order_data.get('redirect_url')
+            or order_data.get('checkout_url')
         )
         self.write({
             'l10n_ar_mp_order_id': order_data.get('id'),
