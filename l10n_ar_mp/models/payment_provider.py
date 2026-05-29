@@ -61,6 +61,16 @@ class PaymentProvider(models.Model):
             return super()._get_redirect_form_view(is_validation=is_validation)
         return self.env.ref('l10n_ar_mp.redirect_form')
 
+    def _get_specific_inline_form_values(self, *args, **kwargs):
+        self.ensure_one()
+        if self.code != 'mercado_pago':
+            return super()._get_specific_inline_form_values(*args, **kwargs)
+        pk = self.mercado_pago_public_key or ''
+        return {
+            'public_key': pk,
+            'email': '',
+        }
+
     def write(self, values):
         card_method = self.env.ref('payment.payment_method_card', raise_if_not_found=False)
         if (
