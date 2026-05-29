@@ -4,8 +4,6 @@
         <field name="code">mercado_pago</field>
         <field name="redirect_form_view_id" ref="payment_mercado_pago.redirect_form"/>
         <field name="inline_form_view_id" ref="payment_mercado_pago.inline_form"/>
-        <field name="state">disabled</field>
-        <field name="is_published">False</field>
         <field name="allow_tokenization">False</field>
     </record>
 </odoo>
