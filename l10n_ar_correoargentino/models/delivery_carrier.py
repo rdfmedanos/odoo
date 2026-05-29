@@ -193,8 +193,28 @@ class DeliveryCarrier(models.Model):
         })
         return price
 
+    def _l10n_ar_get_rate_configuration_error(self):
+        self.ensure_one()
+        if not self.active:
+            return _('El transportista Correo Argentino esta archivado.')
+        if not self.l10n_ar_micorreo_api_username or not self.l10n_ar_micorreo_api_password:
+            return _('Faltan usuario o password API de MiCorreo en el transportista.')
+        if not self.l10n_ar_micorreo_customer_id:
+            return _('Falta Customer ID de MiCorreo en el transportista.')
+        if not self.l10n_ar_origin_postal_code:
+            return _('Falta codigo postal de origen en el transportista.')
+        return False
+
     def rate_shipment(self, order):
         self.ensure_one()
+        configuration_error = self._l10n_ar_get_rate_configuration_error()
+        if configuration_error:
+            return {
+                'success': False,
+                'price': 0.0,
+                'warning_message': False,
+                'error_message': _('No se pudo cotizar Correo Argentino: %s') % configuration_error,
+            }
         try:
             response = self._l10n_ar_fetch_rates(order, delivery_type=order.l10n_ar_correo_delivery_type or None)
         except Exception as err:

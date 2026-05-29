@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Argentina - Correo Argentino Ecommerce',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'summary': 'MiCorreo y PaqAr para tienda online y logistica',
     'description': """
 Integracion de Correo Argentino para Odoo 19 CE.
