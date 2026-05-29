@@ -7,9 +7,17 @@
         <field name="arch" type="xml">
             <group name="provider_credentials" position="after">
                 <group string="Mercado Pago Checkout API Orders" invisible="code != 'mercado_pago'" groups="base.group_system">
+                    <field name="is_published" string="Publicado en el sitio web"/>
                     <field name="l10n_ar_mp_client_id"/>
                     <field name="l10n_ar_mp_client_secret" password="True"/>
                     <field name="l10n_ar_mp_webhook_url" readonly="1"/>
+                    <button
+                        name="action_toggle_is_published"
+                        string="Publicar / Despublicar"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="state == 'disabled'"
+                    />
                     <button
                         name="action_l10n_ar_mp_test_connection"
                         string="Test conexion"
