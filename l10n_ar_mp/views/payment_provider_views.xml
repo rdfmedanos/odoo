@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_form_mercado_pago" model="ir.ui.view">
+        <field name="name">payment.provider.form.mercado.pago</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Mercado Pago" invisible="code != 'mercado_pago'">
+                    <group>
+                        <field name="l10n_ar_mp_access_token" password="True"/>
+                        <field name="l10n_ar_mp_public_key"/>
+                        <field name="l10n_ar_mp_client_id"/>
+                        <field name="l10n_ar_mp_client_secret" password="True"/>
+                    </group>
+                    <group>
+                        <field name="l10n_ar_mp_webhook_url" readonly="1"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

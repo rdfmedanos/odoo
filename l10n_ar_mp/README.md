@@ -36,4 +36,33 @@ python3 -m odoo -c /etc/odoo/odoo.conf -d <tu_bd> -i l10n_ar_mp --stop-after-ini
 
 ## Estado actual
 
-El modulo esta en base inicial y puede requerir desarrollos adicionales segun el flujo de cobro que necesites.
+El modulo registra Mercado Pago como proveedor estandar de pago de Odoo y agrega campos de credenciales en el formulario de proveedores de pago.
+
+## Configuracion
+
+1. Ir a `Contabilidad / Configuracion / Proveedores de pago`.
+2. Abrir `Mercado Pago`.
+3. Cargar las credenciales:
+   - `Access Token`
+   - `Public Key`
+   - `Client ID`, si aplica
+   - `Client Secret`, si aplica
+4. Copiar la `Webhook URL` mostrada por Odoo y configurarla en Mercado Pago.
+5. Habilitar el proveedor cuando las credenciales esten listas.
+
+## Endpoints
+
+- Retorno del comprador: `/payment/mercado_pago/return`
+- Webhook: `/payment/mercado_pago/webhook`
+
+## Implementacion
+
+El modulo crea ordenes contra la API de Mercado Pago mediante `POST /v1/orders`, usando `Authorization: Bearer <access_token>` y `X-Idempotency-Key`.
+
+El webhook y el retorno consultan la orden en Mercado Pago antes de actualizar el estado de la transaccion de Odoo.
+
+## Pendientes de validacion
+
+- Probar el flujo completo contra una instancia Odoo 19 CE con credenciales sandbox.
+- Confirmar los nombres exactos de campos devueltos por Mercado Pago para la URL de checkout en la respuesta de `POST /v1/orders`.
+- Ajustar el mapeo de estados si Mercado Pago devuelve valores adicionales para Checkout API Orders.
