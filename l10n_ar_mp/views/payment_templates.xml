@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Redirect form: auto-submits to our payment page -->
     <template id="redirect_form">
         <form action="/payment/mercado_pago/pay" method="GET">
-            <input type="hidden" name="reference" t-att-value="render_values.get('reference', '')"/>
+            <input type="hidden" name="reference" t-att-value="reference"/>
         </form>
     </template>
 
-    <!-- Full payment page with Card Payment Brick -->
     <template id="payment_page" name="Mercado Pago Card Payment">
         <t t-call="website.layout">
             <div id="wrap" class="container py-4">
