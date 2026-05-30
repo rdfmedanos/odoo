@@ -1,13 +1,153 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <template id="redirect_form">
-        <form action="/payment/mercado_pago/pay" method="GET">
-            <input type="hidden" name="reference" t-att-value="reference"/>
-        </form>
-    </template>
-
     <template id="payment_page" name="Mercado Pago Card Payment">
         <t t-call="website.layout">
+            <style>
+                /* Modern spinner styling */
+                .mp-spinner-container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 50px 20px;
+                }
+                .mp-spinner {
+                    width: 44px;
+                    height: 44px;
+                    border: 4px solid #f1f5f9;
+                    border-top-color: #3b82f6;
+                    border-radius: 50%;
+                    animation: mp-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                }
+                @keyframes mp-spin {
+                    to { transform: rotate(360deg); }
+                }
+                .mp-loading-text {
+                    margin-top: 20px;
+                    color: #64748b;
+                    font-size: 15px;
+                    font-weight: 500;
+                }
+
+                /* Modern inline error alert styling */
+                #mp-error {
+                    padding: 16px 20px;
+                    border-radius: 12px;
+                    background-color: #fef2f2;
+                    border: 1px solid #fca5a5;
+                    color: #991b1b;
+                    font-size: 14px;
+                    font-weight: 500;
+                    margin-top: 15px;
+                    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.05);
+                }
+
+                /* Modal overlay styling with backdrop blur and dark semi-transparent bg */
+                .mp-modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    background-color: rgba(15, 23, 42, 0.5); /* Slate-900 with transparency */
+                    backdrop-filter: blur(8px);
+                    -webkit-backdrop-filter: blur(8px);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.25s ease;
+                }
+
+                .mp-modal-overlay.active {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                /* Modal box styling */
+                .mp-modal-box {
+                    background: #ffffff;
+                    border-radius: 24px;
+                    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+                    width: 90%;
+                    max-width: 440px;
+                    padding: 36px 30px;
+                    text-align: center;
+                    position: relative;
+                    transform: scale(0.92);
+                    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    border: 1px solid rgba(226, 232, 240, 0.8);
+                }
+
+                .mp-modal-overlay.active .mp-modal-box {
+                    transform: scale(1);
+                }
+
+                /* Modal header/icon style */
+                .mp-modal-icon-container {
+                    width: 64px;
+                    height: 64px;
+                    background-color: #fee2e2; /* Light red/rose */
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 24px;
+                    color: #ef4444; /* Bright red */
+                    box-shadow: 0 0 0 8px #fef2f2;
+                }
+                .mp-modal-icon {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                /* Title and description styling */
+                .mp-modal-title {
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: #1e293b; /* Slate-800 */
+                    margin-bottom: 12px;
+                    font-family: inherit;
+                }
+
+                .mp-modal-message {
+                    font-size: 15px;
+                    color: #64748b; /* Slate-500 */
+                    line-height: 1.6;
+                    margin-bottom: 28px;
+                }
+
+                /* Close/Accept Button */
+                .mp-modal-btn {
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                    color: #ffffff !important;
+                    border: none;
+                    padding: 14px 30px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    width: 100%;
+                    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2), 0 2px 4px -1px rgba(239, 68, 68, 0.1);
+                    transition: all 0.2s ease;
+                }
+
+                .mp-modal-btn:hover {
+                    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3), 0 4px 6px -2px rgba(239, 68, 68, 0.15);
+                }
+
+                .mp-modal-btn:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
+                }
+
+                .mp-modal-btn:active {
+                    transform: translateY(0);
+                }
+            </style>
+
             <div id="wrap" class="container py-4">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-6">
@@ -19,14 +159,29 @@
                                 </p>
 
                                 <div id="cardPaymentBrick_container" style="min-height: 350px;">
-                                    <div id="mp-loading" style="text-align: center; padding: 40px;">
-                                        <p>Cargando formulario de pago...</p>
+                                    <div id="mp-loading" class="mp-spinner-container">
+                                        <div class="mp-spinner"></div>
+                                        <div class="mp-loading-text">Cargando formulario de pago...</div>
                                     </div>
-                                    <div id="mp-error" style="display: none; text-align: center; padding: 20px; color: red;"></div>
+                                    <div id="mp-error" style="display: none; text-align: center;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Custom Error Modal -->
+            <div id="mp-modal-overlay" class="mp-modal-overlay">
+                <div class="mp-modal-box">
+                    <div class="mp-modal-icon-container">
+                        <svg class="mp-modal-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                        </svg>
+                    </div>
+                    <h3 class="mp-modal-title">No se pudo procesar el pago</h3>
+                    <p id="mp-modal-message" class="mp-modal-message"></p>
+                    <button type="button" id="mp-modal-close-btn" class="mp-modal-btn">Entendido</button>
                 </div>
             </div>
         </t>
@@ -50,6 +205,38 @@
             (function() {
                 console.log('[MP] init', window.l10nArMpConfig);
                 var cfg = window.l10nArMpConfig;
+
+                function showErrorModal(message) {
+                    var overlay = document.getElementById('mp-modal-overlay');
+                    var msgEl = document.getElementById('mp-modal-message');
+                    if (overlay && msgEl) {
+                        msgEl.textContent = message;
+                        overlay.classList.add('active');
+                    } else {
+                        alert(message);
+                    }
+                }
+
+                function hideErrorModal() {
+                    var overlay = document.getElementById('mp-modal-overlay');
+                    if (overlay) {
+                        overlay.classList.remove('active');
+                    }
+                }
+
+                var closeBtn = document.getElementById('mp-modal-close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', hideErrorModal);
+                }
+
+                var overlay = document.getElementById('mp-modal-overlay');
+                if (overlay) {
+                    overlay.addEventListener('click', function(e) {
+                        if (e.target === overlay) {
+                            hideErrorModal();
+                        }
+                    });
+                }
 
                 if (!cfg.publicKey) {
                     document.getElementById('mp-loading').style.display = 'none';
@@ -102,14 +289,14 @@
                                     if (data.success) {
                                         window.location.href = data.redirect_url;
                                     } else {
-                                        alert('Error: ' + (data.error || 'No se pudo procesar el pago'));
+                                        showErrorModal(data.error || 'No se pudo procesar el pago');
                                         reject();
                                     }
                                     resolve();
                                 })
                                 .catch(function(err) {
                                     console.error('[MP] fetch error', err);
-                                    alert('Error de conexion al procesar el pago');
+                                    showErrorModal('Error de conexion al procesar el pago');
                                     reject();
                                 });
                             });
@@ -137,4 +324,3 @@
             })();
         ]]></script>
     </template>
-</odoo>
