@@ -221,7 +221,7 @@
                         msgEl.textContent = message;
                         overlay.classList.add('active');
                     } else {
-                        alert(message);
+                        console.error('[MP] Error modal elements not found. Message:', message);
                     }
                 }
 
