@@ -19,7 +19,7 @@ Integración de Andreani para Odoo 19 CE.
     'data': [
         'security/ir.model.access.csv',
         'views/delivery_carrier_views.xml',
-        'views/res_config_settings_views.xml',
+        'views/res_company_views.xml',
     ],
     'installable': True,
     'application': False,

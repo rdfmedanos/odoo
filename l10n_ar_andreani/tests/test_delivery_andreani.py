@@ -71,12 +71,13 @@ class TestDeliveryAndreani(TransactionCase):
             'name': 'Andreani Global',
             'delivery_type': 'andreani',
         })
-        IrConfig = self.env['ir.config_parameter'].sudo()
-        IrConfig.set_param('l10n_ar_andreani.username', 'global_user')
-        IrConfig.set_param('l10n_ar_andreani.password', 'global_pass')
-        IrConfig.set_param('l10n_ar_andreani.client_number', '654321')
-        IrConfig.set_param('l10n_ar_andreani.contract_number', '098765')
-        IrConfig.set_param('l10n_ar_andreani.env', 'prod')
+        self.env.company.write({
+            'andreani_username': 'global_user',
+            'andreani_password': 'global_pass',
+            'andreani_client_number': '654321',
+            'andreani_contract_number': '098765',
+            'andreani_env': 'prod',
+        })
 
         creds = carrier._andreani_get_credentials()
         self.assertEqual(creds['username'], 'global_user')

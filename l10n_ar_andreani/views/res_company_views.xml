@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_andreani" model="ir.ui.view">
+        <field name="name">res.company.form.andreani</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page name="andreani" string="Andreani">
+                    <group>
+                        <group string="Credenciales">
+                            <field name="andreani_username"/>
+                            <field name="andreani_password" password="True"/>
+                            <field name="andreani_client_number"/>
+                            <field name="andreani_contract_number"/>
+                            <field name="andreani_env" widget="radio"/>
+                        </group>
+                        <group string="Opciones">
+                            <field name="andreani_volumetric_divisor"/>
+                            <button name="action_test_andreani_credentials" string="Probar credenciales" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
