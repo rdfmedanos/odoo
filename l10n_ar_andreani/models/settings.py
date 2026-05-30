@@ -28,24 +28,24 @@ class ResConfigSettings(models.TransientModel):
         res = super().get_values()
         IrConfig = self.env['ir.config_parameter'].sudo()
         res.update(
-            andreani_username=IrConfig.get_param('delivery_andreani.username', default=''),
-            andreani_password=IrConfig.get_param('delivery_andreani.password', default=''),
-            andreani_client_number=IrConfig.get_param('delivery_andreani.client_number', default=''),
-            andreani_contract_number=IrConfig.get_param('delivery_andreani.contract_number', default=''),
-            andreani_env=IrConfig.get_param('delivery_andreani.env', default='test'),
-            andreani_volumetric_divisor=int(IrConfig.get_param('delivery_andreani.volumetric_divisor', default=5000)),
+            andreani_username=IrConfig.get_param('l10n_ar_andreani.username', default=''),
+            andreani_password=IrConfig.get_param('l10n_ar_andreani.password', default=''),
+            andreani_client_number=IrConfig.get_param('l10n_ar_andreani.client_number', default=''),
+            andreani_contract_number=IrConfig.get_param('l10n_ar_andreani.contract_number', default=''),
+            andreani_env=IrConfig.get_param('l10n_ar_andreani.env', default='test'),
+            andreani_volumetric_divisor=int(IrConfig.get_param('l10n_ar_andreani.volumetric_divisor', default=5000)),
         )
         return res
 
     def set_values(self):
         super().set_values()
         IrConfig = self.env['ir.config_parameter'].sudo()
-        IrConfig.set_param('delivery_andreani.username', self.andreani_username or '')
-        IrConfig.set_param('delivery_andreani.password', self.andreani_password or '')
-        IrConfig.set_param('delivery_andreani.client_number', self.andreani_client_number or '')
-        IrConfig.set_param('delivery_andreani.contract_number', self.andreani_contract_number or '')
-        IrConfig.set_param('delivery_andreani.env', self.andreani_env or 'test')
-        IrConfig.set_param('delivery_andreani.volumetric_divisor', str(self.andreani_volumetric_divisor or 5000))
+        IrConfig.set_param('l10n_ar_andreani.username', self.andreani_username or '')
+        IrConfig.set_param('l10n_ar_andreani.password', self.andreani_password or '')
+        IrConfig.set_param('l10n_ar_andreani.client_number', self.andreani_client_number or '')
+        IrConfig.set_param('l10n_ar_andreani.contract_number', self.andreani_contract_number or '')
+        IrConfig.set_param('l10n_ar_andreani.env', self.andreani_env or 'test')
+        IrConfig.set_param('l10n_ar_andreani.volumetric_divisor', str(self.andreani_volumetric_divisor or 5000))
 
     def action_test_andreani_credentials(self):
         username = self.andreani_username

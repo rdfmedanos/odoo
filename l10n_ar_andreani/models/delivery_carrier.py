@@ -55,12 +55,12 @@ class DeliveryCarrier(models.Model):
 
         if not username or not password:
             IrConfig = self.env['ir.config_parameter'].sudo()
-            username = username or IrConfig.get_param('delivery_andreani.username')
-            password = password or IrConfig.get_param('delivery_andreani.password')
-            client = client or IrConfig.get_param('delivery_andreani.client_number')
-            contract = contract or IrConfig.get_param('delivery_andreani.contract_number')
-            env = env or IrConfig.get_param('delivery_andreani.env') or 'test'
-            divisor = divisor or int(IrConfig.get_param('delivery_andreani.volumetric_divisor') or 5000)
+            username = username or IrConfig.get_param('l10n_ar_andreani.username')
+            password = password or IrConfig.get_param('l10n_ar_andreani.password')
+            client = client or IrConfig.get_param('l10n_ar_andreani.client_number')
+            contract = contract or IrConfig.get_param('l10n_ar_andreani.contract_number')
+            env = env or IrConfig.get_param('l10n_ar_andreani.env') or 'test'
+            divisor = divisor or int(IrConfig.get_param('l10n_ar_andreani.volumetric_divisor') or 5000)
 
         return {
             'username': username,

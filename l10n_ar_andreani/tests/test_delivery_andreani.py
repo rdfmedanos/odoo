@@ -72,11 +72,11 @@ class TestDeliveryAndreani(TransactionCase):
             'delivery_type': 'andreani',
         })
         IrConfig = self.env['ir.config_parameter'].sudo()
-        IrConfig.set_param('delivery_andreani.username', 'global_user')
-        IrConfig.set_param('delivery_andreani.password', 'global_pass')
-        IrConfig.set_param('delivery_andreani.client_number', '654321')
-        IrConfig.set_param('delivery_andreani.contract_number', '098765')
-        IrConfig.set_param('delivery_andreani.env', 'prod')
+        IrConfig.set_param('l10n_ar_andreani.username', 'global_user')
+        IrConfig.set_param('l10n_ar_andreani.password', 'global_pass')
+        IrConfig.set_param('l10n_ar_andreani.client_number', '654321')
+        IrConfig.set_param('l10n_ar_andreani.contract_number', '098765')
+        IrConfig.set_param('l10n_ar_andreani.env', 'prod')
 
         creds = carrier._andreani_get_credentials()
         self.assertEqual(creds['username'], 'global_user')
@@ -91,7 +91,7 @@ class TestDeliveryAndreani(TransactionCase):
         token = self.carrier._andreani_get_token(force=False)
         self.assertEqual(token, 'cached_token_123')
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_06_get_token_fresh(self, mock_post):
         mock_resp = MagicMock()
         mock_resp.status_code = 200
@@ -103,7 +103,7 @@ class TestDeliveryAndreani(TransactionCase):
         self.assertEqual(self.carrier.andreani_token, 'new_token_456')
         self.assertTrue(self.carrier.andreani_token_expires > fields.Datetime.now())
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_07_get_token_auth_failure(self, mock_post):
         mock_resp = MagicMock()
         mock_resp.status_code = 401
@@ -114,7 +114,7 @@ class TestDeliveryAndreani(TransactionCase):
         with self.assertRaises(UserError):
             self.carrier._andreani_get_token(force=True)
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_08_get_token_no_credentials(self, mock_post):
         carrier = self.env['delivery.carrier'].create({
             'name': 'No Creds',
@@ -151,8 +151,8 @@ class TestDeliveryAndreani(TransactionCase):
         link = self.carrier.get_tracking_link('')
         self.assertEqual(link, '')
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.get')
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.get')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_14_rate_shipment_success(self, mock_post, mock_get):
         mock_login = MagicMock()
         mock_login.status_code = 200
@@ -169,8 +169,8 @@ class TestDeliveryAndreani(TransactionCase):
         self.assertTrue(result['success'])
         self.assertEqual(result['price'], 1500.0)
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.get')
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.get')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_15_rate_shipment_no_price(self, mock_post, mock_get):
         mock_login = MagicMock()
         mock_login.status_code = 200
@@ -186,8 +186,8 @@ class TestDeliveryAndreani(TransactionCase):
         result = self.carrier.andreani_rate_shipment(order)
         self.assertFalse(result['success'])
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.get')
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.get')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_16_send_shipping_success(self, mock_post, mock_get):
         mock_login = MagicMock()
         mock_login.status_code = 200
@@ -217,8 +217,8 @@ class TestDeliveryAndreani(TransactionCase):
         self.assertEqual(result[0]['exact_price'], 1500.0)
         self.assertEqual(pickings.carrier_tracking_ref, 'ANDR789')
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.get')
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.get')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_17_send_shipping_no_label(self, mock_post, mock_get):
         mock_login = MagicMock()
         mock_login.status_code = 200
@@ -243,7 +243,7 @@ class TestDeliveryAndreani(TransactionCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['tracking_number'], 'ANDR789')
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_18_cancel_shipment_success(self, mock_post):
         mock_login = MagicMock()
         mock_login.status_code = 200
@@ -257,7 +257,7 @@ class TestDeliveryAndreani(TransactionCase):
         result = self.carrier.cancel_shipment('ANDR789')
         self.assertTrue(result)
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_19_cancel_shipment_error(self, mock_post):
         mock_login = MagicMock()
         mock_login.status_code = 200
@@ -289,7 +289,7 @@ class TestDeliveryAndreani(TransactionCase):
         expected = (20 * 15 * 10) / 5000
         self.assertEqual(vol_weight, expected)
 
-    @patch('delivery_andreani.models.delivery_carrier.requests.post')
+    @patch('l10n_ar_andreani.models.delivery_carrier.requests.post')
     def test_23_action_test_andreani_credentials(self, mock_post):
         mock_resp = MagicMock()
         mock_resp.status_code = 200
