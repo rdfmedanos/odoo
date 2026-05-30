@@ -1,3 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="redirect_form">
+        <form action="/payment/mercado_pago/pay" method="GET">
+            <input type="hidden" name="reference" t-att-value="reference"/>
+        </form>
+    </template>
+
     <template id="payment_page" name="Mercado Pago Card Payment">
         <t t-call="website.layout">
             <style>
@@ -324,3 +332,4 @@
             })();
         ]]></script>
     </template>
+</odoo>
