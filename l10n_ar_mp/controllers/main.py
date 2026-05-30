@@ -31,9 +31,13 @@ class MercadoPagoController(http.Controller):
             'partner_name': tx.partner_name or (partner and partner.name) or '',
         })
 
-    @http.route('/payment/mercado_pago/process_order', type='json', auth='public', methods=['POST'], csrf=False, save_session=False)
+    @http.route('/payment/mercado_pago/process_order', type='http', auth='public', methods=['POST'], csrf=False, save_session=False)
     def mercado_pago_process_order(self, **kwargs):
-        data = request.get_json_data()
+        import json
+        try:
+            data = json.loads(request.httprequest.data)
+        except Exception:
+            data = {}
         _logger.info('Procesando pago con tarjeta MP: %s', {k: v for k, v in data.items() if k != 'token'})
 
         reference = data.get('external_reference', '')
@@ -42,14 +46,14 @@ class MercadoPagoController(http.Controller):
             ('reference', '=', reference),
         ], limit=1)
         if not tx:
-            return {'success': False, 'error': 'Transaccion no encontrada'}
+            return request.make_json_response({'success': False, 'error': 'Transaccion no encontrada'})
 
         try:
             tx._mercado_pago_process_card_payment(data)
-            return {
+            return request.make_json_response({
                 'success': True,
                 'redirect_url': '/payment/status',
-            }
+            })
         except Exception as e:
             _logger.exception('Error al procesar pago MP')
             msg = str(e)
@@ -61,7 +65,7 @@ class MercadoPagoController(http.Controller):
                 msg = 'La tarjeta no tiene fondos suficientes.'
             elif 'call_for_auth' in msg:
                 msg = 'La tarjeta requiere autorizacion del banco emisor.'
-            return {'success': False, 'error': msg}
+            return request.make_json_response({'success': False, 'error': msg})
 
     @http.route('/payment/mercado_pago/return', type='http', auth='public', methods=['GET', 'POST'], csrf=False, save_session=False)
     def mercado_pago_return(self, **data):

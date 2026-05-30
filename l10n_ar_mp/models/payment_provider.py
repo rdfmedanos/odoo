@@ -45,7 +45,7 @@ class PaymentProvider(models.Model):
         super()._compute_feature_support_fields()
         self.filtered(lambda p: p.code == 'mercado_pago').update({
             'support_tokenization': False,
-            'support_manual_capture': None,
+            'support_manual_capture': False,
             'support_refund': 'none',
         })
 

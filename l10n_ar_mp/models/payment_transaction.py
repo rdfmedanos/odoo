@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -62,6 +62,7 @@ class PaymentTransaction(models.Model):
                 self._set_pending()
         return result
 
+    @api.model
     def _get_tx_from_notification_data(self, provider_code, notification_data):
         if provider_code != 'mercado_pago':
             return super()._get_tx_from_notification_data(provider_code, notification_data)
