@@ -55,6 +55,7 @@ class PaymentTransaction(models.Model):
                 self._set_done()
             elif status == 'rejected':
                 self._set_error(status_detail or _('Mercado Pago rechazo la operacion.'))
+                raise ValidationError(status_detail or 'cc_rejected')
             elif status in ('pending', 'in_process'):
                 self._set_pending()
             else:

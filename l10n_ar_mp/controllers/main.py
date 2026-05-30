@@ -57,15 +57,38 @@ class MercadoPagoController(http.Controller):
         except Exception as e:
             _logger.exception('Error al procesar pago MP')
             msg = str(e)
-            if 'rejected_by_issuer' in msg:
-                msg = 'La tarjeta fue rechazada por el banco emisor. Probá con otra tarjeta.'
-            elif 'invalid_card_token' in msg:
-                msg = 'El token de la tarjeta expiro o es invalido. Recarga la pagina y completa los datos de la tarjeta nuevamente.'
-            elif 'insufficient_amount' in msg:
-                msg = 'La tarjeta no tiene fondos suficientes.'
-            elif 'call_for_auth' in msg:
-                msg = 'La tarjeta requiere autorizacion del banco emisor.'
-            return request.make_json_response({'success': False, 'error': msg})
+            
+            error_map = {
+                'rejected_by_issuer': 'La tarjeta fue rechazada por el banco emisor. Probá con otra tarjeta.',
+                'invalid_card_token': 'El token de la tarjeta expiró o es inválido. Recargá la página e intentá nuevamente.',
+                'insufficient_amount': 'La tarjeta no tiene fondos suficientes.',
+                'call_for_auth': 'La tarjeta requiere autorización del banco emisor.',
+                'call_for_authorize': 'La tarjeta requiere autorización del banco emisor.',
+                'bad_filled_card_number': 'El número de la tarjeta es incorrecto.',
+                'bad_filled_date': 'La fecha de vencimiento es incorrecta.',
+                'bad_filled_security_code': 'El código de seguridad (CVV) es incorrecto.',
+                'card_disabled': 'La tarjeta está inactiva. Comunicate con el banco emisor.',
+                'duplicated_payment': 'Se detectó un pago duplicado. Intentá con otra tarjeta o esperá unos minutos.',
+                'high_risk': 'El pago fue rechazado por medidas de seguridad de Mercado Pago.',
+                'invalid_installments': 'La cantidad de cuotas seleccionada no está permitida para esta tarjeta.',
+                'max_attempts': 'Superaste el límite de intentos permitidos. Intentá con otra tarjeta.',
+            }
+            
+            user_msg = 'La tarjeta fue rechazada por el banco emisor. Probá con otra tarjeta.'
+            matched = False
+            for key, val in error_map.items():
+                if key in msg:
+                    user_msg = val
+                    matched = True
+                    break
+            
+            if not matched:
+                if 'rejected' in msg or 'cc_rejected' in msg:
+                    user_msg = 'La tarjeta fue rechazada. Probá con otra tarjeta o medio de pago.'
+                else:
+                    user_msg = msg
+                    
+            return request.make_json_response({'success': False, 'error': user_msg})
 
     @http.route('/payment/mercado_pago/return', type='http', auth='public', methods=['GET', 'POST'], csrf=False, save_session=False)
     def mercado_pago_return(self, **data):
